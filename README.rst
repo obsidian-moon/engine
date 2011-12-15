@@ -1,5 +1,5 @@
 =========================================
-Obsidian Moon Engine v1.0.0 Documentation
+Obsidian Moon Engine v1.0.1 Documentation
 =========================================
 This is a project that I have worked on for several months after being inspired by CodeIgniter.
 After setting up the initial steps of the system I am opening the project up for open source.
