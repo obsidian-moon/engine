@@ -1,0 +1,6 @@
+================================
+========== Change Log ==========
+================================
+
+============ v1.0.1 ============
+#Added the ability to import third party modules and classes.
