@@ -26,7 +26,8 @@ class ObsidianMoonCore
 		}		
 		if (isset($conf) && is_array($conf)) {
 			foreach ($conf as $key => $value) {
-				$this->conf_{$key} = $value;
+				$var = 'conf_'.$key;
+				$this->$var = $value;
 			}
 		}
 	}
