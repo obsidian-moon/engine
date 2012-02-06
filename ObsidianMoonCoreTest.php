@@ -14,8 +14,8 @@ class ObsidianMoonTest extends PHPUnit_Framework_TestCase {
 		$this->assertGreaterThan(0,$this->core->systime);
 		$this->assertEquals(false,$this->core->is_ajax);
 		$this->assertEquals('testlibslocation',$this->core->conf_libs);
-		$this->assertEquals('testlibslocation',$this->core->conf_core);
-		$this->assertEquals('testlibslocation',$this->core->conf_publ);
-		$this->assertEquals('testlibslocation',$this->core->conf_base);
+		$this->assertEquals('testcorelocation',$this->core->conf_core);
+		$this->assertEquals('testpubllocation',$this->core->conf_publ);
+		$this->assertEquals('testbaselocation',$this->core->conf_base);
 	}
 }
