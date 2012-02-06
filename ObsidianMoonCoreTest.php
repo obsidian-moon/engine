@@ -1,21 +1,21 @@
 <?php
 include('ObsidianMoonCore.php');
-class ObsidianMoonTest extends PHPUnit_Framework_TestCase {
+class ObsidianMoonCoreTest extends PHPUnit_Framework_TestCase {
 	public $core;
 	
 	public function testConstruct() {
 		$conf = array(
-			'libs' => 'testlibslocation',
-			'core' => 'testcorelocation',
-			'publ' => 'testpubllocation',
-			'base' => 'testbaselocation'
+			'libs' => dirname(__FILE__) . '/test/libraries/',
+			'core' => dirname(__FILE__) . '/',
+			'publ' => dirname(__FILE__) . '/test/',
+			'base' => dirname(__FILE__) . '/test/'
 		);
 		$this->core = new ObsidianMoonCore($conf);
 		$this->assertGreaterThan(0,$this->core->systime);
 		$this->assertEquals(false,$this->core->is_ajax);
-		$this->assertEquals('testlibslocation',$this->core->conf_libs);
-		$this->assertEquals('testcorelocation',$this->core->conf_core);
-		$this->assertEquals('testpubllocation',$this->core->conf_publ);
-		$this->assertEquals('testbaselocation',$this->core->conf_base);
+		$this->assertEquals($conf['libs'],$this->core->conf_libs);
+		$this->assertEquals($conf['core'],$this->core->conf_core);
+		$this->assertEquals($conf['publ'],$this->core->conf_publ);
+		$this->assertEquals($conf['base'],$this->core->conf_base);
 	}
 }

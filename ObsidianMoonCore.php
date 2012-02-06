@@ -14,16 +14,13 @@ class ObsidianMoonCore
 	public $systime;
 	public $is_ajax;
 	public $error;
-	public $conf_libs;
-	public $conf_core;
-	public $conf_base;
-	public $conf_publ;
 	
 	public function __construct($conf = null) {
 		$this->systime = time();
 		if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 			$this->is_ajax = true;
-		}		
+		}
+		// Assign all configuration values to $conf_**** variables
 		if (isset($conf) && is_array($conf)) {
 			foreach ($conf as $key => $value) {
 				$var = 'conf_'.$key;
