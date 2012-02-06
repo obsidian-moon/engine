@@ -3,11 +3,19 @@ include('ObsidianMoonCore.php');
 class ObsidianMoonTest extends PHPUnit_Framework_TestCase {
 	public $core;
 	
-	public function setUp(){ }  
-	public function tearDown(){ } 
 	public function testConstruct() {
-		$this->core = new ObsidianMoonCore();
+		$conf = array(
+			'libs' => 'testlibslocation',
+			'core' => 'testcorelocation',
+			'publ' => 'testpubllocation',
+			'base' => 'testbaselocation'
+		);
+		$this->core = new ObsidianMoonCore($conf);
 		$this->assertGreaterThan(0,$this->core->systime);
 		$this->assertEquals(false,$this->core->is_ajax);
+		$this->assertEquals('testlibslocation',$this->core->conf_libs);
+		$this->assertEquals('testlibslocation',$this->core->conf_core);
+		$this->assertEquals('testlibslocation',$this->core->conf_publ);
+		$this->assertEquals('testlibslocation',$this->core->conf_base);
 	}
 }

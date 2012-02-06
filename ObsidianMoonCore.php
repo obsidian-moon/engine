@@ -19,11 +19,16 @@ class ObsidianMoonCore
 	public $conf_base;
 	public $conf_publ;
 	
-	public function __construct() {
+	public function __construct($conf = null) {
 		$this->systime = time();
 		if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 			$this->is_ajax = true;
 		}		
+		if (isset($conf) && is_array($conf)) {
+			foreach ($conf as $key => $value) {
+				$this->conf_{$key} = $value;
+			}
+		}
 	}
 	
 	public function classes() {
