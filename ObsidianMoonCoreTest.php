@@ -8,7 +8,10 @@ class ObsidianMoonCoreTest extends PHPUnit_Framework_TestCase {
 			'libs' => dirname(__FILE__) . '/test/libraries/',
 			'core' => dirname(__FILE__) . '/',
 			'publ' => dirname(__FILE__) . '/test/',
-			'base' => dirname(__FILE__) . '/test/'
+			'base' => dirname(__FILE__) . '/test/',
+			'modules' => array(
+				'TestClass'
+			)
 		);
 		$this->core = new ObsidianMoonCore($conf);
 		$this->assertGreaterThan(0,$this->core->systime);

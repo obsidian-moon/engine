@@ -27,9 +27,38 @@ class ObsidianMoonCore
 				$this->$var = $value;
 			}
 		}
+		if (isset($conf['modules'])) {
+			if (is_array($conf['modules'])) {
+				$exception = NULL;
+				foreach ($conf['modules'] as $key => $value) {
+					try {
+						if (is_numeric($key)):
+							$this->classes($value);
+						else:
+							$this->classes($key,$value);
+						endif;
+					} catch(Exception $e) {
+						$exception .= $e->getMessage()."<br />\n";
+					}
+				}
+				if ($exception !== NULL) {
+					throw new Exception($exception);
+				}
+			} else {
+				try {
+					if (is_numeric($key)):
+						$this->classes($value);
+					else:
+						$this->classes($key,$value);
+					endif;
+				} catch(Exception $e) {
+					throw new Exception($e->getMessage());
+				}
+			}	
+		}
 	}
 	
-	public function classes() {
+	public function classes($key, $value=NULL) {
 		
 	}
 	
