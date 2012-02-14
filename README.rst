@@ -26,19 +26,19 @@ The sub folder feature needs to be worked on.
 
 You can initiate the Obsidian Moon Engine with the following:
 
-	{{{
-	include('/home/user/Obsidian-Moon-Engine/ObsidianMoonCore.php');
-	$conf = array(
-		'core' => '/home/user/Obsidian-Moon-Engine/',
-		'libs' => dirname(__FILE__) . '/libraries/',
-		'base' => dirname(__FILE__) . '/',
-		'publ' => $_SERVER['HTTP_HOST'],
-		'modules' => array(
-			'input'
-		)
-	);
-	$core = new ObsidianMoonCore();
-	}}}
+	::
+	
+		include('/home/user/Obsidian-Moon-Engine/ObsidianMoonCore.php');
+		$conf = array(
+			'core' => '/home/user/Obsidian-Moon-Engine/',
+			'libs' => dirname(__FILE__) . '/libraries/',
+			'base' => dirname(__FILE__) . '/',
+			'publ' => $_SERVER['HTTP_HOST'],
+			'modules' => array(
+				'input'
+			)
+		);
+		$core = new ObsidianMoonCore();
 
 Instructions for Using Obsidian Moon
 ====================================
