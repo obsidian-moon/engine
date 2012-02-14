@@ -26,6 +26,7 @@ The sub folder feature needs to be worked on.
 
 You can initiate the Obsidian Moon Engine with the following:
 
+	.. code-block:: php
 	include('/home/user/Obsidian-Moon-Engine/ObsidianMoonCore.php');
 	$conf = array(
 		'core' => '/home/user/Obsidian-Moon-Engine/',
