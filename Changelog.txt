@@ -2,5 +2,7 @@
 ========== Change Log ==========
 ================================
 
+============ v1.1.0 ============
+#Reformatted the framework to no longer require the Constants it previously needed.
 ============ v1.0.1 ============
 #Added the ability to import third party modules and classes.
