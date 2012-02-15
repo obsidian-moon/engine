@@ -38,7 +38,7 @@ You can initiate the Obsidian Moon Engine with the following:
 				'input'
 			)
 		);
-		$core = new ObsidianMoonCore();
+		$core = new ObsidianMoonCore($conf);
 
 Instructions for Using Obsidian Moon
 ====================================
