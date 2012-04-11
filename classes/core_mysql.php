@@ -65,7 +65,7 @@ class core_mysql
 		}
 	}
 	
-	function fetch_array()
+	function fetch_array($single_key=false)
 	{
 		$resulting = false;
 		if (mysql_num_rows($this->result) > 1) 
@@ -77,7 +77,11 @@ class core_mysql
 		}
 		else
 		{
-			$resulting = @mysql_fetch_array($this->result,MYSQL_ASSOC);
+			if ($single_key == true) {
+				$resulting[] = @mysql_fetch_array($this->result,MYSQL_ASSOC);
+			} else {
+				$resulting = @mysql_fetch_array($this->result,MYSQL_ASSOC);
+			}
 		}
 		return $resulting;
 	}
