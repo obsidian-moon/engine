@@ -20,6 +20,7 @@ class core_mysql
 	var $q_where_or = array();
 	var $q_values = array();
 	var	$result = null;
+	var $error = null;
 	
 	function __construct($params)
 	{
@@ -63,6 +64,14 @@ class core_mysql
 		{
 			mysql_select_db($this->params['name'], $this->$connection);
 		}
+	}
+	
+	function error($connection='connection')
+	{
+		if (!isset($this->error)) {
+			$this->error = mysql_error($this->$connection);
+		}
+		return $this->error;
 	}
 	
 	function fetch_array($single_key=false)
@@ -173,7 +182,10 @@ class core_mysql
 		{
 			return false;
 		}
-		$this->result = mysql_query($sql,$this->$connection);
+		if (!($this->result = mysql_query($sql,$this->$connection)))
+		{ 
+			$this->error = mysql_error($this->$connection);
+		}
 		return $this;
 	}
 	
