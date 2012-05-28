@@ -74,7 +74,7 @@ class core_mysql
 		return $this->error;
 	}
 	
-	function fetch_array($single_key=false)
+	function fetch_array($params=false)
 	{
 		$resulting = false;
 		if (mysql_num_rows($this->result) > 1) 
@@ -86,8 +86,12 @@ class core_mysql
 		}
 		else
 		{
-			if ($single_key == true) {
+			if ($params == true) {
 				$resulting[] = @mysql_fetch_array($this->result,MYSQL_ASSOC);
+			} elseif ($params['item']) {
+				$item = $params['item'];
+				$return = @mysql_fetch_array($this->result,MYSQL_ASSOC);
+				$resulting = $return[$item];
 			} else {
 				$resulting = @mysql_fetch_array($this->result,MYSQL_ASSOC);
 			}
