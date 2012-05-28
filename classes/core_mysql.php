@@ -86,7 +86,7 @@ class core_mysql
 		}
 		else
 		{
-			if ($params == true) {
+			if ($params === true) {
 				$resulting[] = @mysql_fetch_array($this->result,MYSQL_ASSOC);
 			} elseif ($params['item']) {
 				$item = $params['item'];
