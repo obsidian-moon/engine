@@ -57,7 +57,7 @@ class ObsidianMoonCore {
 		}
 	}
 
-	function classes($class, $alternate_name = "", $p3_cname = null) {
+	function classes($classes, $alternate_name = "", $p3_cname = null) {
 		/**
 		 * This function will load classes as needed for the user to use.
 		 * It will allow them to be accessible via $core->classname.
@@ -65,10 +65,10 @@ class ObsidianMoonCore {
 		 * @param $class - This is the file and class name of the class being called.
 		 * @param $alternate_name - This is what the user would like to name the variable if available.
 		 */
-		if (!is_array($class)) {
-			$class = array($class, array($alternate_name,$p3_cname));
+		if (!is_array($classes)) {
+			$classes = array($classes, array($alternate_name,$p3_cname));
 		}
-		foreach ($class as $class => $alternate_name) {
+		foreach ($classes as $class => $alternate_name) {
 			if (is_array($alternate_name))
 				list($alternate_name,$p3_cname) = $alternate_name;
 			if (preg_match('/\//', $class)) {
