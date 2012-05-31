@@ -29,16 +29,10 @@ class ObsidianMoonCore {
 		if (isset($conf['modules'])) {
 			if (is_array($conf['modules'])) {
 				$exception = NULL;
-				foreach ($conf['modules'] as $key => $value) {
-					try {
-						if (is_numeric($key)):
-							$this->classes($value);
-						else:
-							$this->classes($key, $value);
-						endif;
-					} catch (Exception $e) {
-						$exception .= $e->getMessage() . "<br />\n";
-					}
+				try {
+					$this->classes($conf['modules']);
+				} catch (Exception $e) {
+					$exception .= $e->getMessage() . "<br />\n";
 				}
 				if ($exception !== NULL) {
 					throw new Exception($exception);
@@ -71,6 +65,8 @@ class ObsidianMoonCore {
 		foreach ($classes as $class => $alternate_name) {
 			if (is_array($alternate_name))
 				list($alternate_name,$p3_cname) = $alternate_name;
+			if (is_numeric($class))
+				$class = $alternate_name;
 			if (preg_match('/\//', $class)) {
 				$class_name = explode('/', $class);
 				$class_name = end($class_name);
@@ -106,13 +102,13 @@ class ObsidianMoonCore {
 						if (method_exists($this->$alternate_name, 'om_start')) {
 							$this->$alternate_name->om_start();
 						}
-						return true;
 					} else {
 						$this->error[] = "\$this->$alternate_name has already been set, could not reinstanciate it!";
 					}
 				}
 			}
 		}
+		return true;
 	}
 
 	function views($_view, $_data = NULL, $_return = FALSE) {
