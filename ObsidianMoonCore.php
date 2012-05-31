@@ -65,44 +65,51 @@ class ObsidianMoonCore {
 		 * @param $class - This is the file and class name of the class being called.
 		 * @param $alternate_name - This is what the user would like to name the variable if available.
 		 */
-		if (preg_match('/\//', $class)) {
-			$class_name = explode('/', $class);
-			$class_name = end($class_name);
-		} elseif ($p3_cname !== null) {
-			$class_name = $p3_cname;
-		} else {
-			$class_name = $class;
+		if (!is_array($class)) {
+			$class = array($class, array($alternate_name,$p3_cname));
 		}
+		foreach ($class as $class => $alternate_name) {
+			if (is_array($alternate_name))
+				list($alternate_name,$p3_cname) = $alternate_name;
+			if (preg_match('/\//', $class)) {
+				$class_name = explode('/', $class);
+				$class_name = end($class_name);
+			} elseif ($p3_cname !== null) {
+				$class_name = $p3_cname;
+			} else {
+				$class_name = $class;
+			}
 
-		if (preg_match('/^core\//', $class))
-			$classes_location = $this->conf_core . 'classes/' . $class_name . '.php';
-		elseif (preg_match('/^third_party\//', $class))
-			$classes_location = $this->conf_libs . $class . '.php';
-		else
-			$classes_location = $this->conf_libs . 'classes/' . $class . '.php';
-		$configs_location = $this->conf_libs . 'configs/' . $class . '.php';
-		if (file_exists($classes_location)) {
-			include($classes_location);
-			if (class_exists($class_name)) {
-				if (file_exists($configs_location)) {
-					include($configs_location);
-				}
-				if ($alternate_name == "") {
-					$alternate_name = $class_name;
-				}
-				if (!isset($this->$alternate_name)) {
-					if (isset($config) && $config !== null) {
-						$this->$alternate_name = new $class_name($config);
+			if (preg_match('/^core\//', $class))
+				$classes_location = $this->conf_core . 'classes/' . $class_name . '.php';
+			elseif (preg_match('/^third_party\//', $class))
+				$classes_location = $this->conf_libs . $class . '.php';
+			else
+				$classes_location = $this->conf_libs . 'classes/' . $class . '.php';
+			$configs_location = $this->conf_libs . 'configs/' . $class . '.php';
+			if (file_exists($classes_location)) {
+				include($classes_location);
+				if (class_exists($class_name)) {
+					if (file_exists($configs_location)) {
+						include($configs_location);
+					}
+					if ($alternate_name == "") {
+						$alternate_name = $class_name;
+					}
+					if (!isset($this->$alternate_name)) {
+						if (isset($config) && $config !== null) {
+							$this->$alternate_name = new $class_name($config);
+						} else {
+							$this->$alternate_name = new $class_name();
+						}
+						$this->$alternate_name->core = & $this;
+						if (method_exists($this->$alternate_name, 'om_start')) {
+							$this->$alternate_name->om_start();
+						}
+						return true;
 					} else {
-						$this->$alternate_name = new $class_name();
+						$this->error[] = "\$this->$alternate_name has already been set, could not reinstanciate it!";
 					}
-					$this->$alternate_name->core = & $this;
-					if (method_exists($this->$alternate_name, 'om_start')) {
-						$this->$alternate_name->om_start();
-					}
-					return true;
-				} else {
-					$this->error[] = "\$this->$alternate_name has already been set, could not reinstanciate it!";
 				}
 			}
 		}
