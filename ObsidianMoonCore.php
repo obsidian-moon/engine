@@ -68,8 +68,7 @@ class ObsidianMoonCore {
 			if (is_numeric($class))
 				$class = $alternate_name;
 			if (preg_match('/\//', $class)) {
-				$class_name = explode('/', $class);
-				$class_name = end($class_name);
+				$class_name = end(explode('/', $class));
 			} elseif ($p3_cname !== null) {
 				$class_name = $p3_cname;
 			} else {
