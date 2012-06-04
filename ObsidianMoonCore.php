@@ -130,6 +130,8 @@ class ObsidianMoonCore {
 				return $buffer;
 			else
 				$this->output .= $buffer;
+		} elseif ($_view === NULL) {
+			$this->output .= $_data;
 		}
 	}
 
