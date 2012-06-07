@@ -100,7 +100,7 @@ Once you have those two files squared away you will want to set up your working 
 Instructions for Using Obsidian Moon
 ====================================
 
-There are two functions that you really need to know. The first of all is the classes method. Let's start off by creating a basic class that will be used.
+There are two functions that you really need to know. The first of all is the ``classes()`` method. Let's start off by creating a basic class that will be used.
 
 	::
 		
@@ -112,7 +112,7 @@ There are two functions that you really need to know. The first of all is the cl
 			function __construct() { }
 			
 			function my_method() {
-				// Random stuff
+				return "Hello World!";
 			}
 
 			function om_start() {
@@ -127,11 +127,16 @@ This class will now be accessible from within your controller to be started. Let
 		
 		<?php
 		// Location: /home/user/public_html/libraries/control/main.php
-		$core->classes('basic_class','basic'); // This allows you to pull up the ../classes/basic_class.php and assign it to 'basic'
-		$core->basic->my_method(); // You are then able to call it from core
+		$core->classes('basic_class','basic'); 
+		// This allows you to pull up the ../classes/basic_class.php and assign it to 'basic'
+		$core->basic->my_method(); 
+		// You are then able to call it from core
+		
 		// Another thing that you can do is use the third_party folder, since some of you like to use smarty which has the class name as 'Smarty'
-		$core->classes('third_party/Smarty/Smarty.class', 'smarty', 'Smarty'); // The third option allows you to declare what the class name is from the file
+		$core->classes('third_party/Smarty/Smarty.class', 'smarty', 'Smarty'); 
+		// The third option allows you to declare what the class name is from the file
 		$core->smarty->display();
+		
 		// Finally, if you need to declare several files in one shot you can pass an array to the first parameter and it will handle it:
 		$core->classes(array(
 			'basic_class',
@@ -139,9 +144,53 @@ This class will now be accessible from within your controller to be started. Let
 			'third_party/Smarty/Smarty.class'=>array('smarty','Smarty') 
 		);
 		// The above is the equivalent of:
-		$core->classes('basic_class'); // $core->basic_class->my_method();
-		$core->classes('core/core_input','input'); // $core->input->post('post_var');
-		$core->classes('third_party/Smarty/Smarty.class','smarty','Smarty'); // $core->smarty->display();
+		$core->classes('basic_class'); 
+		$core->classes('core/core_input','input'); 
+		$core->classes('third_party/Smarty/Smarty.class','smarty','Smarty');
+
+		// Summary:
+		// classes('location/name','name_of_var_to_set','othername');
+
+You will need to keep in mind the following exceptions to the first parameter:
+* starting with ``core/`` will use ``/home/user/Obsidian-Moon-Engine/classes/`` as base.
+* starting with ``third_party/`` will use ``/home/user/public_html/libraries/third_party/``
+* don't use the above two keywords otherwise you won't find the classes you defined
+
+The second method is the ``views()`` method, which is quite simple compared to the ``classes()`` method. First off lets create a simple view
+
+	::
+		
+		<?php
+		// Location: /home/user/public_html/libraries/views/simple_view.php
+		?>
+		<html>
+			<body><?=$test_value?></body>
+		</html>
+
+After that we will go back to the main controller
+
+	::
+		
+		<?php
+		// Location: /home/user/public_html/libraries/control/main.php
+		// Get the basic_class added so that we can use it to grab info and drop into a view.
+		$core->classes('basic_class','basic');
+		
+		// Then we will take the my_method() and get the returned value and assign to an array.
+		$data['test_value'] = $core->basic->my_method(); // Returns Hello World!
+		
+		// Then we will send it into a view and it will be appended to $core->output
+		$core->views('simple_view',$data); // $data must always be an array
+
+		// However if you wanted to return the value of the view to a variable you can do so by:
+		$my_var = $core->views('simple_view',$data,true);
+
+		// On occasion you may come across an issue where you don't need to have a view but want to 
+		// display the data variable for example handling AJAX. This will assign it straight to $core->output
+		$core->views(null,$data);
+		
+
+		
 
 Summary of Obsidian Moon
 ========================
