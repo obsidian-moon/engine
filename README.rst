@@ -152,9 +152,10 @@ This class will now be accessible from within your controller to be started. Let
 		// classes('location/name','name_of_var_to_set','othername');
 
 You will need to keep in mind the following exceptions to the first parameter:
-* starting with ``core/`` will use ``/home/user/Obsidian-Moon-Engine/classes/`` as base.
-* starting with ``third_party/`` will use ``/home/user/public_html/libraries/third_party/``
-* don't use the above two keywords otherwise you won't find the classes you defined
+- starting with ``core/`` will use ``/home/user/Obsidian-Moon-Engine/classes/`` as base.
+- starting with ``third_party/`` will use ``/home/user/public_html/libraries/third_party/``
+- don't use the above two keywords otherwise you won't find the classes you defined, anything else pulls from ``/home/user/public_html/libraries/classes/``
+- You can use sub-directories eg. ``main/main_index`` for ``/home/user/public_html/libraries/classes/main/main_index.php``
 
 The second method is the ``views()`` method, which is quite simple compared to the ``classes()`` method. First off lets create a simple view
 
