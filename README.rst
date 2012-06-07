@@ -152,6 +152,7 @@ This class will now be accessible from within your controller to be started. Let
 		// classes('location/name','name_of_var_to_set','othername');
 
 You will need to keep in mind the following exceptions to the first parameter:
+
 - starting with ``core/`` will use ``/home/user/Obsidian-Moon-Engine/classes/`` as base.
 - starting with ``third_party/`` will use ``/home/user/public_html/libraries/third_party/``
 - don't use the above two keywords otherwise you won't find the classes you defined, anything else pulls from ``/home/user/public_html/libraries/classes/``
