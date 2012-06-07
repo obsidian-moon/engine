@@ -40,11 +40,13 @@ You can initiate the Obsidian Moon Engine in your index and add basic functional
 			'core' => '/home/user/Obsidian-Moon-Engine/',
 			'libs' => dirname(__FILE__) . '/libraries/',
 			'base' => dirname(__FILE__) . '/',
+			'defcon' => 'main', //default control
 			'publ' => $_SERVER['HTTP_HOST'],
 			'modules' => array(
 				'input'
-			)
+			) // Modules lists all of the classes you want to load automatically
 		);
+		// All values are set as $core->conf_**** by their key value
 		$core = new ObsidianMoonCore($conf);
 		// Handle what control is called
 		if ($control == "") {
@@ -98,7 +100,48 @@ Once you have those two files squared away you will want to set up your working 
 Instructions for Using Obsidian Moon
 ====================================
 
-There are two functions that you really ne
+There are two functions that you really need to know. The first of all is the classes method. Let's start off by creating a basic class that will be used.
+
+	::
+		
+		<?php
+		// Location: /home/user/public_html/libraries/classes/basic_class.php
+		class basic_class {
+			var $core; // We need this so that we can access the core from within the class as $this->core
+			
+			function __construct() { }
+			
+			function my_method() {
+				// Random stuff
+			}
+
+			function om_start() {
+				// If you need to do something after the construct but need $this->core run it here
+				// If this method exists it will be automatically run
+			}
+		}
+
+This class will now be accessible from within your controller to be started. Let's go over that a bit so that you know how you can start up a class.
+
+	::
+		
+		<?php
+		// Location: /home/user/public_html/libraries/control/main.php
+		$core->classes('basic_class','basic'); // This allows you to pull up the ../classes/basic_class.php and assign it to 'basic'
+		$core->basic->my_method(); // You are then able to call it from core
+		// Another thing that you can do is use the third_party folder, since some of you like to use smarty which has the class name as 'Smarty'
+		$core->classes('third_party/Smarty/Smarty.class', 'smarty', 'Smarty'); // The third option allows you to declare what the class name is from the file
+		$core->smarty->display();
+		// Finally, if you need to declare several files in one shot you can pass an array to the first parameter and it will handle it:
+		$core->classes(array(
+			'basic_class',
+			'core/core_input'=>'input',
+			'third_party/Smarty/Smarty.class'=>array('smarty','Smarty') 
+		);
+		// The above is the equivalent of:
+		$core->classes('basic_class'); // $core->basic_class->my_method();
+		$core->classes('core/core_input','input'); // $core->input->post('post_var');
+		$core->classes('third_party/Smarty/Smarty.class','smarty','Smarty'); // $core->smarty->display();
 
 Summary of Obsidian Moon
 ========================
