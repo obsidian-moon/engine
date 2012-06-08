@@ -60,11 +60,11 @@ class ObsidianMoonCore {
 		 * @param $alternate_name - This is what the user would like to name the variable if available.
 		 */
 		if (!is_array($classes)) {
-			$classes = array($classes, array($alternate_name,$p3_cname));
+			$classes = array($classes, array($alternate_name, $p3_cname));
 		}
 		foreach ($classes as $class => $alternate_name) {
 			if (is_array($alternate_name))
-				list($alternate_name,$p3_cname) = $alternate_name;
+				list($alternate_name, $p3_cname) = $alternate_name;
 			if (is_numeric($class))
 				$class = $alternate_name;
 			if (preg_match('/\//', $class)) {
