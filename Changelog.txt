@@ -2,7 +2,9 @@
 ========== Change Log ==========
 ================================
 
+============ v1.2.0 ============
+# Added the core_benchmark class to use with Obsidian Moon Engine (advocaite).
 ============ v1.1.0 ============
-#Reformatted the framework to no longer require the Constants it previously needed.
+# Reformatted the framework to no longer require the Constants it previously needed.
 ============ v1.0.1 ============
-#Added the ability to import third party modules and classes.
+# Added the ability to import third party modules and classes.

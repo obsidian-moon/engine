@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 
  * Obsidian Moon Engine presented by Dark Prospect Games
@@ -6,11 +7,11 @@
  * @copyright (c) 2011
  * 
  */
-class core_mysqli
-{
-	function __construct($params)
-	{
+class core_mysqli {
+
+	function __construct($params) {
 		$this->params = $params;
 		$this->connect();
 	}
+
 }
