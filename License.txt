@@ -12,7 +12,7 @@ modification, are permitted provided that the following conditions are met:
    must display the following acknowledgement:
    Powered by Obsidian Moon.
 4. Neither the name of Rev. Alfonso E Martinez, III nor the
-   names of its contributors may be used to endorse or promote products
+   names of their contributors may be used to endorse or promote products
    derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY REV. ALFONSO E MARTINEZ, III ''AS IS'' AND ANY
