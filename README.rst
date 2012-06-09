@@ -87,14 +87,14 @@ Once you have those two files squared away you will want to set up your working 
 	
 		/
 		|-- libraries/
-		|   |-- classes/		* Holds all of your classes
-		|   |-- configs/		* This holds the configs for your classes
-		|   |   |-- core/		* Core class configs (eg. core_mysql)
-		|	|   |-- third_party * Third Party configs (eg. Smarty)
-		|   |-- control/		* All of the controllers for your app go in here
-		|   |-- third_party/	* Any classes that are not maintained by you can be placed here and called
-		|   |-- views/			* HTML views for you to insert data into
-		|-- static/				* I use a static fold to hold all my assets
+		|   |-- classes/         * Holds all of your classes
+		|   |-- configs/         * This holds the configs for your classes
+		|   |   |-- core/        * Core class configs (eg. core_mysql)
+		|	|   |-- third_party/ * Third Party configs (eg. Smarty)
+		|   |-- control/         * All of the controllers for your app go in here
+		|   |-- third_party/     * Any classes that are not maintained by you can be placed here and called
+		|   |-- views/           * HTML views for you to insert data into
+		|-- static/              * I use a static fold to hold all my assets
 		|-- .htaccess
 		|-- index.php
 
