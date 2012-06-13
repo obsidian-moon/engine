@@ -7,8 +7,6 @@
  * @copyright (c) 2011
  * 
  */
-include 'core_security.php';
-
 class core_input {
 
 	/**
@@ -16,19 +14,16 @@ class core_input {
 	 */
 	public $core;
 
-	function __construct() {
-		// We are going to use the CodeIgniter security class until I can make one for myself.
-		$this->security = new core_security();
-	}
-
 	function _fetch_from_array(&$array, $index = '', $xss_clean = FALSE) {
 		if (!isset($array[$index])) {
 			return FALSE;
 		}
 
-		if ($xss_clean === TRUE) {
-			return $this->security->xss_clean($array[$index]);
-		}
+		/*		 * if ($xss_clean === TRUE) {
+		  return $this->security->xss_clean($array[$index]);
+		  }
+		 * Replacing this code with a new xss cleaner
+		 * * */
 
 		return $array[$index];
 	}
