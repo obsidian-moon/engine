@@ -69,19 +69,21 @@ class core_mysql {
 
 	function fetch_array($params = false) {
 		$resulting = false;
-		if (mysql_num_rows($this->result) > 1) {
-			while ($row = @mysql_fetch_array($this->result, MYSQL_ASSOC)) {
-				$resulting[] = $row;
-			}
-		} else {
-			if ($params === true) {
-				$resulting[] = @mysql_fetch_array($this->result, MYSQL_ASSOC);
-			} elseif ($params['item']) {
-				$item = $params['item'];
-				$return = @mysql_fetch_array($this->result, MYSQL_ASSOC);
-				$resulting = $return[$item];
+		if (mysql_num_rows($this->result) > 0) {
+			if (mysql_num_rows($this->result) > 1) {
+				while ($row = @mysql_fetch_array($this->result, MYSQL_ASSOC)) {
+					$resulting[] = $row;
+				}
 			} else {
-				$resulting = @mysql_fetch_array($this->result, MYSQL_ASSOC);
+				if ($params === true) {
+					$resulting[] = @mysql_fetch_array($this->result, MYSQL_ASSOC);
+				} elseif ($params['item']) {
+					$item = $params['item'];
+					$return = @mysql_fetch_array($this->result, MYSQL_ASSOC);
+					$resulting = $return[$item];
+				} else {
+					$resulting = @mysql_fetch_array($this->result, MYSQL_ASSOC);
+				}
 			}
 		}
 		return $resulting;
