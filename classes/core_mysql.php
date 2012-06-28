@@ -83,7 +83,7 @@ class core_mysql {
 			}
 		}
 		if (!($this->result = mysql_query($sql, $this->$connection))) {
-			echo $sql.": ".$this->error = mysql_error($this->$connection)."<br />";
+			$this->error = $sql." : ".mysql_error($this->$connection);
 		}
 		return $this;
 	}
