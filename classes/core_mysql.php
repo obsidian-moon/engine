@@ -72,12 +72,18 @@ class core_mysql {
 		}
 	}
 
-	function query($sql, $connection = 'connection') {
+	function query($sql, $params = NULL, $connection = 'connection') {
 		if ($sql == '') {
 			return false;
 		}
+		if ($params !== NULL) {
+			foreach ($params as $value) {
+				$replacement = "'".mysql_real_escape_string($value)."'";
+				$sql = preg_replace('/\?/i',$replacement,$sql,1);
+			}
+		}
 		if (!($this->result = mysql_query($sql, $this->$connection))) {
-			$this->error = mysql_error($this->$connection);
+			echo $sql.": ".$this->error = mysql_error($this->$connection)."<br />";
 		}
 		return $this;
 	}
