@@ -62,7 +62,7 @@ class core_pdo {
 			$sth->execute($params);
 		}
 		if ($sth instanceof PDOStatement) {
-			$this->values = $sth->fetchAll();
+			$this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
 		}
 		
 		return $this;
