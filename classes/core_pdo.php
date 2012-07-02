@@ -40,6 +40,9 @@ class core_pdo {
 		} else {
 			if ($params == true) {
 				return $this->values;
+			} elseif ($params['item']) {
+				$item = $params['item'];
+				return $this->values[0][$item];
 			} else {
 				return $this->values[0];
 			}
