@@ -48,6 +48,10 @@ class core_pdo {
 			}
 		}
 	}
+	
+	function insert_id() {
+		return $this->lastid;
+	}
 
 	function num_rows() {
 		return count($this->values);
@@ -66,6 +70,9 @@ class core_pdo {
 		}
 		if ($sth instanceof PDOStatement) {
 			$this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
+		}
+		if (preg_match("/insert/i", $sql)) {
+			$this->lastid = $this->$connection->lastInsertId();
 		}
 		
 		return $this;

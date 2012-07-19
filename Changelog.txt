@@ -6,6 +6,7 @@
 # Removed a lot of the useless MySQL Extension functions that plainly aren't up to par with what I wanted.
 # Removed the MySQLi class
 # Added the PDO Class to the system.
+# Added the last_id() method (grabs the last insert id) to MySQL Extension and PDO Classes.
 ============ v1.2.0 ============
 # Added the core_benchmark class to use with Obsidian Moon Engine (advocaite).
 ============ v1.1.0 ============

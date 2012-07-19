@@ -65,6 +65,10 @@ class core_mysql {
 		}
 		return $resulting;
 	}
+	
+	function insert_id() {
+		return $this->lastid;
+	}
 
 	function num_rows() {
 		if ($this->result) {
@@ -84,6 +88,9 @@ class core_mysql {
 		}
 		if (!($this->result = mysql_query($sql, $this->$connection))) {
 			$this->error = $sql." : ".mysql_error($this->$connection);
+		}
+		if (preg_match("/insert/i", $sql)) {
+			$this->lastid = $this->$connection->mysql_insert_id();
 		}
 		return $this;
 	}
