@@ -31,7 +31,17 @@ class core_pdo {
 			throw new Exception($e->getMessage());
 		}
 	}
-
+	
+	function execute($array,$stmt = 'stmt', $connection = 'connection') {
+		$sth = $this->$stmt->execute($array);
+		if ($sth instanceof PDOStatement) {
+			$this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
+		}
+		if (preg_match("/insert/i", $sql)) {
+			$this->lastid = $this->$connection->lastInsertId();
+		}
+	}
+	
 	function fetch_array($params = false) {
 		if (count($this->values) == 0) {
 			return false;
@@ -56,7 +66,11 @@ class core_pdo {
 	function num_rows() {
 		return count($this->values);
 	}
-
+	
+	function prepare($sql, $stmt = 'stmt', $connection = 'connection') {
+		$this->$stmt = $this->$connection->prepare($sql);
+	}
+	
 	function query($sql, $params = NULL, $connection = 'connection') {
 		$sth = null;
 		if ($sql == '') {

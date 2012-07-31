@@ -44,6 +44,21 @@ class core_mysql {
 		return $this->error;
 	}
 
+	function execute($array, $stmt = 'stmt', $connection = 'connection') {
+		$stmt = 'prepare_'.$stmt;
+		$sql = $this->$stmt;
+		foreach ($array as $value) {
+			$replacement = "'".mysql_real_escape_string($value)."'";
+			$sql = preg_replace('/\?/i',$replacement,$sql,1);
+		}
+		if (!($this->result = mysql_query($sql, $this->$connection))) {
+			$this->error = $sql." : ".mysql_error($this->$connection);
+		}
+		if (preg_match("/insert/i", $sql)) {
+			$this->lastid = $this->$connection->mysql_insert_id();
+		}
+	}
+	
 	function fetch_array($params = false) {
 		$resulting = false;
 		if (mysql_num_rows($this->result) > 0) {
@@ -76,6 +91,11 @@ class core_mysql {
 		}
 	}
 
+	function prepare($sql, $stmt = 'stmt', $connection = 'connection') {
+		$stmt = 'prepare_'.$stmt;
+		$this->$stmt = $sql;
+	}
+	
 	function query($sql, $params = NULL, $connection = 'connection') {
 		if ($sql == '') {
 			return false;
