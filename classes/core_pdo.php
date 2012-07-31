@@ -33,6 +33,7 @@ class core_pdo {
 	}
 	
 	function execute($array,$stmt = 'stmt', $connection = 'connection') {
+		$stmt = 'prepare_'.$stmt;
 		$sth = $this->$stmt->execute($array);
 		if ($sth instanceof PDOStatement) {
 			$this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -68,6 +69,7 @@ class core_pdo {
 	}
 	
 	function prepare($sql, $stmt = 'stmt', $connection = 'connection') {
+		$stmt = 'prepare_'.$stmt;
 		$this->$stmt = $this->$connection->prepare($sql);
 	}
 	
