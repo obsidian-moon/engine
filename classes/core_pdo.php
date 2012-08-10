@@ -32,7 +32,7 @@ class core_pdo {
 		}
 	}
 	
-	function execute($array,$stmt = 'stmt', $connection = 'connection') {
+	function execute($array, $stmt = 'stmt', $connection = 'connection') {
 		$stmt = 'prepare_'.$stmt;
 		$sth = $this->$stmt->execute($array);
 		if ($sth instanceof PDOStatement) {
@@ -42,7 +42,7 @@ class core_pdo {
 			$this->lastid = $this->$connection->lastInsertId();
 		}
 	}
-	
+
 	function fetch_array($params = false) {
 		if (count($this->values) == 0) {
 			return false;
@@ -72,17 +72,30 @@ class core_pdo {
 		$stmt = 'prepare_'.$stmt;
 		$this->$stmt = $this->$connection->prepare($sql);
 	}
-	
+
 	function query($sql, $params = NULL, $connection = 'connection') {
-		$sth = null;
+		$sth = NULL;
+		$this->values = NULL;
+		$this->lastid = NULL;
 		if ($sql == '') {
 			return false;
 		}
 		if ($params === NULL) {
-			$sth = $this->$connection->query($sql);
+			try {
+				$this->error = NULL;
+				$sth = $this->$connection->query($sql);
+			} catch(PDOException $e) {
+				$this->error = $e->getMessage();
+			}
 		} else {
 			$sth = $this->$connection->prepare($sql);
-			$sth->execute($params);
+			
+			try {
+				$this->error = NULL;
+				$sth->execute($params);
+			} catch(PDOException $e) {
+				$this->error = $e->getMessage();
+			}
 		}
 		if ($sth instanceof PDOStatement) {
 			$this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
