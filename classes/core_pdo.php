@@ -11,6 +11,9 @@ class core_pdo {
 
 	function __construct($params) {
 		$this->params = $params;
+		if (empty($this->params['type'])) {
+			$this->params['type'] = "mysql";
+		}
 		$this->connect();
 	}
 
@@ -24,7 +27,7 @@ class core_pdo {
 		if ($params !== null) {
 			$this->params = $params;
 		}
-		$dsn = "mysql:dbname={$this->params['name']};host={$this->params['host']}";
+		$dsn = "{$this->params['type']}:dbname={$this->params['name']};host={$this->params['host']}";
 		try {
 			$this->$connection = new PDO($dsn, $this->params['user'], $this->params['pass']);
 		} catch(PDOException $e) {
