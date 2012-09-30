@@ -41,7 +41,7 @@ class core_input {
 		return $this->_fetch_from_array($_GET, $index, $xss_clean);
 	}
 
-	function post($index = NULL, $xss_clean = FALSE, $game = NULL) {
+	function post($index = NULL, $game = NULL, $xss_clean = FALSE) {
 		// Check if a field has been provided
 		if ($index === NULL AND !empty($_POST)) {
 			$post = array();
@@ -55,6 +55,8 @@ class core_input {
 		$value = $this->_fetch_from_array($_POST, $index, $xss_clean);
 		if ($game == 'buy') {
 			$value = @round(abs($value));
+		} elseif ($game == 'isset') {
+			return isset($_POST[$index]);
 		}
 		return $value;
 	}
