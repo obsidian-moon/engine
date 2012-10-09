@@ -1,11 +1,12 @@
 =========================================
-Obsidian Moon Engine v1.2.1 Documentation
+Obsidian Moon Engine v1.2.2 Documentation
 =========================================
 This is a project that I have worked on for several months after being inspired by CodeIgniter.
 After setting up the initial steps of the system I am opening the project up for open source.
-Feel free to contribute and peer review my work, please not that there are a few pieces that are based on CodeIgniter that need to be worked on.
+Feel free to contribute and peer review my work, please not that there are a few pieces that are 
+based on CodeIgniter that need to be worked on.
 
--deth4uall aka Rev. Alfonso E Martinez, III
+-Necromnius aka Rev. Alfonso E Martinez, III
 
 
 Instructions for Installation
