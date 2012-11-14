@@ -241,7 +241,7 @@ class Fb_enhanced {
 		return $friends;
 	}
 
-	public function fb_login_url($script = false, $scope = false) {
+	public function fb_login_url($script = false, $scope = false, $redirect = false) {
 		/**
 		 * This method creates a login url that your users 
 		 * can be redirected towards. If the $script variable is set to true
@@ -253,6 +253,7 @@ class Fb_enhanced {
 		if ($redirect === false) {
 			$redirect = $this->globals['fb_canvas'];
 		}
+		echo "<br />".$redirect."<br />";
 		$url = $this->facebook->getLoginUrl(array(
 			'scope' => $scope,
 			'redirect_uri' => $redirect
@@ -279,6 +280,19 @@ class Fb_enhanced {
 			$url = "<script>top.location.href='" . $url . "'</script>";
 		}
 		return $url;
+	}
+
+	public function fb_notification($message, $user_id = NULL) {
+		if ($user_id === NULL) {
+			$user_id = $this->facebook->getUser();
+		}
+		$data = array(
+			'href'=> $this->globals['fb_canvas'],
+			'access_token'=> $this->facebook->getAccessToken(),
+			'template'=> $message
+		);
+		$send_result = $this->facebook->api("/$user_id/notifications", 'post', $data);
+		return $send_result;
 	}
 
 	public function fb_post_to_feed_dialog($display, $link, $picture, $name, $caption, $description) {
