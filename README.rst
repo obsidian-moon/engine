@@ -14,7 +14,7 @@ Instructions for Installation
 
 You will need a few things for this to work correctly: 
 	
-1) This code 
+1) This code
 2) Hosting with PHP support
 
 You will need to place the ``Obsidian-Moon-Engine`` folder in the ``/home/user/`` directory also known as ``~/``
@@ -30,8 +30,8 @@ You can initiate the Obsidian Moon Engine in your index and add basic functional
 	::
 	
 		session_start();
-		// Get the URI from the system explode it into an array, grab the control and then slice the rest 
-		// into a variable called $params. 
+		// Get the URI from the system explode it into an array, grab the control and then slice the rest
+		// into a variable called $params.
 		$uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 		$control = $uri[0];
 		$params = array_slice($uri, 1);
@@ -51,7 +51,7 @@ You can initiate the Obsidian Moon Engine in your index and add basic functional
 		$core = new ObsidianMoonCore($conf);
 		// Handle what control is called
 		if ($control == "") {
-			// If a control isn't called use the default 
+			// If a control isn't called use the default
 			include("{$core->conf_libs}control/{$core->conf_defcon}.php");
 		} elseif (!file_exists("{$core->conf_libs}control/{$control}.php")) {
 			// Use default if the called control is not available
@@ -67,14 +67,14 @@ After that we will need to make sure that we also add a .htaccess to the system 
 
 	::
 	
-		RewriteEngine On 
+		RewriteEngine On
 		Options +FollowSymLinks
-		RewriteBase /	
-		
+		RewriteBase /
+
 		# Remove the ability to access libraries folder
 		RewriteCond %{REQUEST_URI} ^libraries.*
 		RewriteRule ^(.*)$ /index.php?/$1 [L]
-		
+
 		#Checks to see if the user is attempting to access a valid file,
 		#such as an image or css document, if this isn't true it sends the
 		#request to index.php
@@ -88,8 +88,8 @@ Once you have those two files squared away you will want to set up your working 
 	
 		/
 		|-- libraries/
-		|   |-- classes/         * Holds all of your classes
-		|   |-- configs/         * This holds the configs for your classes
+		|   |-- modules/         * Holds all of your modules
+		|   |-- configs/         * This holds the configs for your modules
 		|   |   |-- core/        * Core class configs (eg. core_mysql)
 		|	|   |-- third_party/ * Third Party configs (eg. Smarty)
 		|   |-- control/         * All of the controllers for your app go in here
@@ -107,9 +107,9 @@ There are two functions that you really need to know. The first of all is the ``
 	::
 		
 		<?php
-		// Location: /home/user/public_html/libraries/classes/basic_class.php
-		class basic_class {
-			var $core; // We need this so that we can access the core from within the class as $this->core
+		// Location: /home/user/public_html/libraries/modules/basic_module.php
+		class basic_module {
+			var $core; // We need this so that we can access the core from within the module as $this->core
 			
 			function __construct() { }
 			
@@ -123,44 +123,44 @@ There are two functions that you really need to know. The first of all is the ``
 			}
 		}
 
-This class will now be accessible from within your controller to be started. Let's go over that a bit so that you know how you can start up a class.
+This module will now be accessible from within your controller to be started. Let's go over that a bit so that you know how you can start up a module.
 
 	::
 		
 		<?php
 		// Location: /home/user/public_html/libraries/control/main.php
-		$core->classes('basic_class','basic'); 
-		// This allows you to pull up the ../classes/basic_class.php and assign it to 'basic'
+		$core->module('basic_module','basic');
+		// This allows you to pull up the ../modules/basic_module.php and assign it to 'basic'
 		$core->basic->my_method(); 
 		// You are then able to call it from core
 		
 		// Another thing that you can do is use the third_party folder, since some of you like to use smarty which has the class name as 'Smarty'
-		$core->classes('third_party/Smarty/Smarty.class', 'smarty', 'Smarty'); 
-		// The third option allows you to declare what the class name is from the file
+		$core->module('third_party/Smarty/Smarty.class', 'smarty', 'Smarty');
+		// The third option allows you to declare what the module name is from the file
 		$core->smarty->display();
 		
 		// Finally, if you need to declare several files in one shot you can pass an array to the first parameter and it will handle it:
-		$core->classes(array(
-			'basic_class',
+		$core->module(array(
+			'basic_module',
 			'core/core_input'=>'input',
 			'third_party/Smarty/Smarty.class'=>array('smarty','Smarty') 
 		);
 		// The above is the equivalent of:
-		$core->classes('basic_class'); 
-		$core->classes('core/core_input','input'); 
-		$core->classes('third_party/Smarty/Smarty.class','smarty','Smarty');
+		$core->module('basic_module');
+		$core->module('core/core_input','input');
+		$core->module('third_party/Smarty/Smarty.class','smarty','Smarty');
 
 		// Summary:
-		// classes('location/name','name_of_var_to_set','othername');
+		// module('location/name','name_of_var_to_set','othername');
 
 You will need to keep in mind the following exceptions to the first parameter:
 
-- starting with ``core/`` will use ``/home/user/Obsidian-Moon-Engine/classes/`` as base.
+- starting with ``core/`` will use ``/home/user/Obsidian-Moon-Engine/modules/`` as base.
 - starting with ``third_party/`` will use ``/home/user/public_html/libraries/third_party/``
-- don't use the above two keywords otherwise you won't find the classes you defined, anything else pulls from ``/home/user/public_html/libraries/classes/``
-- You can use sub-directories eg. ``main/main_index`` for ``/home/user/public_html/libraries/classes/main/main_index.php``
+- don't use the above two keywords otherwise you won't find the module you defined, anything else pulls from ``/home/user/public_html/libraries/modules/``
+- You can use sub-directories eg. ``main/main_index`` for ``/home/user/public_html/libraries/modules/main/main_index.php``
 
-The second method is the ``views()`` method, which is quite simple compared to the ``classes()`` method. First off lets create a simple view
+The second method is the ``view()`` method, which is quite simple compared to the ``module()`` method. First off lets create a simple view
 
 	::
 		
@@ -177,21 +177,21 @@ After that we will go back to the main controller
 		
 		<?php
 		// Location: /home/user/public_html/libraries/control/main.php
-		// Get the basic_class added so that we can use it to grab info and drop into a view.
-		$core->classes('basic_class','basic');
+		// Get the basic_module added so that we can use it to grab info and drop into a view.
+		$core->module('basic_module','basic');
 		
 		// Then we will take the my_method() and get the returned value and assign to an array.
 		$data['test_value'] = $core->basic->my_method(); // Returns Hello World!
 		
 		// Then we will send it into a view and it will be appended to $core->output
-		$core->views('simple_view',$data); // $data must always be an array
+		$core->view('simple_view',$data); // $data must always be an array
 
 		// However if you wanted to return the value of the view to a variable you can do so by:
-		$my_var = $core->views('simple_view',$data,true);
+		$my_var = $core->view('simple_view',$data,true);
 
 		// On occasion you may come across an issue where you don't need to have a view but want to 
 		// display the data variable for example handling AJAX. This will assign it straight to $core->output
-		$core->views(null,$data);
+		$core->view(null,$data);
 		
 
 		

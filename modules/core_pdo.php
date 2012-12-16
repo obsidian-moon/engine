@@ -9,6 +9,10 @@
  */
 class core_pdo {
 
+	var $error = null;
+	var $lastid = null;
+	var $values = array();
+
 	function __construct($params) {
 		$this->params = $params;
 		if (empty($this->params['type'])) {
@@ -20,7 +24,7 @@ class core_pdo {
 	function connect($connection = 'connection', $params = NULL) {
 		/**
 		 * This function creates a connection and assigns it to a variable in.
-		 * 
+		 *
 		 * @param $connection - This is defaulted to 'connection' but supports anything the user may choose
 		 * @param $params - These are the details pertaining to a newly created connection, if not set it uses the config params.
 		 */
@@ -30,19 +34,33 @@ class core_pdo {
 		$dsn = "{$this->params['type']}:dbname={$this->params['name']};host={$this->params['host']}";
 		try {
 			$this->$connection = new PDO($dsn, $this->params['user'], $this->params['pass']);
+			$this->$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch(PDOException $e) {
-			throw new Exception($e->getMessage());
+			throw new Exception('core_pdo::__construct()->PDO::__construct() : '.$e->getMessage());
 		}
 	}
-	
+
 	function execute($array, $stmt = 'stmt', $connection = 'connection') {
 		$stmt = 'prepare_'.$stmt;
-		$sth = $this->$stmt->execute($array);
-		if ($sth instanceof PDOStatement) {
-			$this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
+		try {
+			$sth = $this->$stmt->execute($array);
+		} catch(PDOException $e) {
+			throw new Exception('core_pdo::execute()->PDOStatement::execute() : '.$e->getMessage());
 		}
-		if (preg_match("/insert/i", $sql)) {
-			$this->lastid = $this->$connection->lastInsertId();
+		if ($sth instanceof PDOStatement) {
+			try {
+				$this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
+			} catch(PDOException $e) {
+				throw new Exception('core_pdo::execute()->PDOStatement::fetchAll() : '.$e->getMessage());
+			}
+		}
+		$store_sql = $stmt."_sql";
+		if (preg_match("/insert/i", $store_sql)) {
+			try {
+				$this->lastid = $this->$connection->lastInsertId();
+			} catch(PDOException $e) {
+				throw new Exception('core_pdo::execute()->PDO::lastInsertId() : '.$e->getMessage());
+			}
 		}
 	}
 
@@ -56,10 +74,10 @@ class core_pdo {
 				return $this->values;
 			} elseif ($params['item']) {
 				$item = $params['item'];
-				if ($this->values[0][$item]) {
-					return $this->values[0][$item];
-				} elseif ($this->values[$item]) {
+				if ($this->values[$item]) {
 					return $this->values[$item];
+				} elseif ($this->values[0][$item]) {
+					return $this->values[0][$item];
 				} else {
 					return false;
 				}
@@ -68,7 +86,7 @@ class core_pdo {
 			}
 		}
 	}
-	
+
 	function insert_id() {
 		return $this->lastid;
 	}
@@ -76,43 +94,59 @@ class core_pdo {
 	function num_rows() {
 		return count($this->values);
 	}
-	
+
 	function prepare($sql, $stmt = 'stmt', $connection = 'connection') {
 		$stmt = 'prepare_'.$stmt;
-		$this->$stmt = $this->$connection->prepare($sql);
+		try {
+			$this->$stmt = $this->$connection->prepare($sql);
+		} catch(PDOException $e) {
+			throw new Exception('core_pdo::prepare()->PDO::prepare() : '.$e->getMessage());
+		}
+		$store_sql = $stmt."_sql";
+		$this->$store_sql = $sql;
 	}
 
 	function query($sql, $params = NULL, $connection = 'connection') {
 		$sth = NULL;
-		$this->values = NULL;
+		$this->values = array();
 		$this->lastid = NULL;
+		$this->error = NULL;
 		if ($sql == '') {
 			return false;
 		}
 		if ($params === NULL) {
 			try {
-				$this->error = NULL;
 				$sth = $this->$connection->query($sql);
 			} catch(PDOException $e) {
-				$this->error = $e->getMessage();
+				throw new Exception('core_pdo::query()->PDO::query() : '.$e->getMessage());
 			}
 		} else {
-			$sth = $this->$connection->prepare($sql);
-			
 			try {
-				$this->error = NULL;
+				$sth = $this->$connection->prepare($sql);
+			} catch(PDOException $e) {
+				throw new Exception('core_pdo::query()->PDO::prepare() : '.$e->getMessage());
+			}
+			try {
 				$sth->execute($params);
 			} catch(PDOException $e) {
-				$this->error = $e->getMessage();
+				throw new Exception('core_pdo::query()->PDO::execute() : '.$e->getMessage());
 			}
 		}
 		if ($sth instanceof PDOStatement) {
-			$this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
+			try {
+				$this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
+			} catch(PDOException $e) {
+				throw new Exception('core_pdo::query()->PDO::fetchAll() : '.$e->getMessage());
+			}
 		}
 		if (preg_match("/insert/i", $sql)) {
-			$this->lastid = $this->$connection->lastInsertId();
+			try {
+				$this->lastid = $this->$connection->lastInsertId();
+			} catch(PDOException $e) {
+				throw new Exception('core_pdo::query()->PDO::lastInsertId() : '.$e->getMessage());
+			}
 		}
-		
+
 		return $this;
 	}
 

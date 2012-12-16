@@ -44,16 +44,17 @@ class Fb_enhanced {
 		 * This function will handle all your friend requests.
 		 * ---
 		 * The $callback variable is a holding place for the call of an external model and function.
-		 * 
+		 *
 		 * Usage: $callback = array('file'=>'fb_requests_mode','method'=>'database_insert');
-		 * 
+		 *
 		 * file		this is the file that will be called as if you were to use $this->load->model('file');
 		 * method	this is the function that will called, eg $this->file->method();
-		 * 
-		 * After the system calls the function it will pass $request_ids to it. Make sure you accept and do with it as 
+		 *
+		 * After the system calls the function it will pass $request_ids to it. Make sure you accept and do with it as
 		 * you will.
 		 */
 		$user = $this->facebook->getUser();
+		$access_token = $this->facebook->getAccessToken();
 		$request_ids = explode(',', $request_ids);
 		$result_value = false;
 		if ($callback) {
@@ -93,25 +94,32 @@ class Fb_enhanced {
 		return $result_value;
 	}
 
-	public function fb_check_permissions($perm, $extend = false) {
+	public function fb_check_permissions($perm, $extend = null) {
 		/**
 		 * Checks if the permission type enquired about is authenticated and accepted.
 		 */
 		$FQL = array("method" => "fql.query", "query" => "SELECT {$perm} FROM permissions WHERE uid = me()");
-		$datas = $this->facebook->api($FQL);
-		if ($datas) {
+		$data = $this->facebook->api($FQL);
+		$permission = implode(',', array_keys( array_diff($data[0], array(1) ) ) );
+		if (!$permission) {
 			return true;
 		} else {
-			if ($extend === false) {
+			if ($extend === null) {
 				return false;
 			} else {
-				echo $this->fb_login_url(true, $perm);
-				exit;
+				$extend['scope'] = 'perm';
+				$url =  $this->fb_login_url($extend);
+				if ($extend['script'] == true) {
+					echo $url;
+					exit;
+				} else {
+					return $url;
+				}
 			}
 		}
 	}
 
-	public function fb_create_event($event_data_array, $callback = null) {
+	public function fb_create_event($fb_event_array, $callback = null) {
 		$fb_event_utf8 = array_map(utf8_encode, $fb_event_array);
 		$param = array(
 			'method' => 'event.create',
@@ -175,12 +183,12 @@ class Fb_enhanced {
 		}
 	}
 
-	public function fb_get_me($script = true) {
+	public function fb_get_me($redirect = false, $script = true) {
 		/**
-		 * This returns all of the information for the user from facebook, 
-		 * if it can't recieve anything its due to no authorization so refer them 
+		 * This returns all of the information for the user from facebook,
+		 * if it can't recieve anything its due to no authorization so refer them
 		 * to it.
-		 * 
+		 *
 		 * Script - if set to true will echo out a JavaScript redirect. If set to false will redirect.
 		 */
 		$user = $this->facebook->getUser();
@@ -245,32 +253,32 @@ class Fb_enhanced {
 		return $friends;
 	}
 
-	public function fb_login_url($script = false, $scope = false, $redirect = false) {
+	public function fb_login_url($params = null) {
 		/**
-		 * This method creates a login url that your users 
+		 * This method creates a login url that your users
 		 * can be redirected towards. If the $script variable is set to true
 		 * we also include the javascript to redirect them to the location.
 		 */
-		if ($scope === false) {
-			$scope = $this->globals['fb_auth'];
+		if ($params['scope'] == '') {
+			$params['scope'] = $this->globals['fb_auth'];
 		}
-		if ($redirect === false) {
-			$redirect = $this->globals['fb_canvas'];
+		if ($params['redirect'] == '') {
+			$params['redirect'] = $this->globals['fb_canvas'];
 		}
 		$url = $this->facebook->getLoginUrl(array(
-			'scope' => $scope,
-			'redirect_uri' => $redirect
+			'scope' => $params['scope'],
+			'redirect_uri' => $params['redirect']
 		));
-		if ($script == true) {
+		if ($params['script'] == true) {
 			$url = "<script>top.location.href='" . $url . "'</script>";
 		}
 		return $url;
 	}
 
-	public function fb_logout_url($next = '') {
+	public function fb_logout_url($next = '', $script = false) {
 		/**
-		 * This method creates a logout url that your users 
-		 * can be redirected towards. If the $next variable is set 
+		 * This method creates a logout url that your users
+		 * can be redirected towards. If the $next variable is set
 		 * user will be redirect to the $next controller function after the logout process.
 		 * $next must be in the declared canvas or end with /
 		 */
@@ -372,12 +380,12 @@ class Fb_enhanced {
 		return json_encode($data);
 	}
 
-	public function fb_request_dialog($display, $name) {
+	public function fb_request_dialog($display, $message) {
 		/**
 		 * This function will generate a request dialog
 		 */
 		$send = "<script>
-			FB.init({appId: '{$this->globals['fb_appid']}', frictionlessRequests: true,});
+			FB.init({appId: '{$this->globals['fb_appid']}', frictionlessRequests: true});
 			function sendrequest() {
 				FB.ui({
 					method: 'apprequests',
@@ -455,7 +463,7 @@ class Fb_enhanced {
 			case 5: return $c->{$a}($p[0], $p[1], $p[2], $p[3], $p[4]);
 				break;
 			default: return call_user_func_array(array($c, $a), $p);
-				break;
+			break;
 		}
 	}
 
@@ -488,7 +496,7 @@ class Fb_enhanced {
 			case 'refresh' : header("Refresh:0;url=" . $uri);
 				break;
 			default : header("Location: " . $uri, TRUE, $http_response_code);
-				break;
+			break;
 		}
 		exit;
 	}

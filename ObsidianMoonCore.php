@@ -32,9 +32,6 @@ class ObsidianMoonCore {
 				try {
 					$this->classes($conf['modules']);
 				} catch (Exception $e) {
-					$exception .= $e->getMessage() . "<br />\n";
-				}
-				if ($exception !== NULL) {
 					throw new Exception($exception);
 				}
 			} else {
@@ -51,66 +48,73 @@ class ObsidianMoonCore {
 		}
 	}
 
-	function classes($classes, $alternate_name = "", $p3_cname = null) {
+	function classes($modules, $alternate_name = "", $p3_mname = null) {
+		trigger_error("classes() method is deprecated, please module() method instead.",E_USER_DEPRECATED);
+		$this->module($modules,$alternate_name,$p3_mname);
+	}
+
+	function module($modules, $alternate_name = "", $p3_mname = null) {
 		/**
 		 * This function will load classes as needed for the user to use.
-		 * It will allow them to be accessible via $core->classname.
+		 * It will allow them to be accessible via $core->modulename.
 		 * 
-		 * @param $class - This is the file and class name of the class being called.
+		 * @param $modules - This is the file and class name of the class being called.
 		 * @param $alternate_name - This is what the user would like to name the variable if available.
 		 */
-		if (!is_array($classes)) {
-			$classes = array($classes, array($alternate_name, $p3_cname));
+		if (!is_array($modules)) {
+			$modules = array($modules, array($alternate_name, $p3_mname));
 		}
-		foreach ($classes as $class => $alternate_name) {
+		foreach ($modules as $module => $alternate_name) {
 			if (is_array($alternate_name))
-				list($alternate_name, $p3_cname) = $alternate_name;
-			if (is_numeric($class))
-				$class = $alternate_name;
-			if (preg_match('/\//', $class)) {
-				$class_name = end(explode('/', $class));
-			} elseif ($p3_cname !== null) {
-				$class_name = $p3_cname;
+				list($alternate_name, $p3_mname) = $alternate_name;
+			if (is_numeric($module))
+				$module = $alternate_name;
+			if (preg_match('/\//', $module)) {
+				$module_name = end(explode('/', $module));
+			} elseif ($p3_mname !== null) {
+				$module_name = $p3_mname;
 			} else {
-				$class_name = $class;
+				$module_name = $module;
 			}
 
-			if (preg_match('/^core\//', $class))
-				$classes_location = $this->conf_core . 'classes/' . $class_name . '.php';
-			elseif (preg_match('/^third_party\//', $class))
-				$classes_location = $this->conf_libs . $class . '.php';
+			if (preg_match('/^core\//', $module))
+				$modules_location = $this->conf_core . 'modules/' . $module_name . '.php';
+			elseif (preg_match('/^third_party\//', $module))
+				$modules_location = $this->conf_libs . $module . '.php';
 			else
-				$classes_location = $this->conf_libs . 'classes/' . $class . '.php';
-			$configs_location = $this->conf_libs . 'configs/' . $class . '.php';
-			if (file_exists($classes_location)) {
-				include($classes_location);
-				if (class_exists($class_name)) {
+				$modules_location = $this->conf_libs . 'modules/' . $module . '.php';
+			$configs_location = $this->conf_libs . 'modules/' . $module . '.php';
+			if (file_exists($modules_location)) {
+				include($modules_location);
+				if (class_exists($module_name)) {
 					if (file_exists($configs_location)) {
 						include($configs_location);
 					}
 					if ($alternate_name == "") {
-						$alternate_name = $class_name;
+						$alternate_name = $module_name;
 					}
 					if (!isset($this->$alternate_name)) {
 						if (isset($config) && $config !== null) {
-							$this->$alternate_name = new $class_name($config);
+							$this->$alternate_name = new $module_name($this, $config);
 						} else {
-							$this->$alternate_name = new $class_name();
+							$this->$alternate_name = new $module_name($this);
 						}
-						$this->$alternate_name->core = & $this;
+						$this->$alternate_name->core =& $this;
 						if (method_exists($this->$alternate_name, 'om_start')) {
 							$this->$alternate_name->om_start();
 						}
 					} else {
-						$this->error[] = "\$this->$alternate_name has already been set, could not reinstanciate it!";
+						throw new Exception("Variable '\$this->$alternate_name' has already been set, could not instantiate module '$module_name'!");
 					}
+				} else {
+					throw new Exception("Module '$module_name' does not exist, please check the location and try again!");
 				}
 			}
 		}
 		return true;
 	}
 
-	function views($_view, $_data = NULL, $_return = FALSE) {
+	function view($_view, $_data = NULL, $_return = FALSE) {
 		/**
 		 * This method loads a 'view' and implants the data into it,
 		 * and if needed returns that value to be included in other views.
@@ -122,6 +126,7 @@ class ObsidianMoonCore {
 		if (file_exists($this->conf_libs . 'views/' . $_view . '.php')) {
 			if ($_data !== NULL)
 				extract($_data, EXTR_OVERWRITE);
+			$core =& $this;
 			ob_start();
 			include($this->conf_libs . 'views/' . $_view . '.php');
 			$buffer = ob_get_contents();
@@ -133,6 +138,11 @@ class ObsidianMoonCore {
 		} elseif ($_view === NULL) {
 			$this->output .= $_data;
 		}
+	}
+
+	function views($_view, $_data = NULL, $_return = FALSE) {
+		trigger_error("views() method deprecated, please use view() method instead.", E_USER_DEPRECATED);
+		$this->view($_view,$_data,$_return);
 	}
 
 }

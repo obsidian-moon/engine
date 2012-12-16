@@ -3,7 +3,10 @@
 ================================
 
 ============ v1.2.2 ============
-# Upgraded Facebook Enhanced from v1.0.3 to v1.1.0.
+# Upgraded Facebook Enhanced from v1.0.3 to v1.2.0 (with Facebook PHP SDK v3.2.1).
+# Deprecated core_mysql class, will no longer contribute to it.
+# Views can now use $core from within views, instead of needing to use $this.
+# Core System will now throw exceptions to the application if there are errors during the calling of methods, please catch the exceptions.
 ============ v1.2.1 ============
 # Removed a lot of the useless MySQL Extension functions that plainly aren't up to par with what I wanted.
 # Removed the MySQLi class
