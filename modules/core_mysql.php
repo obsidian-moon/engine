@@ -13,8 +13,9 @@ class core_mysql {
 	var $result = null;
 	var $error = null;
 
-	function __construct($params) {
+	function __construct($core, $params) {
 		trigger_error('Use core_pdo instead of core_mysql', E_USER_DEPRECATED);
+		$this->core = $core;
 		$this->params = $params;
 		$this->connect();
 	}

@@ -99,7 +99,6 @@ class ObsidianMoonCore {
 						} else {
 							$this->$alternate_name = new $module_name($this);
 						}
-						$this->$alternate_name->core =& $this;
 						if (method_exists($this->$alternate_name, 'om_start')) {
 							$this->$alternate_name->om_start();
 						}

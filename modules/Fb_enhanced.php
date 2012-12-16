@@ -12,13 +12,14 @@ class Fb_enhanced {
 	
 	private $globals;
 	
-	public function __construct($config) {
+	public function __construct($core, $config) {
 		/**
 		 * This grabs the variables from you config/fb_ignited.php file and 
 		 * stores them in the globals variable, while passing the below three
 		 * to the Facebook SDK when it is called. The instance of CodeIgniter is 
 		 * set to $this->CI in order to allow usage from the whole class.
 		 */
+		$this->core = $core;
 		parse_str($_SERVER['QUERY_STRING'], $fb_query_strings);
 		if (isset($fb_query_strings['state'])) $_REQUEST['state'] = $fb_query_strings['state'];
 		if (isset($fb_query_strings['code'])) $_REQUEST['code']  = $fb_query_strings['code']; 

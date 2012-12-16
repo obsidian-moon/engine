@@ -13,7 +13,8 @@ class core_pdo {
 	var $lastid = null;
 	var $values = array();
 
-	function __construct($params) {
+	function __construct($core, $params) {
+		$this->core = $core;
 		$this->params = $params;
 		if (empty($this->params['type'])) {
 			$this->params['type'] = "mysql";
