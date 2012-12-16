@@ -71,14 +71,14 @@ class core_pdo {
 		} elseif (count($this->values) > 1) {
 			return $this->values;
 		} else {
-			if ($params == true) {
+			if ($params === true) {
 				return $this->values;
 			} elseif ($params['item']) {
 				$item = $params['item'];
-				if ($this->values[$item]) {
-					return $this->values[$item];
-				} elseif ($this->values[0][$item]) {
+				if ($this->values[0][$item]) {
 					return $this->values[0][$item];
+				} elseif ($this->values[$item]) {
+					return $this->values[$item];
 				} else {
 					return false;
 				}
@@ -133,7 +133,7 @@ class core_pdo {
 				throw new Exception('core_pdo::query()->PDO::execute() : '.$e->getMessage());
 			}
 		}
-		if ($sth instanceof PDOStatement) {
+		if ($sth instanceof PDOStatement && preg_match("/select/i", $sql)) {
 			try {
 				$this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
 			} catch(PDOException $e) {

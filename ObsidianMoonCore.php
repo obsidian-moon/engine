@@ -30,16 +30,16 @@ class ObsidianMoonCore {
 			if (is_array($conf['modules'])) {
 				$exception = NULL;
 				try {
-					$this->classes($conf['modules']);
+					$this->module($conf['modules']);
 				} catch (Exception $e) {
 					throw new Exception($exception);
 				}
 			} else {
 				try {
 					if (is_numeric($key)):
-						$this->classes($value);
+						$this->module($value);
 					else:
-						$this->classes($key, $value);
+						$this->module($key, $value);
 					endif;
 				} catch (Exception $e) {
 					throw new Exception($e->getMessage());
@@ -83,7 +83,7 @@ class ObsidianMoonCore {
 				$modules_location = $this->conf_libs . $module . '.php';
 			else
 				$modules_location = $this->conf_libs . 'modules/' . $module . '.php';
-			$configs_location = $this->conf_libs . 'modules/' . $module . '.php';
+			$configs_location = $this->conf_libs . 'configs/' . $module . '.php';
 			if (file_exists($modules_location)) {
 				include($modules_location);
 				if (class_exists($module_name)) {
