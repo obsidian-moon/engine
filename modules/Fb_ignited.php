@@ -207,7 +207,7 @@ class Fb_ignited {
 		 * @param $script - if set to true will echo out a JavaScript redirect. If set to false will redirect.
 		 * @param $redirect - if set to true will cause the user to be redirected to
 		 */
-		if ($this->userid) {
+		if ($this->userid != null) {
 			try {
 				$me = $this->facebook->api('/me');
 			} catch (FacebookApiException $e) {
