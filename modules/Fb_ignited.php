@@ -1,8 +1,5 @@
 <?php
 
-if (!defined('BASEPATH'))
-	exit('No direct script access allowed');
-
 include_once('Facebook.php');
 include_once('FBIgnitedException.php');
 
