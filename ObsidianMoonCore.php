@@ -95,9 +95,17 @@ class ObsidianMoonCore {
 					}
 					if (!isset($this->$alternate_name)) {
 						if (isset($config) && $config !== null) {
-							$this->$alternate_name = new $module_name($this, $config);
+                            try {
+                                $this->$alternate_name = new $module_name($this, $config);
+                            } catch (Exception $e) {
+                                error_log("Error Loading Module {$module_name}: ".$e->getMessage());
+                            }
 						} else {
-							$this->$alternate_name = new $module_name($this);
+                            try {
+                                $this->$alternate_name = new $module_name($this);
+                            } catch (Exception $e) {
+                                error_log("Error Loading Module {$module_name}: ".$e->getMessage());
+                            }
 						}
 						if (method_exists($this->$alternate_name, 'om_start')) {
 							$this->$alternate_name->om_start();
