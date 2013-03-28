@@ -1,11 +1,11 @@
 <?php
 
 /**
- * 
  * Obsidian Moon Engine presented by Dark Prospect Games
- * @author Rev. Alfonso E Martinez, III
- * @copyright (c) 2011
- * 
+ *
+ * @author    Alfonso Martinez <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ *
  */
 class CouchSimple 
 {

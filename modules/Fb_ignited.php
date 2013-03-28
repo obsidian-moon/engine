@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Obsidian Moon Engine presented by Dark Prospect Games
+ *
+ * @author    Alfonso Martinez <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ *
+ */
+
 include_once('Facebook.php');
 include_once('FBIgnitedException.php');
 

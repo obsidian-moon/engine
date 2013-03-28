@@ -1,11 +1,12 @@
 <?php
 
+
 /**
- * 
  * Obsidian Moon Engine presented by Dark Prospect Games
- * @author Rev. Alfonso E Martinez, III
- * @copyright (c) 2011
- * 
+ *
+ * @author    Alfonso Martinez <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ *
  */
 class core_input {
 
@@ -19,16 +20,17 @@ class core_input {
 			return FALSE;
 		}
 
-		/*		 * if ($xss_clean === TRUE) {
-		  return $this->security->xss_clean($array[$index]);
-		  }
+		/**
+         * if ($xss_clean === TRUE) {
+         * return $this->security->xss_clean($array[$index]);
+         * }
 		 * Replacing this code with a new xss cleaner
-		 * * */
+		 */
 
 		return $array[$index];
 	}
 
-	function get($index) {
+	function get($index, $xss_clean = FALSE) {
 		if ($index === NULL AND !empty($_GET)) {
 			$get = array();
 
@@ -41,7 +43,7 @@ class core_input {
 		return $this->_fetch_from_array($_GET, $index, $xss_clean);
 	}
 
-	function post($index = NULL, $game = NULL, $xss_clean = FALSE) {
+	function post($index = NULL, $xss_clean = FALSE) {
 		// Check if a field has been provided
 		if ($index === NULL AND !empty($_POST)) {
 			$post = array();
@@ -53,11 +55,7 @@ class core_input {
 			return $post;
 		}
 		$value = $this->_fetch_from_array($_POST, $index, $xss_clean);
-		if ($game == 'buy') {
-			$value = @round(abs($value));
-		} elseif ($game == 'isset') {
-			return isset($_POST[$index]);
-		}
+
 		return $value;
 	}
 

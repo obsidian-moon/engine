@@ -200,5 +200,5 @@ Summary of Obsidian Moon
 ========================
 
 You will find that the Obsidian Moon Engine is 100% modular and will expand as you build code into it. Feel free to add modules, tweak the code and 
-add features I have not thought of, however please give credit by placing "Powered by Obsidian Moon" if you do use the engine. And if you make code that 
-improves on what I have now, feel free to share back! Thanks and Enjoy!
+add features I have not thought of, however please give credit by placing "Powered by Obsidian Moon Engine" if you do use the engine.
+Additionally if you write code that improves on what I have now, feel free to share back! Thanks and Enjoy!

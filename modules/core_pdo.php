@@ -1,20 +1,20 @@
 <?php
 
 /**
- * 
  * Obsidian Moon Engine presented by Dark Prospect Games
- * @author Rev. Alfonso E Martinez, III
- * @copyright (c) 2011
+ *
+ * @author    Alfonso Martinez <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
  * 
  */
 class core_pdo {
 
-	var $error = null;
+	var $error  = null;
 	var $lastid = null;
 	var $values = array();
 
 	function __construct($core, $params) {
-		$this->core = $core;
+		$this->core   = $core;
 		$this->params = $params;
 		if (empty($this->params['type'])) {
 			$this->params['type'] = "mysql";
@@ -42,7 +42,11 @@ class core_pdo {
 	}
 
 	function execute($array, $stmt = 'stmt', $connection = 'connection') {
-		$stmt = 'prepare_'.$stmt;
+        $this->values = array();
+        $this->lastid = NULL;
+        $this->error  = NULL;
+		$stmt         = 'prepare_'.$stmt;
+        error_log(print_r($array,true));
 		try {
 			$sth = $this->$stmt->execute($array);
 		} catch(PDOException $e) {
@@ -56,7 +60,7 @@ class core_pdo {
 			}
 		}
 		$store_sql = $stmt."_sql";
-		if (preg_match("/insert/i", $store_sql)) {
+		if (preg_match("/insert/i", $this->$store_sql)) {
 			try {
 				$this->lastid = $this->$connection->lastInsertId();
 			} catch(PDOException $e) {
@@ -108,10 +112,10 @@ class core_pdo {
 	}
 
 	function query($sql, $params = NULL, $connection = 'connection') {
-		$sth = NULL;
+		$sth          = NULL;
 		$this->values = array();
 		$this->lastid = NULL;
-		$this->error = NULL;
+		$this->error  = NULL;
 		if ($sql == '') {
 			return false;
 		}
