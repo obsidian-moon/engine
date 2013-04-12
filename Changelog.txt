@@ -4,6 +4,7 @@
 
 ============ v1.2.3 ============
 # Replaced Facebook Enhanced with Facebook Ignited v1.3.1, 'not-ignited' branch.
+# Added a check for isset to input module, so that we can see if the key is existant.
 ============ v1.2.2 ============
 # Upgraded Facebook Enhanced from v1.0.3 to v1.2.0 (with Facebook PHP SDK v3.2.1).
 # Deprecated core_mysql class, will no longer contribute to it.

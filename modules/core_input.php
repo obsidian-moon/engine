@@ -16,16 +16,16 @@ class core_input {
 	public $core;
 
 	function _fetch_from_array(&$array, $index = '', $xss_clean = FALSE) {
-		if (!isset($array[$index])) {
+        if (!isset($array[$index])) {
 			return FALSE;
 		}
 
-		/**
-         * if ($xss_clean === TRUE) {
-         * return $this->security->xss_clean($array[$index]);
-         * }
-		 * Replacing this code with a new xss cleaner
-		 */
+        /**
+         * Checks to see if the variable is set, since 0 returns as false
+         */
+		if ($xss_clean == 'isset') {
+            return isset($array[$index]);
+        }
 
 		return $array[$index];
 	}
@@ -39,8 +39,9 @@ class core_input {
 				$get[$key] = $this->_fetch_from_array($_GET, $key, $xss_clean);
 			}
 			return $get;
-		}
-		return $this->_fetch_from_array($_GET, $index, $xss_clean);
+		} else {
+            return $this->_fetch_from_array($_GET, $index, $xss_clean);
+        }
 	}
 
 	function post($index = NULL, $xss_clean = FALSE) {
@@ -53,10 +54,9 @@ class core_input {
 				$post[$key] = $this->_fetch_from_array($_POST, $key, $xss_clean);
 			}
 			return $post;
-		}
-		$value = $this->_fetch_from_array($_POST, $index, $xss_clean);
-
-		return $value;
+		} else {
+            return $this->_fetch_from_array($_POST, $index, $xss_clean);
+        }
 	}
 
 	function get_post($index = '', $xss_clean = FALSE) {
