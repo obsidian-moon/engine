@@ -3,13 +3,15 @@
 /**
  * Obsidian Moon Engine presented by Dark Prospect Games
  *
- * @author    Alfonso Martinez <admin@darkprospect.net>
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  *
  */
 class CouchSimple 
 {
-	function __construct($options) 
+    public $core;
+
+	function __construct(ObsidianMoonCore $core, $options)
 	{
 		foreach ($options AS $key => $value) 
 		{

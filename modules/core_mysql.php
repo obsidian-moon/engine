@@ -3,17 +3,17 @@
 /**
  * Obsidian Moon Engine presented by Dark Prospect Games
  *
- * @author    Alfonso Martinez <admin@darkprospect.net>
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  *
  */
 class core_mysql {
 
 	public $core;
-	var $result = null;
-	var $error = null;
+    public $result = null;
+    public $error  = null;
 
-	function __construct($core, $params) {
+	function __construct(ObsidianMoonCore $core, $params) {
 		trigger_error('Use core_pdo instead of core_mysql', E_USER_DEPRECATED);
 		$this->core = $core;
 		$this->params = $params;

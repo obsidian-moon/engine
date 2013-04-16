@@ -3,11 +3,11 @@
 /**
  * Obsidian Moon Engine presented by Dark Prospect Games
  *
- * @author    Alfonso Martinez <admin@darkprospect.net>
+ * Based on CodeIgniter's Benchmark Class
+ *
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  *
- * Based on CodeIgniter's Benchmark Class
- * 
  */
 class core_benchmark {
 

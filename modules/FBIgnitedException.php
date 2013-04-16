@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Obsidian Moon Engine presented by Dark Prospect Games
+ *
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ *
+ */
 class FBIgnitedException extends Exception {
 
 	public function __construct($message = null, Exception $previous = null, $error_log = true) {
