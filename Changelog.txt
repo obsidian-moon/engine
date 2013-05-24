@@ -2,6 +2,11 @@
 ========== Change Log ==========
 ================================
 
+============ v1.3.0 ============
+# The framework will now only be able to be called from a singleton using the ::start() method.
+# The ObsidianMoonEngine will now use namespaces.
+# Removed core_mysql from the framework with the deprecation of MySQL class in PHP 5.5.
+# Modules and Controls will not extend a superclass designed for each.
 ============ v1.2.3 ============
 # Replaced Facebook Enhanced with Facebook Ignited v1.3.1, 'not-ignited' branch.
 # Added a check for isset to input module, so that we can see if the key is existant.

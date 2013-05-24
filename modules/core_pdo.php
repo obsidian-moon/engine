@@ -1,96 +1,166 @@
 <?php
-
 /**
- * Obsidian Moon Engine presented by Dark Prospect Games
+ * Obsidian Moon Engine by Dark Prospect Games
  *
- * @author    Alfonso Martinez <admin@darkprospect.net>
+ * An Open Source, Lightweight and 100% Modular Framework in PHP
+ *
+ * PHP version 5
+ *
+ * @category  ObsidianMoonEngine
+ * @package   ObsidianMoonEngine
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
- *
+ * @license   BSD https://darkprospect.net/BSD-License.txt
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
-class core_pdo
+namespace ObsidianMoonEngine\Modules;
+use \ObsidianMoonEngine\Module, \ObsidianMoonEngine\Core;
+/**
+ * Obsidian Moon Engine by Dark Prospect Games
+ *
+ * Database class using PDO
+ *
+ * @category  ObsidianMoonEngine
+ * @package   core_pdo
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ * @license   BSD https://darkprospect.net/BSD-License.txt
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link      http://www.php.net/manual/en/book.pdo.php
+ */
+class core_pdo extends Module
 {
 
-    var $core = null;
-    var $lastid = null;
-    var $values = array();
+    /**
+     * @var mixed
+     */
+    protected $connection;
 
-    function __construct(ObsidianMoonCore $core, $params)
+    /**
+     * @var mixed
+     */
+    protected $lastid;
+
+    /**
+     * @var mixed
+     */
+    protected $configs = array(
+                          'type'       => 'mysql',
+                          'fetch_mode' => \PDO::FETCH_ASSOC,
+                          'error_mode' => \PDO::ERRMODE_EXCEPTION,
+                         );
+
+    /**
+     * @var mixed
+     */
+    protected $values;
+
+    /**
+     * Creates a new object to access database via PDO.
+     *
+     * @param mixed $core    A reference to the ObsidianMoonEngine Core class.
+     * @param mixed $configs The parameters that we will be passing to PDO.
+     *
+     * @throws \Exception
+     */
+    public function __construct(Core $core, $configs = null)
     {
-        $this->core   = $core;
-        $this->params = $params;
-        if (empty($this->params['type'])) {
-            $this->params['type'] = "mysql";
+        $this->core = $core;
+        if ($configs !== null) {
+            $this->configs = array_replace($this->configs, $configs);
         }
+
         try {
             $this->connect();
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
     }
 
-    function connect($connection = 'connection', $params = null)
+    /**
+     * Create a database connection and instantiate PDO.
+     *
+     * @param null $configs These are the details pertaining to a newly created connection,
+     *                      if not set it uses the config params.
+     *
+     * @throws \Exception
+     * @return mixed
+     */
+    protected function connect($configs = null)
     {
-        /**
-         * This function creates a connection and assigns it to a variable in.
-         *
-         * @param $connection - This is defaulted to 'connection' but supports anything the user may choose
-         * @param $params     - These are the details pertaining to a newly created connection, if not set it uses the config params.
-         */
-        if ($params !== null) {
-            $this->params = $params;
+        if ($configs !== null) {
+            $this->configs = $configs;
         }
-        $dsn = "{$this->params['type']}:dbname={$this->params['name']};host={$this->params['host']}";
+
+        $dsn = "{$this->configs['type']}:dbname={$this->configs['name']};host={$this->configs['host']}";
         try {
-            $this->$connection = new PDO($dsn, $this->params['user'], $this->params['pass']);
-            $this->$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            throw new Exception('core_pdo::__construct()->PDO::__construct() : ' . $e->getMessage());
+            $this->connection = new \PDO($dsn, $this->configs['user'], $this->configs['pass']);
+            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, $this->configs['error_mode']);
+        } catch (\PDOException $e) {
+            throw new \Exception('core_pdo::__construct()->PDO::__construct() : ' . $e->getMessage());
         }
     }
 
-    function execute($array, $stmt = 'stmt', $connection = 'connection')
+    /**
+     * Excutes a prepared statement
+     *
+     * @param array  $array An array holding the values to be used in a prepared statement.
+     * @param string $stmt  The name of the variable where the statement was stored.
+     *
+     * @return $this
+     * @throws \Exception
+     */
+    public function execute($array, $stmt = 'stmt')
     {
         $this->values = array();
         $this->lastid = null;
         $stmt         = 'prepare_' . $stmt;
         try {
             $sth = $this->$stmt->execute($array);
-        } catch (PDOException $e) {
-            throw new Exception('core_pdo::execute()->PDOStatement::execute() : ' . $e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception('core_pdo::execute()->PDOStatement::execute() : ' . $e->getMessage());
         }
-        if ($sth instanceof PDOStatement) {
+        if ($sth instanceof \PDOStatement) {
             try {
-                $this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
-            } catch (PDOException $e) {
-                throw new Exception('core_pdo::execute()->PDOStatement::fetchAll() : ' . $e->getMessage());
+                $this->values = $sth->fetchAll($this->configs['fetch_mode']);
+            } catch (\PDOException $e) {
+                throw new \Exception('core_pdo::execute()->PDOStatement::fetchAll() : ' . $e->getMessage());
             }
         }
-        $store_sql = $stmt . "_sql";
-        if (preg_match("/insert/i", $this->$store_sql)) {
+
+        $store_sql = $stmt . '_sql';
+        if (preg_match('/insert/i', $this->$store_sql)) {
             try {
-                $this->lastid = $this->$connection->lastInsertId();
-            } catch (PDOException $e) {
-                throw new Exception('core_pdo::execute()->PDO::lastInsertId() : ' . $e->getMessage());
+                $this->lastid = $this->connection->lastInsertId();
+            } catch (\PDOException $e) {
+                throw new \Exception('core_pdo::execute()->PDO::lastInsertId() : ' . $e->getMessage());
             }
         }
 
         return $this;
     }
 
-    function fetch_array($params = false)
+    /**
+     * Get the array of values fetched from database
+     *
+     * @param mixed $params Specify the method that we are looking for.
+     *
+     * @return array|bool
+     */
+    public function fetch_array($params = false)
     {
         if (count($this->values) == 0) {
             return false;
-        } elseif (count($this->values) > 1) {
+        } else if (count($this->values) > 1) {
             return $this->values;
         } else {
             if ($params === true) {
                 return $this->values;
-            } elseif ($params['item']) {
+            } else if ($params['item']) {
                 $item = $params['item'];
                 if ($this->values[$item]) {
                     return $this->values[$item];
-                } elseif ($this->values[0][$item]) {
+                } else if ($this->values[0][$item]) {
                     return $this->values[0][$item];
                 } else {
                     return false;
@@ -101,68 +171,99 @@ class core_pdo
         }
     }
 
-    function insert_id()
+    /**
+     * Get the last id of the query that in an insert event.
+     *
+     * @return null|int
+     */
+    public function insert_id()
     {
         return $this->lastid;
     }
 
-    function num_rows()
+    /**
+     * Return the number of rows found in the database.
+     *
+     * @return int
+     */
+    public function num_rows()
     {
         return count($this->values);
     }
 
-    function prepare($sql, $stmt = 'stmt', $connection = 'connection')
+    /**
+     * Prepare a query statement to be executed at a later time.
+     *
+     * @param mixed  $sql  The SQL statement that will be prepared.
+     * @param string $stmt The statement will be saved into this space.
+     *
+     * @return $this
+     * @throws \Exception
+     */
+    public function prepare($sql, $stmt = 'stmt')
     {
         $stmt = 'prepare_' . $stmt;
         try {
-            $this->$stmt = $this->$connection->prepare($sql);
-        } catch (PDOException $e) {
-            throw new Exception('core_pdo::prepare()->PDO::prepare() : ' . $e->getMessage());
+            $this->$stmt = $this->connection->prepare($sql);
+        } catch (\PDOException $e) {
+            throw new \Exception('core_pdo::prepare()->PDO::prepare() : ' . $e->getMessage());
         }
-        $store_sql        = $stmt . "_sql";
+        $store_sql        = $stmt . '_sql';
         $this->$store_sql = $sql;
 
         return $this;
     }
 
-    function query($sql, $params = null, $connection = 'connection')
+    /**
+     * Execute a query
+     *
+     * @param mixed $sql    The content of the SQL query.
+     * @param null  $params The parameters of the query.
+     *
+     * @return $this|bool
+     * @throws \Exception
+     */
+    public function query($sql, $params = null)
     {
         $sth          = null;
         $this->values = array();
         $this->lastid = null;
         if ($sql == '') {
-            return false;
+            throw new \Exception('core_pdo::query(): Query was undefined, please make sure you pass one.');
         }
+
         if ($params === null) {
             try {
-                $sth = $this->$connection->query($sql);
-            } catch (PDOException $e) {
-                throw new Exception('core_pdo::query()->PDO::query() : ' . $e->getMessage());
+                $sth = $this->connection->query($sql);
+            } catch (\PDOException $e) {
+                throw new \Exception('core_pdo::query()->PDO::query() : ' . $e->getMessage());
             }
         } else {
             try {
-                $sth = $this->$connection->prepare($sql);
-            } catch (PDOException $e) {
-                throw new Exception('core_pdo::query()->PDO::prepare() : ' . $e->getMessage());
+                $sth = $this->connection->prepare($sql);
+            } catch (\PDOException $e) {
+                throw new \Exception('core_pdo::query()->PDO::prepare() : ' . $e->getMessage());
             }
             try {
                 $sth->execute($params);
-            } catch (PDOException $e) {
-                throw new Exception('core_pdo::query()->PDO::execute() : ' . $e->getMessage());
+            } catch (\PDOException $e) {
+                throw new \Exception('core_pdo::query()->PDO::execute() : ' . $e->getMessage());
             }
         }
-        if ($sth instanceof PDOStatement && preg_match("/select/i", $sql)) {
+
+        if ($sth instanceof \PDOStatement && preg_match('/select/i', $sql)) {
             try {
-                $this->values = $sth->fetchAll(PDO::FETCH_ASSOC);
-            } catch (PDOException $e) {
-                throw new Exception('core_pdo::query()->PDOStatement::fetchAll() : ' . $e->getMessage());
+                $this->values = $sth->fetchAll($this->configs['fetch_mode']);
+            } catch (\PDOException $e) {
+                throw new \Exception('core_pdo::query()->PDOStatement::fetchAll() : ' . $e->getMessage());
             }
         }
-        if (preg_match("/insert/i", $sql)) {
+
+        if (preg_match('/insert/i', $sql)) {
             try {
-                $this->lastid = $this->$connection->lastInsertId();
-            } catch (PDOException $e) {
-                throw new Exception('core_pdo::query()->PDO::lastInsertId() : ' . $e->getMessage());
+                $this->lastid = $this->connection->lastInsertId();
+            } catch (\PDOException $e) {
+                throw new \Exception('core_pdo::query()->PDO::lastInsertId() : ' . $e->getMessage());
             }
         }
 

@@ -1,52 +1,86 @@
 <?php
-
 /**
- * Obsidian Moon Engine presented by Dark Prospect Games
+ * Obsidian Moon Engine by Dark Prospect Games
  *
+ * An Open Source, Lightweight and 100% Modular Framework in PHP
+ *
+ * PHP version 5
+ *
+ * @category  Frameworks
+ * @package   ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
- *
+ * @license   BSD https://darkprospect.net/BSD-License.txt
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
-class CouchSimple 
+namespace ObsidianMoonEngine\Modules;
+use \ObsidianMoonEngine\Module;
+/**
+ * Obsidian Moon Engine by Dark Prospect Games
+ *
+ * Database class for CouchDB
+ *
+ * @category  ObsidianMoonEngine
+ * @package   Module
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ * @license   BSD https://darkprospect.net/BSD-License.txt
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ */
+class core_couchdb extends Module
 {
-    public $core;
 
-	function __construct(ObsidianMoonCore $core, $options)
-	{
-		foreach ($options AS $key => $value) 
-		{
-			$this->$key = $value;
-		}
-	}
+    /**
+     * @var mixed
+     */
+    private $headers;
 
-	function send($method, $url, $post_data = NULL) {
-		$s = fsockopen($this->host, $this->port, $errno, $errstr);
-		if (!$s) {
-			echo "$errno: $errstr\n";
-			return false;
-		}
+    /**
+     * @var mixed
+     */
+    private $body;
 
-		$request = "$method $url HTTP/1.0\r\nHost: $this->host\r\n";
+    /**
+     * Send the request for CouchDB
+     *
+     * @param mixed  $method    Method we will use to access DB.
+     * @param string $url       Url to be called.
+     * @param mixed  $post_data Data to be posted to the Database.
+     *
+     * @return bool
+     */
+    public function send($method, $url, $post_data = null)
+    {
+        $s = fsockopen($this->configs['host'], $this->configs['port'], $errno, $errstr);
+        if (!$s) {
+            echo "$errno: $errstr\n";
 
-		if ($this->user) {
-			$request .= "Authorization: Basic " . base64_encode("$this->user:$this->pass") . "\r\n";
-		}
+            return false;
+        }
 
-		if ($post_data) {
-			$request .= "Content-Length: " . strlen($post_data) . "\r\n\r\n";
-			$request .= "$post_data\r\n";
-		} else {
-			$request .= "\r\n";
-		}
+        $request = "$method $url HTTP/1.0\r\nHost: {$this->configs['host']}\r\n";
 
-		fwrite($s, $request);
-		$response = "";
+        if ($this->configs['user']) {
+            $request .= 'Authorization: Basic ' . base64_encode("{$this->configs['user']}:{$this->configs['pass']}") . "\r\n";
+        }
 
-		while (!feof($s)) {
-			$response .= fgets($s);
-		}
+        if ($post_data) {
+            $request .= 'Content-Length: ' . strlen($post_data) . "\r\n\r\n";
+            $request .= "$post_data\r\n";
+        } else {
+            $request .= "\r\n";
+        }
 
-		list($this->headers, $this->body) = explode("\r\n\r\n", $response);
-		return $this->body;
-	}
+        fwrite($s, $request);
+        $response = '';
+
+        while (!feof($s)) {
+            $response .= fgets($s);
+        }
+
+        list($this->headers, $this->body) = explode("\r\n\r\n", $response);
+
+        return $this->body;
+    }
+
 }

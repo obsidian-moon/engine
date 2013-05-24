@@ -1,90 +1,180 @@
 <?php
-
-
 /**
- * Obsidian Moon Engine presented by Dark Prospect Games
+ * Obsidian Moon Engine by Dark Prospect Games
  *
+ * An Open Source, Lightweight and 100% Modular Framework in PHP
+ *
+ * PHP version 5
+ *
+ * @category  Frameworks
+ * @package   ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
- *
+ * @license   BSD https://darkprospect.net/BSD-License.txt
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
-class core_input {
+namespace ObsidianMoonEngine\Modules;
+use \ObsidianMoonEngine\Module, \ObsidianMoonEngine\Core;
+/**
+ * Obsidian Moon Engine by Dark Prospect Games
+ *
+ * Class to handle all of the input from $_POST, $_GET, $_SESSION, $_COOKIE and $_SERVER
+ *
+ * @category  ObsidianMoonEngine
+ * @package   Module
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ * @license   BSD https://darkprospect.net/BSD-License.txt
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ */
+class core_input extends Module
+{
 
-	/**
-	 * Based on CodeIgniters Input Class
-	 */
-	public $core;
-
-	function _fetch_from_array(&$array, $index = '', $xss_clean = FALSE) {
+    /**
+     * The function that will handle getting the data from the arrays.
+     *
+     * @param mixed   &$array    The array that will pulled from.
+     * @param string  $index     What we are looking for.
+     * @param boolean $xss_clean Whether to clean it or not or not. Incomplete.
+     *
+     * @return bool
+     */
+    protected function fetch_from_array(&$array, $index = '', $xss_clean = false)
+    {
         if (!isset($array[$index])) {
-			return FALSE;
-		}
+            return false;
+        }
 
-        /**
-         * Checks to see if the variable is set, since 0 returns as false
-         */
-		if ($xss_clean == 'isset') {
+        // Checks to see if the variable is set, since 0 returns as false.
+        if ($xss_clean == 'isset') {
             return isset($array[$index]);
         }
 
-		return $array[$index];
-	}
+        return $array[$index];
+    }
 
-	function get($index, $xss_clean = FALSE) {
-		if ($index === NULL AND !empty($_GET)) {
-			$get = array();
+    /**
+     * Grab values from the $_GET global.
+     *
+     * @param mixed   $index     The index that we will be searching for.
+     * @param boolean $xss_clean Whether we want to clean it or not.
+     *
+     * @return mixed
+     */
+    public function get($index = null, $xss_clean = false)
+    {
+        if ($index === null && count($_GET) > 0) {
+            $get = array();
 
-			// loop through the full _GET array
-			foreach (array_keys($_GET) as $key) {
-				$get[$key] = $this->_fetch_from_array($_GET, $key, $xss_clean);
-			}
-			return $get;
-		} else {
-            return $this->_fetch_from_array($_GET, $index, $xss_clean);
+            // Loop through the full $_GET array.
+            foreach (array_keys($_GET) as $key) {
+                $get[$key] = $this->fetch_from_array($_GET, $key, $xss_clean);
+            }
+
+            return $get;
+        } else {
+            return $this->fetch_from_array($_GET, $index, $xss_clean);
         }
-	}
+    }
 
-	function post($index = NULL, $xss_clean = FALSE) {
-		// Check if a field has been provided
-		if ($index === NULL AND !empty($_POST)) {
-			$post = array();
+    /**
+     * Grab values from the $_POST global.
+     *
+     * @param mixed   $index     The index that we will be searching for.
+     * @param boolean $xss_clean Whether we want to clean it or not.
+     *
+     * @return mixed
+     */
+    public function post($index = null, $xss_clean = false)
+    {
+        // Check if a field has been provided.
+        if ($index === null && count($_POST) > 0) {
+            $post = array();
 
-			// Loop through the full _POST array and return it
-			foreach (array_keys($_POST) as $key) {
-				$post[$key] = $this->_fetch_from_array($_POST, $key, $xss_clean);
-			}
-			return $post;
-		} else {
-            return $this->_fetch_from_array($_POST, $index, $xss_clean);
+            // Loop through the full $_POST array and return the value.
+            foreach (array_keys($_POST) as $key) {
+                $post[$key] = $this->fetch_from_array($_POST, $key, $xss_clean);
+            }
+
+            return $post;
+        } else {
+            return $this->fetch_from_array($_POST, $index, $xss_clean);
         }
-	}
+    }
 
-	function get_post($index = '', $xss_clean = FALSE) {
-		if (!isset($_POST[$index])) {
-			return $this->get($index, $xss_clean);
-		} else {
-			return $this->post($index, $xss_clean);
-		}
-	}
+    /**
+     * Grab values from the $_COOKIE global.
+     *
+     * @param mixed   $index     The index that we will be searching for.
+     * @param boolean $xss_clean Whether we want to clean it or not.
+     *
+     * @return mixed
+     */
+    public function cookie($index = '', $xss_clean = false)
+    {
+        return $this->fetch_from_array($_COOKIE, $index, $xss_clean);
+    }
 
-	function cookie($index = '', $xss_clean = FALSE) {
-		return $this->_fetch_from_array($_COOKIE, $index, $xss_clean);
-	}
+    /**
+     * Grab values from the $_SERVER global.
+     *
+     * @param mixed   $index     The index that we will be searching for.
+     * @param boolean $xss_clean Whether we want to clean it or not.
+     *
+     * @return mixed
+     */
+    public function server($index = '', $xss_clean = false)
+    {
+        return $this->fetch_from_array($_SERVER, $index, $xss_clean);
+    }
 
-	function server($index = '', $xss_clean = FALSE) {
-		return $this->_fetch_from_array($_SERVER, $index, $xss_clean);
-	}
+    /**
+     * Grab values from the $_SESSION global.
+     *
+     * @param mixed   $index     The index that we will be searching for.
+     * @param boolean $xss_clean Whether we want to clean it or not.
+     *
+     * @return mixed
+     */
+    public function session($index = '', $xss_clean = false)
+    {
+        return $this->fetch_from_array($_SESSION, $index, $xss_clean);
+    }
 
-	function session($index = '', $xss_clean = FALSE) {
-		return $this->_fetch_from_array($_SESSION, $index, $xss_clean);
-	}
+    /**
+     * Set values in the $_SESSION global.
+     *
+     * @param mixed $index The index that we will be setting.
+     * @param mixed $value Value of what we will be setting in the index.
+     *
+     * @return mixed
+     */
+    public function setSession($index = '', $value = '')
+    {
+        if (isset($_SESSION[$index]) === false) {
+            $_SESSION[$index] = $value;
+        } else {
+            return false;
+        }
 
-	function set_session($index = '', $value = '') {
-		return $_SESSION[$index] = $value;
-	}
+        return true;
+    }
 
-	function unset_session($index = '') {
-		unset($_SESSION[$index]);
-	}
+    /**
+     * Remove values from the $_SESSION global.
+     *
+     * @param mixed $index The index that we will be removing.
+     *
+     * @return boolean
+     */
+    public function unsetSession($index = '')
+    {
+        unset($_SESSION[$index]);
+        if (empty($_SESSION[$index])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
