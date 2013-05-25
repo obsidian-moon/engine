@@ -89,7 +89,7 @@ Once you have those two files squared away you will want to set up your working 
 |-- libraries/
 |   |-- Modules/   * Holds all of your modules
 |   |-- Configs/   * This holds the configs for your modules
-|   |   |-- core/  * Core class configs (eg. core_mysql)
+|   |   |-- core/  * Core class configs (eg. core_mysql.php matches $core_path/Modules/core_mysql.php)
 |   |-- Controls/  * All of the controllers for your app go in here
 |   |-- Views/     * HTML views for you to insert data into
 |-- static/        * I use a static fold to hold all my assets
@@ -104,7 +104,7 @@ Let's start off by creating a basic module that will be used by the Core class:
 
 ```php
 <?php
-// Location: /home/user/public_html/libraries/modules/basic_module.php
+// Location: /home/user/public_html/libraries/Modules/basic_module.php
 namespace ObsidianMoonEngine\Modules;
 use ObsidianMoonEngine\Core, ObsidianMoonEngine\Module, ObsidianMoonEngine\Control;
 class basic_module extends Module
@@ -242,11 +242,15 @@ $core->module(array(
 
 You will need to keep in mind the following details for the first parameter or array key of the details:
 
-- Starting with `core_` will use `/home/user/ObsidianMoonEngine/modules/` as base, do not try to use a path because
-  it will try to look in Core Modules.
-- Anything else will try to use a path to find a module in the  `/home/user/public_html/libraries/Modules/` folder.
-- You can use sub-directories to access files within your apps Modules folder structure, for example `main/main_index`
-  will find `/home/user/public_html/libraries/Modules/main/main_index.php`
+- Starting with `core_` will use `/home/user/ObsidianMoonEngine/Modules/` as base, do not try to use a path afterwards
+  because it will try to look in Core modules. Future revisions will have this rectified. All core modules don't currently
+  use any paths so the use of them is unneeded for Core modules.
+- If the path/file are not prefixed for Core the Core class will try to match a path and module name from within the application's
+  module folder, located in the `/home/user/public_html/libraries/Modules/` folder for these examples.
+- You can use subdirectories to access files within your apps Modules folder structure, for example `main/main_index`
+  will find `/home/user/public_html/libraries/Modules/main/main_index.php` and will call the `main_index` module class name
+  from the file and will additionally attempt to check for the existance of a config file located in the applications Configs folder
+  located at `/home/user/public_html/libraries/Configs/main/main_index.php` for these examples.
 
 The second method is as quite important as the previous one. The `view()` method, which is quite simple compared
 to the `module()` method, pulls up views with html that display the result of the data processed from the modules.
