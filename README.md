@@ -6,7 +6,6 @@ based on CodeIgniter that need to be worked on.
 
 Alfonso E Martinez, III of Dark Prospect Games, LLC
 
-
 ## Instructions for Installation
 
 You will need a few things for this to work correctly:
@@ -30,37 +29,25 @@ $core_path = '/home/user/ObsidianMoonEngine/';
 set_include_path(get_include_path() . PATH_SEPARATOR . $core_path);
 session_start();
 
-// Get the URI from the system explode it into an array, grab the control and
-// then slice the rest into a variable called $params.
-$uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-$control = $uri[0];
-$params = array_slice($uri, 1);
-
 // Include and instantiate the class
 use \ObsidianMoonEngine\Core;
 $conf = array(
-    'defcon' => 'main',
-    // Default control that will be shown.
-    'modules' => array('input'),
-    // Modules lists all of the classes you want to load automatically
+    'defcon'  => 'main',
+    // Default control that will be used if none are called for
+    'modules' => array('core_input'),
+    // This lists all of the classes you want to load automatically
+    'routing' => 'core_routing'
+    // The class that will handle routing
 );
-$core = Core::start($conf);
-// All values are set as $core->conf_**** by their key value
-
-// Handle what control is called
-if ($control == "") {
-    // If a control isn't called use the default
-    include("{$core->conf_libs}/Controls/{$core->conf_defcon}.php");
-} elseif (!file_exists("{$core->conf_libs}control/{$control}.php")) {
-    // Use default if the called control is not available
-    include("{$core->conf_libs}/Controls/{$core->conf_defcon}.php");
-} else {
-    // If existant then use the control called
-    include("{$core->conf_libs}/Controls/{$control}.php");
+try {
+    $core = Core::start($conf);
+    $core->routing();
+} catch (Exception $e) {
+    error_log('Error on OME Construct: '.$e->getMessage());
+    echo 'There was an error initializing the system, please try again!';
+    exit;
 }
-
-// Finally let's echo out the output!
-echo $core->output;
+// The Core will echo out the output buffer after the class finishes
 ```
 
 After that we will need to make sure that we also add an `.htaccess` to the system with the following rules:
@@ -105,10 +92,10 @@ Let's start off by creating a basic module that will be used by the Core class:
 ```php
 <?php
 // Location: /home/user/public_html/libraries/Modules/basic_module.php
-namespace ObsidianMoonEngine\Modules;
-use ObsidianMoonEngine\Core, ObsidianMoonEngine\Module, ObsidianMoonEngine\Control;
+namespace ObsidianMoonEngine;
 class basic_module extends Module
 {
+
     /**
      * @var Core This is handled by the parent 'Module' and thus does not need to
      *           be redeclared.
@@ -136,8 +123,8 @@ class basic_module extends Module
     public function __construct(Core $core, $configs = null)
     {
         /**
-         * This is a custom constructor: $core and $configs are handled by parent
-         * and assigned to $this->core and $this->configs.
+         * This is a custom constructor: $core and $configs are handled
+         * by parent and assigned to $this->core and $this->configs.
          */
         parent::__construct($core, $configs);
         // Custom handling in the constructor.
@@ -196,46 +183,73 @@ you know how you can start up and use a module:
 ```php
 <?php
 // Location: /home/user/public_html/libraries/Controls/main.php
-$core->module(array('basic_module'));
-// By using only a value the system will automatically assume you don't want to change the name of the
-// module being loaded and will use the standard class name and allow you to call it from $core like such:
-$core->basic_module->my_method();
+class control_main extends Module
+{
+    public function __construct()
+    {
+        parent::__construct();
 
+        $core->module(array('basic_module'));
+        // By using only a value the system will automatically assume you don't want to
+        // change the name of the module being loaded and will use the standard class
+        // name and allow you to call it from $core like such:
+        $core->basic_module->my_method();
+    }
 
+    public function index()
+    {
+        // This called from the URI '/main/'
 
-$core->module(array('basic_module' => 'basic'));
-// If you do not want to use the same class name you can create an alias in the system by assigning the class
-// to the key and the alias to a value. This will then allow you to pull up the Modules/basic_module.php and
-// assign it to '$core->basic' which you are then able to call as follows, assuming it is not previously set:
-$core->basic->my_method();
+        $core->module(array('basic_module' => 'basic'));
+        // If you do not want to use the same class name you can create an alias in the system by assigning the class
+        // to the key and the alias to a value. This will then allow you to pull up the Modules/basic_module.php and
+        // assign it to '$core->basic' which you are then able to call as follows, assuming it is not previously set:
+        $this->core->basic->my_method();
 
-// Another thing that you can do is use subfolders to organize all of your module, and since some of you like
-// to use smarty which does not follow the OME standards has a class name of 'Smarty'. By making the value an
-// array and making the second value in the array the name of the class you can call third party modules and
-// classes like follows. Notice the folders being included in the key to access it:
-$core->module(array('third_party/Smarty/Smarty.class' => array('smarty', 'Smarty')));
-$core->smarty->display();
+        // Another thing that you can do is use subfolders to organize all of your module, and since some of you like
+        // to use smarty which does not follow the OME standards has a class name of 'Smarty'. By making the value an
+        // array and making the second value in the array the name of the class you can call third party modules and
+        // classes like follows. Notice the folders being included in the key to access it:
+        $this->core->module(array('third_party/Smarty/Smarty.class' => array('smarty', 'Smarty')));
+        $this->core->smarty->display();
+    }
 
-// Occasionally you may need to overwrite the default configuration that you previously declared in the
-// configurations file located in 'libraries/Configs/` by adding an additional array to the third value
-// as follows. This will allow you to dynamicly create classes with configurations that differ from default.
-$database_overwrite = array(
-                       'host' => 'remotehost',
-                       'name' => 'data_base_2',
-                       'user' => 'userName2',
-                       'pass' => 'password2',
-                      );
-$core->module(array('core_pdo' => array('db', null, $database_overwrite)));
+    public function about_site()
+    {
+        // This is called when URI is '/main/about_site/'
 
-// Finally, if you need to declare several files in one shot you can just add to the array and pass multiple
-// keys and array values as follows to the module method and it will handle adding them all automatically for you:
-$core->module(array(
-               'basic_module',
-               'core_input'                      => 'input',
-               'third_party/Smarty/Smarty.class' => array('smarty', 'Smarty'),
-               'core_pdo'                        => array('db', null, $database_overwrite),
-              ));
+        // Occasionally you may need to overwrite the default configuration that you previously declared in the
+        // configurations file located in 'libraries/Configs/` by adding an additional array to the third value
+        // as follows. This will allow you to dynamicly create classes with configurations that differ from default.
+        $database_overwrite = array(
+                               'host' => 'remotehost',
+                               'name' => 'data_base_2',
+                               'user' => 'userName2',
+                               'pass' => 'password2',
+                              );
+        $this->core->module(array('core_pdo' => array('db', null, $database_overwrite)));
+    }
 
+    /**
+     * This is called when the class is created.
+     *
+     * @return void
+     */
+    public function start()
+    {
+        // This is called after it is initialized.
+
+        // Finally, if you need to declare several files in one shot you can just add to the array and pass multiple
+        // keys and array values as follows to the module method and it will handle adding them all automatically for you:
+        $this->core->module(array(
+                             'basic_module',
+                             'core_input'                      => 'input',
+                             'third_party/Smarty/Smarty.class' => array('smarty', 'Smarty'),
+                             'core_pdo'                        => array('db', null, $database_overwrite),
+                            ));
+    }
+
+}
 // Summary:
 // Core::module(array('location/name' => array('name_of_var_to_set', 'othername', array('config1'=>'value1'))));
 ```
@@ -307,7 +321,6 @@ $response = json_encode(
             );
 $core->view(null, $response);
 ```
-
 
 ## Summary of Obsidian Moon
 

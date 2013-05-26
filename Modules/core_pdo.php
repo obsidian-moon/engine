@@ -13,8 +13,7 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
-namespace ObsidianMoonEngine\Modules;
-use \ObsidianMoonEngine\Module, \ObsidianMoonEngine\Core;
+namespace ObsidianMoonEngine;
 /**
  * Obsidian Moon Engine by Dark Prospect Games
  *

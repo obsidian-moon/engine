@@ -13,15 +13,14 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
-namespace ObsidianMoonEngine\Modules;
-use \ObsidianMoonEngine\Module, \ObsidianMoonEngine\Core;
+namespace ObsidianMoonEngine;
 /**
  * Obsidian Moon Engine by Dark Prospect Games
  *
  * Class to handle all of the input from $_POST, $_GET, $_SESSION, $_COOKIE and $_SERVER
  *
  * @category  ObsidianMoonEngine
- * @package   Module
+ * @package   Core_Input
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt

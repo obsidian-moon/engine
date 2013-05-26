@@ -44,7 +44,7 @@ class Core
     /**
      * @var mixed
      */
-    public $output;
+    protected $output;
 
     /**
      * @var mixed
@@ -69,7 +69,7 @@ class Core
     /**
      * This creates an instance of the core class.
      *
-     * @param mixed $conf This is an the configurations passed to the class.
+     * @param mixed $conf This is an array that holds the configurations passed to the class.
      *
      * @throws Exception
      */
@@ -99,20 +99,19 @@ class Core
     }
 
     /**
-     * Set a global in the global storage.
-     *
-     * @param mixed $name  The global variable that is trying to be set.
-     * @param mixed $value Value of the global that you are trying to set.
-     *
-     * @return void
+     * We will automatically echo the framework's output buffer
      */
-    public function __set($name, $value)
+    public function __destruct()
     {
-        $this->globals[$name] = $value;
+        if ($this->output) {
+            echo $this->output;
+        }
     }
 
     /**
      * Call either a module or a global from storage.
+     *
+     * This method will automatically grab the correct place that
      *
      * @param mixed $name The global variable that is trying to be set.
      *
@@ -137,6 +136,54 @@ class Core
         } else {
             throw new Exception("Could not find a variable by the name '{$name}'!");
         }
+    }
+
+    /**
+     * Set a global in the global storage.
+     *
+     * @param mixed $name  The global variable that is trying to be set.
+     * @param mixed $value Value of the global that you are trying to set.
+     *
+     * @return void
+     */
+    public function __set($name, $value)
+    {
+        $this->globals[$name] = $value;
+    }
+
+    /**
+     * Tests the server to see if the user has submitted an AJAX request.
+     *
+     * @return boolean
+     */
+    private function get_ajax()
+    {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Tests the server to see if it is running HTTP or HTTPS.
+     *
+     * @return string
+     */
+    private function get_protocol()
+    {
+        // Check for Apache HTTPS.
+        if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1)) {
+            return 'https';
+        }
+
+        // Check for Nginx HTTPS.
+        if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] === '443')) {
+            return 'https';
+        }
+
+        return 'http';
     }
 
     /**
@@ -171,17 +218,17 @@ class Core
 
             if (preg_match('/^core_/', $_module)) {
                 $_module_location = "{$this->configs['core']}/Modules/{$_module_name}.php";
-                $configs_location = $this->configs['libs'] . '/Configs/core/' . $_module_name . '.php';
+                $configs_location = "{$this->configs['libs']}/Configs/core/{$_module_name}.php";
             } else {
                 $_module_location = "{$this->configs['libs']}/Modules/{$_module}.php";
-                $configs_location = $this->configs['libs'] . '/Configs/' . $_module . '.php';
+                $configs_location = "{$this->configs['libs']}/Configs/{$_module}.php";
             }
 
             if (!file_exists($_module_location)) {
                 throw new Exception("Module '$_module_name' does not exist, please check the location and try again!");
             } else {
                 include $_module_location;
-                $_module_namespace = '\\ObsidianMoonEngine\\Modules\\' . $_module_name;
+                $_module_namespace = "\\ObsidianMoonEngine\\$_module_name";
                 if (!class_exists($_module_namespace)) {
                     throw new Exception("Module '$_module_namespace' could not be found in the provided file, please check the name and try again!");
                 } else {
@@ -222,6 +269,21 @@ class Core
     }
 
     /**
+     * Handles the routing
+     *
+     * @throws Exception
+     * @return void
+     */
+    public function routing()
+    {
+        try {
+            $this->module(array($this->configs['routing'] => 'core_routing'));
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
      * Creating an instance of the ObsidianMoonCore Class.
      *
      * @param mixed $conf The configurations to be passed to the constructor.
@@ -238,8 +300,14 @@ class Core
     }
 
     /**
+     * Load a View into the System
+     *
      * This method loads a 'view' and implants the data into it,
      * and if needed returns that value to be included in other views.
+     *
+     * <code>
+     *     $core->view()
+     * </code>
      *
      * @param mixed   $_view   Name of the view to be called.
      * @param mixed   $_data   Data that can be passed into the view to
@@ -252,8 +320,8 @@ class Core
      */
     public function view($_view, $_data = null, $_return = false)
     {
-        if (!file_exists("{$this->configs['libs']}/views/{$_view}.php") && $_view !== null) {
-            throw new Exception("No view data could be found for 'views/{$_view}.php'!");
+        if (!file_exists("{$this->configs['libs']}/Views/{$_view}.php") && $_view !== null) {
+            throw new Exception("No view data could be found for 'Views/{$_view}.php'!");
         } else if ($_view === null) {
             $this->output .= $_data;
         } else {
@@ -263,7 +331,7 @@ class Core
 
             $core =& $this;
             ob_start();
-            include "{$this->configs['libs']}/views/{$_view}.php";
+            include "{$this->configs['libs']}/Views/{$_view}.php";
             $buffer = ob_get_contents();
             @ob_end_clean();
             if ($_return) {
@@ -276,44 +344,7 @@ class Core
         return true;
     }
 
-    /**
-     * Tests the server to see if it is running HTTP or HTTPS.
-     *
-     * @return string
-     */
-    private function get_protocol()
-    {
-        // Check for Apache HTTPS.
-        if (isset($_SERVER['HTTPS'])
-            && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1)
-        ) {
-            return 'https';
-        }
-
-        // Check for Nginx HTTPS.
-        if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] === '443')) {
-            return 'https';
-        }
-
-        return 'http';
-    }
-
-    /**
-     * Tests the server to see if the user has submitted an AJAX request.
-     *
-     * @return boolean
-     */
-    private function get_ajax()
-    {
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }
 
 require_once 'Module.php';
+require_once 'Control.php';

@@ -11,10 +11,10 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
-namespace ObsidianMoonEngine\Modules;
+namespace ObsidianMoonEngine;
 require_once 'Facebook.php';
 require_once 'core_facebook_exception.php';
-use Facebook, FacebookApiException, \ObsidianMoonEngine\Module, \ObsidianMoonEngine\Core;
+use Facebook, FacebookApiException;
 /**
  * Facebook Ignited by Dark Prospect Games
  *

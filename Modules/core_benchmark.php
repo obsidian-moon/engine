@@ -14,8 +14,7 @@
  * @link      https://github.com/DarkProspectGames/Obsidian-Moon-Engine
  *
  */
-namespace ObsidianMoonEngine\Modules;
-use \ObsidianMoonEngine\Module;
+namespace ObsidianMoonEngine;
 /**
  * Obsidian Moon Engine by Dark Prospect Games
  *

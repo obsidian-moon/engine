@@ -11,8 +11,8 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
-namespace ObsidianMoonEngine\Modules;
-use Exception, ObsidianMoonEngine\Core;
+namespace ObsidianMoonEngine;
+use Exception;
 /**
  * Facebook Ignited by Dark Prospect Games
  *

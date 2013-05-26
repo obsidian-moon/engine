@@ -32,7 +32,7 @@ abstract class Module
 {
 
     /**
-     * @var Core This will hold the Core Class reference.
+     * @var Core This will hold a reference to the Core class.
      */
     protected $core;
 
@@ -45,15 +45,15 @@ abstract class Module
      * Constructor class for a standard module.
      *
      * This function will be called when the class is instantiated. It automatically
-     * adds the Core Class to $this->core and any params to $this->config. All child modules
+     * adds the Core class to $this->core and any params to $this->config. All child modules
      * must call the parent as following if they want to modify the default behaviour of the
-     * constructor:
+     * constructor, unless they want to totally overwrite the constructor:
      *
      * <code>
      *     public function __construct(Core $core, $configs = null)
      *     {
      *         parent::__construct($core, $configs);
-     *         // Continue with your custom constructor.
+     *         // Add any custom coding after you include this in your constructor.
      *     }
      * </code>
      *
