@@ -303,7 +303,7 @@ $data['test_value'] = $core->basic->my_method();
 // After we have assigned data to an array with the appropriate keys we will then send it into a view will will
 // be appended to the Core class's internal buffer. Please note though that variable you pass to 'view()' must
 // always be an array due to how it handles the data we give it to populate into the view.
-$core->view('simple_view',$ data);
+$core->view('simple_view', $data);
 
 // Note: Like the 'module()' method you are able to use subfolders in the 'libraries/Views/' folder.
 
