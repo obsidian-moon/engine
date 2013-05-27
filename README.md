@@ -1,4 +1,4 @@
-# Obsidian Moon Engine v1.3.0 Documentation
+## Obsidian Moon Engine v1.3.0 Documentation
 This is a project that I have worked on for several months after being inspired
 by CodeIgniter. After setting up the initial steps of the system I am opening the
 project up for open source. Feel free to contribute and peer review my work, please
@@ -6,7 +6,7 @@ not that there are a few pieces that are based on CodeIgniter that need to be wo
 
 Alfonso E Martinez, III of Dark Prospect Games, LLC
 
-## Instructions for Installation
+### Instructions for Installation
 
 [Installing Obsidian Moon Engine on Wiki](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Installing-Obsidian-Moon-Engine)
 
@@ -24,7 +24,7 @@ cd ~/
 git clone git://github.com/DarkProspectGames/ObsidianMoonEngine.git
 ```
 
-## Setting Up Your File Structure
+### Setting Up Your File Structure
 
 [Setting Up Your File Structure on Wiki](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Setting-Up-Your-File-Structure)
 
@@ -67,7 +67,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?/$1 [L]
 ```
 
-## Instantiating the Obsidian Moon Engine
+### Instantiating the Obsidian Moon Engine
 
 [Instantiating the Obsidian Moon Engine on Wiki](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Instantiating-the-Obsidian-Moon-Engine)
 
@@ -104,7 +104,7 @@ try {
 // The Core will echo out the output buffer after the class finishes
 ```
 
-## Instructions for Using Obsidian Moon
+### Instructions for Using Obsidian Moon
 
 There are two functions that you really need to know. The first of all is the `module()` method.
 Let's start off by creating a basic module that will be used by the Core class:
@@ -342,7 +342,7 @@ $response = json_encode(
 $core->view(null, $response);
 ```
 
-## Summary of Obsidian Moon
+### Summary of Obsidian Moon
 
 You will find that the Obsidian Moon Engine is 100% modular and will expand as you build code into it. Feel free to
 submit modules for addition into the core, tweak the code to suite your needs and add any features I have not thought of yet.
