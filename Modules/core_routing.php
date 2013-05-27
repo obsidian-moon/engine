@@ -52,7 +52,11 @@ class core_routing extends Module
     /**
      * Constructor class for a standard module.
      *
-     * This will load the routing information
+     * This will load the routing information, it will load the primary route first
+     * and then the secondary if set. Below are examples of what is called:
+     *
+     * - `/main/` loads `libraries/Controls/main.php` with class and method `control_main::index()`
+     * - `/main/about/` loads `libraries/Controls/main.php` with class and method `control_main::about()`
      *
      * @param Core  $core    The reference to the Core Class.
      * @param mixed $configs The configurations being passed to the module.
@@ -62,7 +66,12 @@ class core_routing extends Module
         parent::__construct($core, $configs);
 
         // Get the URI from the system and process it into $this->primary and $this->params.
-        $uri           = explode('/', trim(preg_replace(array('/\?.*$/i'), '', $_SERVER['REQUEST_URI']), '/'));
+        $filter = array('/\?.*$/i');
+        if ($this->core->conf_subdir) {
+            $filter[] = "/{$this->core->conf_subdir}\//i";
+        }
+
+        $uri           = explode('/', trim(preg_replace($filter, '', $_SERVER['REQUEST_URI']), '/'));
         $this->primary = $uri[0];
         $this->params  = array_slice($uri, 1);
 

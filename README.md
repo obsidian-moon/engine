@@ -1,75 +1,36 @@
 # Obsidian Moon Engine v1.3.0 Documentation
-This is a project that I have worked on for several months after being inspired by CodeIgniter.
-After setting up the initial steps of the system I am opening the project up for open source.
-Feel free to contribute and peer review my work, please not that there are a few pieces that are
-based on CodeIgniter that need to be worked on.
+This is a project that I have worked on for several months after being inspired
+by CodeIgniter. After setting up the initial steps of the system I am opening the
+project up for open source. Feel free to contribute and peer review my work, please
+not that there are a few pieces that are based on CodeIgniter that need to be worked on.
 
 Alfonso E Martinez, III of Dark Prospect Games, LLC
 
 ## Instructions for Installation
 
+[Installing Obsidian Moon Engine on Wiki](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Installing-Obsidian-Moon-Engine)
+
 You will need a few things for this to work correctly:
 
-1. This code
-2. Hosting with PHP support
+1. Obsidian Moon Engine
+2. Hosting with PHP 5.3+
+3. Shell access with Git (or FTP access instead)
 
-You will need to place the `ObsidianMoonEngine` folder in the `/home/user/` directory also known as `~/`
+If these are satisfied you will be able to install the Obsidian Moon Engine to `~/` by
+following the following the following instructions:
 
-You can do so by doing: `cd ~/` followed by `git clone git://github.com/DarkProspectGames/ObsidianMoonEngine.git` which will clone the latest master version
-into that the `ObsidianMoonEngine` directory.
-
-Create a folder that will hold the contents of application folder, and ensure that it is a document root for better results.
-Note: Using the OME in a subfolder feature needs to be worked on, and will be included in a future release.
-
-You can initiate the Obsidian Moon Engine in your index and add basic functionality with the following:
-
-```php
-// If you need to add to the include path.
-$core_path = '/home/user/ObsidianMoonEngine/';
-set_include_path(get_include_path() . PATH_SEPARATOR . $core_path);
-session_start();
-
-// Include and instantiate the class
-use \ObsidianMoonEngine\Core;
-$conf = array(
-    'defcon'  => 'main',
-    // Default control that will be used if none are called for
-    'modules' => array('core_input'),
-    // This lists all of the classes you want to load automatically
-    'routing' => 'core_routing'
-    // The class that will handle routing
-);
-try {
-    $core = Core::start($conf);
-    $core->routing();
-} catch (Exception $e) {
-    error_log('Error on OME Construct: '.$e->getMessage());
-    echo 'There was an error initializing the system, please try again!';
-    exit;
-}
-// The Core will echo out the output buffer after the class finishes
+```bash
+cd ~/
+git clone git://github.com/DarkProspectGames/ObsidianMoonEngine.git
 ```
 
-After that we will need to make sure that we also add an `.htaccess` to the system with the following rules:
+## Setting Up Your File Structure
 
-```apache
-RewriteEngine On
-Options +FollowSymLinks
-RewriteBase /
+[Setting Up Your File Structure on Wiki](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Setting-Up-Your-File-Structure)
 
-# Remove the ability to access libraries folder
-RewriteCond %{REQUEST_URI} ^libraries.*
-RewriteRule ^(.*)$ /index.php?/$1 [L]
-
-#Checks to see if the user is attempting to access a valid file,
-#such as an image or css document, if this isn't true it sends the
-#request to index.php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?/$1 [L]
-```
-
-Once you have those two files squared away you will want to set up your working directory like such for the sanity of the framework:
+Once you have installed the Obsidian Moon Engine you will want to set up your working
+directory like such for the framework to see all of the files correctly, however this
+is just the suggested layout as I will explain shortly:
 
 ```
 /
@@ -82,6 +43,65 @@ Once you have those two files squared away you will want to set up your working 
 |-- static/        * I use a static fold to hold all my assets
 |-- .htaccess
 |-- index.php
+```
+
+Once you setup the file structure we will need to make sure that we also create an
+`.htaccess` to the system with the following rules, so that we ensure the proper path:
+
+```apache
+RewriteEngine On
+Options +FollowSymLinks
+RewriteBase /
+# If using a subdirectory use as below instead
+RewriteBase /application
+
+# Remove the ability to access libraries folder
+RewriteCond %{REQUEST_URI} ^libraries.*
+RewriteRule ^(.*)$ /index.php?/$1 [L]
+
+# Checks to see if the user is attempting to access a valid file,
+# such as an image or css document, if this isn't true it sends the
+# request to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?/$1 [L]
+```
+
+# Instantiating the Obsidian Moon Engine
+
+[Instantiating the Obsidian Moon Engine on Wiki](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Instantiating-the-Obsidian-Moon-Engine)
+
+Once you have the file structure and `.htaccess` setup correctly, you will then be able
+to initiate the Obsidian Moon Engine from the `index.php` in the application root directory
+and add the basic functionality with the following:
+
+```php
+<?php
+// If you need to add to the include path and create a session.
+include '/home/user/ObsidianMoonEngine/Core.php';
+session_start();
+
+// Include and instantiate the class
+use \ObsidianMoonEngine\Core;
+$conf = array(
+    'defcon'  => 'main',
+    // Default control that will be used if none are called for
+    'modules' => array('core_input'),
+    // This lists all of the classes you want to load automatically
+    'routing' => 'core_routing',
+    // The class that will handle routing
+    'subdir'  => 'application',
+    // Subdirectory routing if needed, eg. 'http://my-obsidian.com/application/'
+);
+try {
+    $core = Core::start($conf);
+    $core->routing();
+} catch (Exception $e) {
+    error_log('Error on OME Construct: '.$e->getMessage());
+    echo 'There was an error initializing the system, please try again!';
+    exit;
+}
+// The Core will echo out the output buffer after the class finishes
 ```
 
 ## Instructions for Using Obsidian Moon
