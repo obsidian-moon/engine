@@ -67,7 +67,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?/$1 [L]
 ```
 
-# Instantiating the Obsidian Moon Engine
+## Instantiating the Obsidian Moon Engine
 
 [Instantiating the Obsidian Moon Engine on Wiki](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Instantiating-the-Obsidian-Moon-Engine)
 
