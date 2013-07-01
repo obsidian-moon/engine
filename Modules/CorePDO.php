@@ -20,14 +20,14 @@ namespace ObsidianMoonEngine;
  * Database class using PDO
  *
  * @category  ObsidianMoonEngine
- * @package   core_pdo
+ * @package   CorePDO
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  * @link      http://www.php.net/manual/en/book.pdo.php
  */
-class core_pdo extends Module
+class CorePDO extends Module
 {
 
     /**
@@ -146,7 +146,7 @@ class core_pdo extends Module
      *
      * @return array|bool
      */
-    public function fetch_array($params = false)
+    public function fetchArray($params = false)
     {
         if (count($this->values) == 0) {
             return false;
@@ -175,7 +175,7 @@ class core_pdo extends Module
      *
      * @return null|int
      */
-    public function insert_id()
+    public function insertId()
     {
         return $this->lastid;
     }
@@ -185,7 +185,7 @@ class core_pdo extends Module
      *
      * @return int
      */
-    public function num_rows()
+    public function numRows()
     {
         return count($this->values);
     }

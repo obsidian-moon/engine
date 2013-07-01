@@ -21,20 +21,20 @@ namespace ObsidianMoonEngine;
  * Based on CodeIgniter's Benchmark Class
  *
  * @category  ObsidianMoonEngine
- * @package   Module
+ * @package   CoreBenchmark
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/Obsidian-Moon-Engine
  *
  */
-class core_benchmark extends Module
+class CoreBenchmark extends Module
 {
 
     /**
      * @var array List of all benchmark markers and when they were added.
      */
-    private $marker = array();
+    private $_marker = array();
 
     /**
      * Set a benchmark marker
@@ -50,7 +50,7 @@ class core_benchmark extends Module
      */
     public function mark($name)
     {
-        $this->marker[$name] = microtime();
+        $this->_marker[$name] = microtime();
     }
 
     /**
@@ -75,16 +75,16 @@ class core_benchmark extends Module
             return '{elapsed_time}';
         }
 
-        if (!isset($this->marker[$point1])) {
+        if (!isset($this->_marker[$point1])) {
             return '';
         }
 
-        if (!isset($this->marker[$point2])) {
-            $this->marker[$point2] = microtime();
+        if (!isset($this->_marker[$point2])) {
+            $this->_marker[$point2] = microtime();
         }
 
-        list($sm, $ss) = explode(' ', $this->marker[$point1]);
-        list($em, $es) = explode(' ', $this->marker[$point2]);
+        list($sm, $ss) = explode(' ', $this->_marker[$point1]);
+        list($em, $es) = explode(' ', $this->_marker[$point2]);
 
         return number_format((($em + $es) - ($sm + $ss)), $decimals);
     }

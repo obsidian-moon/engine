@@ -20,13 +20,13 @@ namespace ObsidianMoonEngine;
  * This class will handle the routing for the application.
  *
  * @category  ObsidianMoonEngine
- * @package   Core_Routing
+ * @package   CoreRouting
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
-class core_routing extends Module
+class CoreRouting extends Module
 {
 
     /**
@@ -77,7 +77,7 @@ class core_routing extends Module
 
         // If there is a second parameter we want to pull that and use it.
         if ($this->params[0]) {
-            $this->secondary = array_slice($this->params, 1);
+            $this->_secondary = array_slice($this->params, 1);
         }
     }
 
@@ -99,14 +99,14 @@ class core_routing extends Module
             include "{$this->core->conf_libs}/Controls/{$this->primary}.php";
         }
 
-        $control_name = "\\ObsidianMoonEngine\\control_{$this->primary}";
+        $control_name = "\\ObsidianMoonEngine\\Control{$this->primary}";
         if (class_exists($control_name)) {
             $this->control = new $control_name($this->core);
             $this->control->start();
         }
 
-        if (isset($this->secondary) && method_exists($this->control, $this->secondary)) {
-            call_user_func_array(array($this->control, $this->secondary), $this->params);
+        if (isset($this->_secondary) && method_exists($this->control, $this->_secondary)) {
+            call_user_func_array(array($this->control, $this->_secondary), $this->params);
         } else {
             $this->control->index();
         }

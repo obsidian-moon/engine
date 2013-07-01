@@ -20,13 +20,13 @@ namespace ObsidianMoonEngine;
  * Class to handle all of the input from $_POST, $_GET, $_SESSION, $_COOKIE and $_SERVER
  *
  * @category  ObsidianMoonEngine
- * @package   Core_Input
+ * @package   CoreInput
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
-class core_input extends Module
+class CoreInput extends Module
 {
 
     /**
@@ -38,7 +38,7 @@ class core_input extends Module
      *
      * @return bool
      */
-    protected function fetch_from_array(&$array, $index = '', $xss_clean = false)
+    protected function fetchFromArray(&$array, $index = '', $xss_clean = false)
     {
         if (!isset($array[$index])) {
             return false;
@@ -67,12 +67,12 @@ class core_input extends Module
 
             // Loop through the full $_GET array.
             foreach (array_keys($_GET) as $key) {
-                $get[$key] = $this->fetch_from_array($_GET, $key, $xss_clean);
+                $get[$key] = $this->fetchFromArray($_GET, $key, $xss_clean);
             }
 
             return $get;
         } else {
-            return $this->fetch_from_array($_GET, $index, $xss_clean);
+            return $this->fetchFromArray($_GET, $index, $xss_clean);
         }
     }
 
@@ -92,12 +92,12 @@ class core_input extends Module
 
             // Loop through the full $_POST array and return the value.
             foreach (array_keys($_POST) as $key) {
-                $post[$key] = $this->fetch_from_array($_POST, $key, $xss_clean);
+                $post[$key] = $this->fetchFromArray($_POST, $key, $xss_clean);
             }
 
             return $post;
         } else {
-            return $this->fetch_from_array($_POST, $index, $xss_clean);
+            return $this->fetchFromArray($_POST, $index, $xss_clean);
         }
     }
 
@@ -111,7 +111,7 @@ class core_input extends Module
      */
     public function cookie($index = '', $xss_clean = false)
     {
-        return $this->fetch_from_array($_COOKIE, $index, $xss_clean);
+        return $this->fetchFromArray($_COOKIE, $index, $xss_clean);
     }
 
     /**
@@ -124,7 +124,7 @@ class core_input extends Module
      */
     public function server($index = '', $xss_clean = false)
     {
-        return $this->fetch_from_array($_SERVER, $index, $xss_clean);
+        return $this->fetchFromArray($_SERVER, $index, $xss_clean);
     }
 
     /**
@@ -137,7 +137,7 @@ class core_input extends Module
      */
     public function session($index = '', $xss_clean = false)
     {
-        return $this->fetch_from_array($_SESSION, $index, $xss_clean);
+        return $this->fetchFromArray($_SESSION, $index, $xss_clean);
     }
 
     /**

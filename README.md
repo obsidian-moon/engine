@@ -6,7 +6,7 @@ not that there are a few pieces that are based on CodeIgniter that need to be wo
 
 Alfonso E Martinez, III of Dark Prospect Games, LLC
 
-### Instructions for Installation
+### Installing Obsidian Moon Engine
 
 [Installing Obsidian Moon Engine on Wiki](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Installing-Obsidian-Moon-Engine)
 
@@ -104,16 +104,29 @@ try {
 // The Core will echo out the output buffer after the class finishes
 ```
 
-### Instructions for Using Obsidian Moon
+### Overview of the Base Methods
 
-There are two functions that you really need to know. The first of all is the `module()` method.
-Let's start off by creating a basic module that will be used by the Core class:
+Within the Obsidian Moon Engine there are a few functions that you will need to keep in mind
+when using using the framework. The first of all is that the system uses a path routing system
+that you will need to declare in the configurations. The files used to manage the flow of
+application's called ControlsIn order to provide an
+ease of use upon installation, Obsidian Moon Engine comes with a default routing module
+([core_routing](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Module-core_routing))
+that you use or extend and/or overwrite.
+
+Within the Control you will be able to load modules and views as well as handle any errors that
+occur during the process of your application's life cycle.
+
+### Deprecated Documentation
+
+There are two functions that you really need to know. The first of all is the `module()`
+method. Let's start off by creating a basic module that will be used by the Core class:
 
 ```php
 <?php
 // Location: /home/user/public_html/libraries/Modules/basic_module.php
 namespace ObsidianMoonEngine;
-class basic_module extends Module
+class Basic_Module extends Module
 {
 
     /**
@@ -161,7 +174,7 @@ class basic_module extends Module
      *
      * @return void
      */
-    protected function custom_construct_method()
+    protected function customConstructMethod()
     {
         // Custom handling example.
         echo "This was echoed in constructor!";
@@ -175,7 +188,7 @@ class basic_module extends Module
      *
      * @return string
      */
-    public function my_method()
+    public function myMethod()
     {
         return "Hello World!";
     }
@@ -220,7 +233,7 @@ class control_main extends Module
     {
         // This called from the URI '/main/'
 
-        $core->module(array('basic_module' => 'basic'));
+        $core->module(array('BasicModule' => 'basic'));
         // If you do not want to use the same class name you can create an alias in the system by assigning the class
         // to the key and the alias to a value. This will then allow you to pull up the Modules/basic_module.php and
         // assign it to '$core->basic' which you are then able to call as follows, assuming it is not previously set:
@@ -234,7 +247,7 @@ class control_main extends Module
         $this->core->smarty->display();
     }
 
-    public function about_site()
+    public function aboutSite()
     {
         // This is called when URI is '/main/about_site/'
 

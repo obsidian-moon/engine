@@ -216,9 +216,9 @@ class Core
                 $_module_name = $_module;
             }
 
-            if (preg_match('/^core_/', $_module)) {
+            if (preg_match('/^Core/', $_module)) {
                 $_module_location = "{$this->configs['core']}/Modules/{$_module_name}.php";
-                $configs_location = "{$this->configs['libs']}/Configs/core/{$_module_name}.php";
+                $configs_location = "{$this->configs['libs']}/Configs/Core/{$_module_name}.php";
             } else {
                 $_module_location = "{$this->configs['libs']}/Modules/{$_module}.php";
                 $configs_location = "{$this->configs['libs']}/Configs/{$_module}.php";

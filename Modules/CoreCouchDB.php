@@ -20,24 +20,24 @@ namespace ObsidianMoonEngine;
  * Database class for CouchDB
  *
  * @category  ObsidianMoonEngine
- * @package   Module
+ * @package   CoreCouchDB
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
-class core_couchdb extends Module
+class CoreCouchDB extends Module
 {
 
     /**
      * @var mixed
      */
-    private $headers;
+    private $_headers;
 
     /**
      * @var mixed
      */
-    private $body;
+    private $_body;
 
     /**
      * Send the request for CouchDB
@@ -77,9 +77,9 @@ class core_couchdb extends Module
             $response .= fgets($s);
         }
 
-        list($this->headers, $this->body) = explode("\r\n\r\n", $response);
+        list($this->_headers, $this->_body) = explode("\r\n\r\n", $response);
 
-        return $this->body;
+        return $this->_body;
     }
 
 }
