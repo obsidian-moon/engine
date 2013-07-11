@@ -34,10 +34,10 @@ is just the suggested layout as I will explain shortly:
 
 ```
 /
-|-- libraries/
+|-- Libraries/
 |   |-- Modules/   * Holds all of your modules
 |   |-- Configs/   * This holds the configs for your modules
-|   |   |-- core/  * Core class configs (eg. core_mysql.php matches $core_path/Modules/core_mysql.php)
+|   |   |-- Core/  * Core class configs (eg. core_mysql.php matches $core_path/Modules/core_mysql.php)
 |   |-- Controls/  * All of the controllers for your app go in here
 |   |-- Views/     * HTML views for you to insert data into
 |-- static/        * I use a static fold to hold all my assets
@@ -84,11 +84,11 @@ session_start();
 // Include and instantiate the class
 use \ObsidianMoonEngine\Core;
 $conf = array(
-    'defcon'  => 'main',
+    'defcon'  => 'Main',
     // Default control that will be used if none are called for
-    'modules' => array('core_input'),
+    'modules' => array('CoreInput'),
     // This lists all of the classes you want to load automatically
-    'routing' => 'core_routing',
+    'routing' => 'CoreRouting',
     // The class that will handle routing
     'subdir'  => 'application',
     // Subdirectory routing if needed, eg. 'http://my-obsidian.com/application/'
@@ -111,7 +111,7 @@ when using using the framework. The first of all is that the system uses a path 
 that you will need to declare in the configurations. The files used to manage the flow of
 application's called ControlsIn order to provide an
 ease of use upon installation, Obsidian Moon Engine comes with a default routing module
-([core_routing](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Module-core_routing))
+([CoreRouting](https://github.com/DarkProspectGames/ObsidianMoonEngine/wiki/Module-CoreRouting))
 that you use or extend and/or overwrite.
 
 Within the Control you will be able to load modules and views as well as handle any errors that
@@ -124,22 +124,10 @@ method. Let's start off by creating a basic module that will be used by the Core
 
 ```php
 <?php
-// Location: /home/user/public_html/libraries/Modules/basic_module.php
+// Location: /home/user/public_html/Libraries/Modules/BasicModule.php
 namespace ObsidianMoonEngine;
-class Basic_Module extends Module
+class BasicModule extends Module
 {
-
-    /**
-     * @var Core This is handled by the parent 'Module' and thus does not need to
-     *           be redeclared.
-     */
-    protected $core;
-
-    /**
-     * @var mixed $core This will be used to handle by the parent class, you do not
-     *                  need to declare it in your Module when you extend core Module.
-     */
-    protected $configs;
 
     /**
      * The constructor for the Basic Module
@@ -162,7 +150,7 @@ class Basic_Module extends Module
         parent::__construct($core, $configs);
         // Custom handling in the constructor.
         if ($this->configs['custom_config'] !== null) {
-            $this->custom_construct_method();
+            $this->customConstructMethod();
         }
     }
 
@@ -215,18 +203,18 @@ you know how you can start up and use a module:
 
 ```php
 <?php
-// Location: /home/user/public_html/libraries/Controls/main.php
-class control_main extends Module
+// Location: /home/user/public_html/Libraries/Controls/Main.php
+class ControlMain extends Control
 {
     public function __construct()
     {
         parent::__construct();
 
-        $core->module(array('basic_module'));
+        $core->module(array('BasicModule'));
         // By using only a value the system will automatically assume you don't want to
         // change the name of the module being loaded and will use the standard class
         // name and allow you to call it from $core like such:
-        $core->basic_module->my_method();
+        $core->basic_module->myMethod();
     }
 
     public function index()
@@ -235,9 +223,9 @@ class control_main extends Module
 
         $core->module(array('BasicModule' => 'basic'));
         // If you do not want to use the same class name you can create an alias in the system by assigning the class
-        // to the key and the alias to a value. This will then allow you to pull up the Modules/basic_module.php and
+        // to the key and the alias to a value. This will then allow you to pull up the Modules/BasicModule.php and
         // assign it to '$core->basic' which you are then able to call as follows, assuming it is not previously set:
-        $this->core->basic->my_method();
+        $this->core->basic->myMethod();
 
         // Another thing that you can do is use subfolders to organize all of your module, and since some of you like
         // to use smarty which does not follow the OME standards has a class name of 'Smarty'. By making the value an
@@ -247,12 +235,12 @@ class control_main extends Module
         $this->core->smarty->display();
     }
 
-    public function aboutSite()
+    public function aboutsite()
     {
-        // This is called when URI is '/main/about_site/'
+        // This is called when URI is '/main/aboutsite/'
 
         // Occasionally you may need to overwrite the default configuration that you previously declared in the
-        // configurations file located in 'libraries/Configs/` by adding an additional array to the third value
+        // configurations file located in 'Libraries/Configs/` by adding an additional array to the third value
         // as follows. This will allow you to dynamicly create classes with configurations that differ from default.
         $database_overwrite = array(
                                'host' => 'remotehost',
@@ -260,7 +248,7 @@ class control_main extends Module
                                'user' => 'userName2',
                                'pass' => 'password2',
                               );
-        $this->core->module(array('core_pdo' => array('db', null, $database_overwrite)));
+        $this->core->module(array('CorePDO' => array('db', null, $database_overwrite)));
     }
 
     /**
@@ -275,29 +263,29 @@ class control_main extends Module
         // Finally, if you need to declare several files in one shot you can just add to the array and pass multiple
         // keys and array values as follows to the module method and it will handle adding them all automatically for you:
         $this->core->module(array(
-                             'basic_module',
-                             'core_input'                      => 'input',
+                             'BasicModule',
+                             'CoreInput'                       => 'input',
                              'third_party/Smarty/Smarty.class' => array('smarty', 'Smarty'),
-                             'core_pdo'                        => array('db', null, $database_overwrite),
+                             'CorePDO'                         => array('db', null, $database_overwrite),
                             ));
     }
 
 }
 // Summary:
-// Core::module(array('location/name' => array('name_of_var_to_set', 'othername', array('config1'=>'value1'))));
+// Core::module(array('Location/Name' => array('instance_variable', 'third_party_class_name', array('config1'=>'value1'))));
 ```
 
 You will need to keep in mind the following details for the first parameter or array key of the details:
 
-- Starting with `core_` will use `/home/user/ObsidianMoonEngine/Modules/` as base, do not try to use a path afterwards
+- Starting with `Core` will use `/home/user/ObsidianMoonEngine/Modules/` as base, do not try to use a path afterwards
   because it will try to look in Core modules. Future revisions will have this rectified. All core modules don't currently
   use any paths so the use of them is unneeded for Core modules.
 - If the path/file are not prefixed for Core the Core class will try to match a path and module name from within the application's
-  module folder, located in the `/home/user/public_html/libraries/Modules/` folder for these examples.
-- You can use subdirectories to access files within your apps Modules folder structure, for example `main/main_index`
-  will find `/home/user/public_html/libraries/Modules/main/main_index.php` and will call the `main_index` module class name
+  module folder, located in the `/home/user/public_html/Libraries/Modules/` folder for these examples.
+- You can use subdirectories to access files within your app's Modules folder structure, for example `Main/MainIndex`
+  will find `/home/user/public_html/Libraries/Modules/Main/MainIndex.php` and will call the `MainIndex` module class name
   from the file and will additionally attempt to check for the existance of a config file located in the applications Configs folder
-  located at `/home/user/public_html/libraries/Configs/main/main_index.php` for these examples.
+  located at `/home/user/public_html/Libraries/Configs/Main/MainIndex.php` for these examples.
 
 The second method is as quite important as the previous one. The `view()` method, which is quite simple compared
 to the `module()` method, pulls up views with html that display the result of the data processed from the modules.
@@ -306,7 +294,7 @@ Note that you can of course use basic operators if you wish like the 'if', 'loop
 
 ```php
 <?php
-// Location: /home/user/public_html/Library/Views/simple_view.php
+// Location: /home/user/public_html/Libraries/Views/SimpleView.php
 ?>
 <!DOCTYPE html>
 <html>
@@ -325,34 +313,34 @@ differently as you will see below:
 
 ```php
 <?php
-// Location: /home/user/public_html/libraries/Controls/main.php
+// Location: /home/user/public_html/Libraries/Controls/Main.php
 
-// Get the basic_module added so that we can use it to grab data and insert it into a view. After that we will
-// take the my_method() and get the returned value of 'Hello World!' and assign it to an array with the key of
+// Get the BasicModule added so that we can use it to grab data and insert it into a view. After that we will
+// take the myMethod() and get the returned value of 'Hello World!' and assign it to an array with the key of
 // of 'test_value' since that is the variable we are going to be replacing.:
-$core->module(array('basic_module' => 'basic'));
-$data['test_value'] = $core->basic->my_method();
+$this->core->module(array('BasicModule' => 'basic'));
+$this->data['test_value'] = $this->core->basic->myMethod();
 
 // After we have assigned data to an array with the appropriate keys we will then send it into a view will will
 // be appended to the Core class's internal buffer. Please note though that variable you pass to 'view()' must
 // always be an array due to how it handles the data we give it to populate into the view.
-$core->view('simple_view', $data);
+$this->core->view('SimpleView', $this->data);
 
-// Note: Like the 'module()' method you are able to use subfolders in the 'libraries/Views/' folder.
+// Note: Like the 'module()' method you are able to use subfolders in the 'Libraries/Views/' folder.
 
 // If you ever needed to have the value of the view returned to a variable you can do so by passing a 'true' to
 // the third parameter of the 'view()' method, which instead of adding to buffer will allow you to save it to
 // a variable for later use:
-$saved_view['content'] = $core->view('simple_view', $data, true);
+$this->saved_view['content'] = $this->core->view('SimpleView', $this->data, true);
 
 // If you ever come across an issue where you don't need to pass anything to a view but might want to display the
 // data variable, for example handling AJAX where you only wanted to echo out a JSON response, you can give the
 // first parameter a null value. This will skip looking for a view assign it straight to Core class's out buffer
 // and release it so that will shown. As you can see below I only want to give a JSON response:
-$response = json_encode(
+$this->response = json_encode(
                 array('error' => 'We were unable to find your account, please check your username and try again!');
             );
-$core->view(null, $response);
+$this->core->view(null, $this->response);
 ```
 
 ### Summary of Obsidian Moon

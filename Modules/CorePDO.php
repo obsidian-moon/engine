@@ -96,7 +96,7 @@ class CorePDO extends Module
             $this->connection = new \PDO($dsn, $this->configs['user'], $this->configs['pass']);
             $this->connection->setAttribute(\PDO::ATTR_ERRMODE, $this->configs['error_mode']);
         } catch (\PDOException $e) {
-            throw new \Exception('core_pdo::__construct()->PDO::__construct() : ' . $e->getMessage());
+            throw new \Exception('CorePDO::__construct()->PDO::__construct() : ' . $e->getMessage());
         }
     }
 
@@ -117,13 +117,13 @@ class CorePDO extends Module
         try {
             $sth = $this->$stmt->execute($array);
         } catch (\PDOException $e) {
-            throw new \Exception('core_pdo::execute()->PDOStatement::execute() : ' . $e->getMessage());
+            throw new \Exception('CorePDO::execute()->PDOStatement::execute() : ' . $e->getMessage());
         }
         if ($sth instanceof \PDOStatement) {
             try {
                 $this->values = $sth->fetchAll($this->configs['fetch_mode']);
             } catch (\PDOException $e) {
-                throw new \Exception('core_pdo::execute()->PDOStatement::fetchAll() : ' . $e->getMessage());
+                throw new \Exception('CorePDO::execute()->PDOStatement::fetchAll() : ' . $e->getMessage());
             }
         }
 
@@ -132,7 +132,7 @@ class CorePDO extends Module
             try {
                 $this->lastid = $this->connection->lastInsertId();
             } catch (\PDOException $e) {
-                throw new \Exception('core_pdo::execute()->PDO::lastInsertId() : ' . $e->getMessage());
+                throw new \Exception('CorePDO::execute()->PDO::lastInsertId() : ' . $e->getMessage());
             }
         }
 
@@ -205,7 +205,7 @@ class CorePDO extends Module
         try {
             $this->$stmt = $this->connection->prepare($sql);
         } catch (\PDOException $e) {
-            throw new \Exception('core_pdo::prepare()->PDO::prepare() : ' . $e->getMessage());
+            throw new \Exception('CorePDO::prepare()->PDO::prepare() : ' . $e->getMessage());
         }
         $store_sql        = $stmt . '_sql';
         $this->$store_sql = $sql;
@@ -228,25 +228,25 @@ class CorePDO extends Module
         $this->values = array();
         $this->lastid = null;
         if ($sql == '') {
-            throw new \Exception('core_pdo::query(): Query was undefined, please make sure you pass one.');
+            throw new \Exception('CorePDO::query(): Query was undefined, please make sure you pass one.');
         }
 
         if ($params === null) {
             try {
                 $sth = $this->connection->query($sql);
             } catch (\PDOException $e) {
-                throw new \Exception('core_pdo::query()->PDO::query() : ' . $e->getMessage());
+                throw new \Exception('CorePDO::query()->PDO::query() : ' . $e->getMessage());
             }
         } else {
             try {
                 $sth = $this->connection->prepare($sql);
             } catch (\PDOException $e) {
-                throw new \Exception('core_pdo::query()->PDO::prepare() : ' . $e->getMessage());
+                throw new \Exception('CorePDO::query()->PDO::prepare() : ' . $e->getMessage());
             }
             try {
                 $sth->execute($params);
             } catch (\PDOException $e) {
-                throw new \Exception('core_pdo::query()->PDO::execute() : ' . $e->getMessage());
+                throw new \Exception('CorePDO::query()->PDO::execute() : ' . $e->getMessage());
             }
         }
 
@@ -254,7 +254,7 @@ class CorePDO extends Module
             try {
                 $this->values = $sth->fetchAll($this->configs['fetch_mode']);
             } catch (\PDOException $e) {
-                throw new \Exception('core_pdo::query()->PDOStatement::fetchAll() : ' . $e->getMessage());
+                throw new \Exception('CorePDO::query()->PDOStatement::fetchAll() : ' . $e->getMessage());
             }
         }
 
@@ -262,7 +262,7 @@ class CorePDO extends Module
             try {
                 $this->lastid = $this->connection->lastInsertId();
             } catch (\PDOException $e) {
-                throw new \Exception('core_pdo::query()->PDO::lastInsertId() : ' . $e->getMessage());
+                throw new \Exception('CorePDO::query()->PDO::lastInsertId() : ' . $e->getMessage());
             }
         }
 

@@ -87,7 +87,7 @@ class Core
 
         $this->configs['core'] = dirname(__FILE__);
         $this->configs['base'] = dirname($_SERVER['SCRIPT_FILENAME']);
-        $this->configs['libs'] = $this->configs['base'] . '/libraries';
+        $this->configs['libs'] = $this->configs['base'] . '/Libraries';
 
         if (isset($conf['modules'])) {
             try {
