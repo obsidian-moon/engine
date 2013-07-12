@@ -15,7 +15,7 @@
  */
 namespace ObsidianMoonEngine;
 /**
- * Obsidian Moon Engine by Dark Prospect Games
+ * Module ObsidianMoonEngine\CorePDO
  *
  * Database class using PDO
  *

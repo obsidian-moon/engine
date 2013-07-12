@@ -5,14 +5,15 @@
   which will use a single instance.
 - The Obsidian Moon Engine will now use the `ObsidianMoonEngine` namespace for all of it's
   components, and will be required in all of your applications components.
-- Removed `core_mysql` module from the framework with the deprecation of MySQL class in PHP 5.5.
-  Please, use the `core_pdo` module instead, more optimizations will be introduced at a later time.
+- Removed `CoreMysql` module from the framework with the deprecation of MySQL class in PHP 5.5.
+  Please, use the `CorePDO` module instead, more optimizations will be introduced at a later time.
 - Modules and Controls will not extend a superclass designed to provide a skeleton for each.
-- Routing is now handled by a routing module which we will now have to defined in the
-  configurations on creations.
+- Routing is now handled by a routing module which will default to `CoreRouting` if not specified.
 - Added the ability to use subdirectories as the base of the application, for example:
   `http://my-obsidian.com/application/`. Check documentation for methods of using this in
   your application.
+- Allowing users to customize their apps by adding additional optional configurations, `mycontrol` & `mymodule`.
+- Added the ability to overwrite the configurations stored in  `Libraries/Configs` by passing an array to `module()`.
 
 #### Version 1.2.3
 - Replaced Facebook Enhanced with Facebook Ignited `Version 1.3.1`, `not-ignited` branch.

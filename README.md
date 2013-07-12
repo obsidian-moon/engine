@@ -55,8 +55,8 @@ RewriteBase /
 # If using a subdirectory use as below instead
 RewriteBase /application
 
-# Remove the ability to access libraries folder
-RewriteCond %{REQUEST_URI} ^libraries.*
+# Remove the ability to access Libraries folder
+RewriteCond %{REQUEST_URI} ^Libraries.*
 RewriteRule ^(.*)$ /index.php?/$1 [L]
 
 # Checks to see if the user is attempting to access a valid file,
@@ -84,14 +84,18 @@ session_start();
 // Include and instantiate the class
 use \ObsidianMoonEngine\Core;
 $conf = array(
-    'defcon'  => 'Main',
+    'defcon'    => 'Main',
     // Default control that will be used if none are called for
-    'modules' => array('CoreInput'),
+    'modules'   => array('CoreInput'),
     // This lists all of the classes you want to load automatically
-    'routing' => 'CoreRouting',
-    // The class that will handle routing
-    'subdir'  => 'application',
+    'routing'   => 'CoreRouting',
+    // The class that will handle routing, default is CoreRouting
+    'subdir'    => 'application',
     // Subdirectory routing if needed, eg. 'http://my-obsidian.com/application/'
+    'mycontrol' => 'MyControl',
+    // Load a custom Control interface/abstract from app Modules directory
+    'mymodule'  => 'MyModule',
+    // Load a custom Module interface/abstract from app Modules directory
 );
 try {
     $core = Core::start($conf);

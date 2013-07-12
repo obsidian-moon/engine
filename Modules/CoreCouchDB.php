@@ -6,7 +6,7 @@
  *
  * PHP version 5
  *
- * @category  Frameworks
+ * @category  ObsidianMoonEngine
  * @package   ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
@@ -15,9 +15,9 @@
  */
 namespace ObsidianMoonEngine;
 /**
- * Obsidian Moon Engine by Dark Prospect Games
+ * Module ObsidianMoonEngine\CoreCouchDB
  *
- * Database class for CouchDB
+ * Database class for CouchDB [Experimental!]
  *
  * @category  ObsidianMoonEngine
  * @package   CoreCouchDB
@@ -25,6 +25,7 @@ namespace ObsidianMoonEngine;
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ *
  */
 class CoreCouchDB extends Module
 {

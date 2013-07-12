@@ -11,22 +11,22 @@
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/Obsidian-Moon-Engine
- *
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
 namespace ObsidianMoonEngine;
 /**
- * Class ObsidianMoonCore\Module
+ * Class ObsidianMoonEngine\Module
  *
- * This class is the core of the framework and handles all of the
- * the modules that you will be using for your applications.
+ * This class is the structure of the modules used by the framework which are
+ * loaded into the framework for later use for your applications.
  *
- * @category ObsidianMoonEngine
- * @package  Module
- * @author   Alfonso E Martinez, III <admin@darkprospect.net>
- * @license  BSD https://darkprospect.net/BSD-License.txt
- * @link     https://github.com/DarkProspectGames/ObsidianMoonEngine
- * @since    1.3.0 Allowing for implementations of modules.
+ * @category  ObsidianMoonEngine
+ * @package   Module
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ * @license   BSD https://darkprospect.net/BSD-License.txt
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @since     1.3.0 Allowing for implementations of modules.
  */
 abstract class Module
 {

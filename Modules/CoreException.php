@@ -2,6 +2,8 @@
 /**
  * Obsidian Moon Engine by Dark Prospect Games
  *
+ * An Open Source, Lightweight and 100% Modular Framework in PHP
+ *
  * PHP version 5
  *
  * @category  ObsidianMoonEngine
@@ -20,13 +22,14 @@ use Exception;
  * You will be able to log errors automatically instead of dealing
  * with error_log() directly.
  *
- * @category ObsidianMoonEngine
- * @package  CoreException
- * @author   Alfonso E Martinez, III <admin@darkprospect.net>
- * @license  BSD https://darkprospect.net/BSD-License.txt
- * @version  Release: 1.3.2
- * @link     https://github.com/DarkProspectGames/ObsidianMoonEngine
- * @link     https://github.com/DarkProspectGames/Facebook-Ignited
+ * @category  ObsidianMoonEngine
+ * @package   CoreException
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ * @license   BSD https://darkprospect.net/BSD-License.txt
+ * @version   Release: 1.3.2
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link      https://github.com/DarkProspectGames/Facebook-Ignited
  */
 class CoreException extends Exception
 {

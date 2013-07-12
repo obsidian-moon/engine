@@ -6,26 +6,26 @@
  *
  * PHP version 5
  *
- * @category  Frameworks
+ * @category  ObsidianMoonEngine
  * @package   ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/Obsidian-Moon-Engine
- *
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
 namespace ObsidianMoonEngine;
 /**
- * Obsidian Moon Engine by Dark Prospect Games
+ * Module ObsidianMoonEngine\CoreBenchmark
  *
- * Based on CodeIgniter's Benchmark Class
+ * Loosely inspired by CodeIgniter's benchmark class, this module calculates the
+ * time it takes to load the application's resources.
  *
  * @category  ObsidianMoonEngine
  * @package   CoreBenchmark
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/Obsidian-Moon-Engine
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  *
  */
 class CoreBenchmark extends Module

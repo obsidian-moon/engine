@@ -11,22 +11,22 @@
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/Obsidian-Moon-Engine
- *
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
 namespace ObsidianMoonEngine;
 /**
- * Class ObsidianMoonCore\Control
+ * Class ObsidianMoonEngine\Control
  *
- * This class is the core of the framework and handles all of the
- * the controls that will guide the movement of your applications.
+ * This class is the structure of the controls used by the framework which are
+ * called by the framework in order to guide the application's flow.
  *
- * @category ObsidianMoonEngine
- * @package  Control
- * @author   Alfonso E Martinez, III <admin@darkprospect.net>
- * @license  BSD https://darkprospect.net/BSD-License.txt
- * @link     https://github.com/DarkProspectGames/ObsidianMoonEngine
- * @since    1.3.0 Allowing for implementations of modules.
+ * @category  ObsidianMoonEngine
+ * @package   Control
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ * @license   BSD https://darkprospect.net/BSD-License.txt
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @since     1.3.0 Allowing for implementations of modules.
  */
 abstract class Control
 {

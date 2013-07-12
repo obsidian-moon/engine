@@ -6,7 +6,7 @@
  *
  * PHP version 5
  *
- * @category  Frameworks
+ * @category  ObsidianMoonEngine
  * @package   ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
@@ -15,9 +15,9 @@
  */
 namespace ObsidianMoonEngine;
 /**
- * Obsidian Moon Engine by Dark Prospect Games
+ * Module ObsidianMoonEngine\CoreInput
  *
- * Class to handle all of the input from $_POST, $_GET, $_SESSION, $_COOKIE and $_SERVER
+ * A module to handle all of the input from $_POST, $_GET, $_SESSION, $_COOKIE and $_SERVER
  *
  * @category  ObsidianMoonEngine
  * @package   CoreInput

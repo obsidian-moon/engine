@@ -12,24 +12,32 @@
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
- *
  */
 namespace ObsidianMoonEngine;
 use Exception;
+
+require_once 'Module.php';
+require_once 'Control.php';
 /**
- * Class ObsidianMoonCore\Core
+ * Class ObsidianMoonEngine\Core
  *
- * This class is the core of the framework and handles all of the
- * the modules that you will be using for your applications.
+ * This class is the core of the framework and handles all of the loading and processing
+ * of modules and controls that will be used by your application.
  *
- * @category ObsidianMoonEngine
- * @package  Core
- * @author   Alfonso E Martinez, III <admin@darkprospect.net>
- * @license  BSD https://darkprospect.net/BSD-License.txt
- * @link     https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @category  ObsidianMoonEngine
+ * @package   Core
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
+ * @copyright 2011-2013 Dark Prospect Games, LLC
+ * @license   BSD https://darkprospect.net/BSD-License.txt
+ * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
  */
 class Core
 {
+
+    /**
+     * @const Version of the Framework
+     */
+    const VERSION = '1.3.0';
 
     /**
      * @var mixed
@@ -42,27 +50,29 @@ class Core
     public $errors = array();
 
     /**
-     * @var mixed
+     * @var mixed The variable that stores the output that will be returned at
+     *            the end of the script.
      */
     protected $output;
 
     /**
-     * @var mixed
+     * @var mixed An array holding all of the configurations that we created the Core with.
      */
     protected $configs;
 
     /**
-     * @var mixed
+     * @var mixed When the user creates variables in the Core, we assign them to this
+     *            array for later referencing by the app.
      */
     protected $globals;
 
     /**
-     * @var Core
+     * @var Core The current instance of a Core object.
      */
     protected static $instance = null;
 
     /**
-     * @var mixed
+     * @var mixed An array holding all of the Module objects currently loaded into Core.
      */
     protected $modules;
 
@@ -76,8 +86,8 @@ class Core
     protected function __construct($conf = null)
     {
         $this->globals['systime'] = time();
-        $this->globals['is_ajax'] = $this->get_ajax();
-        $this->globals['is_http'] = $this->get_protocol();
+        $this->globals['is_ajax'] = $this->getAjax();
+        $this->globals['is_http'] = $this->getProtocol();
         // Assign all configuration values to $conf_**** variables.
         if (isset($conf) == true && is_array($conf) == true) {
             foreach ($conf as $key => $value) {
@@ -88,6 +98,21 @@ class Core
         $this->configs['core'] = dirname(__FILE__);
         $this->configs['base'] = dirname($_SERVER['SCRIPT_FILENAME']);
         $this->configs['libs'] = $this->configs['base'] . '/Libraries';
+
+        // CoreRouting is default routing method, can be overwritten when specified.
+        if (!isset($this->configs['routing'])) {
+            $this->configs['routing'] = 'CoreRouting';
+        }
+
+        // Check if a custom Control class is defined.
+        if (isset($this->configs['mycontrol'])) {
+            require_once $this->configs['libs'].'/Modules/'.$this->configs['mycontrol'].'.php';
+        }
+
+        // Check if a custom Module class is defined.
+        if (isset($this->configs['mymodule'])) {
+            require_once $this->configs['libs'] . '/Modules/' . $this->configs['mymodule'] . '.php';
+        }
 
         if (isset($conf['modules'])) {
             try {
@@ -111,7 +136,8 @@ class Core
     /**
      * Call either a module or a global from storage.
      *
-     * This method will automatically grab the correct place that
+     * This method will automatically grab the correct reference and return the
+     * value as the app needs.
      *
      * @param mixed $name The global variable that is trying to be set.
      *
@@ -139,16 +165,43 @@ class Core
     }
 
     /**
-     * Set a global in the global storage.
+     * Global Setter
+     *
+     * We use this to set a global in the global storage array, however we don't
+     * want them to be able to create variables that have prefix of 'conf_' since
+     * that is reserved for framework configs.
      *
      * @param mixed $name  The global variable that is trying to be set.
      * @param mixed $value Value of the global that you are trying to set.
      *
-     * @return void
+     * @return boolean
      */
     public function __set($name, $value)
     {
-        $this->globals[$name] = $value;
+        if (!preg_match('/^conf_/i', $name)) {
+            $this->globals[$name] = $value;
+
+            // Check to make sure that the value got set, and that it is correct.
+            if (isset($this->globals[$name]) && $this->globals[$name] == $value) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Global toString
+     *
+     * We use this to return the name and version of Framework if they try to echo Core.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return 'Obsidian Moon Engine v'.self::VERSION.', Copyright (c) 2011-2013 Dark Prospect Games, LLC';
     }
 
     /**
@@ -156,7 +209,7 @@ class Core
      *
      * @return boolean
      */
-    private function get_ajax()
+    private function getAjax()
     {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
         ) {
@@ -171,7 +224,7 @@ class Core
      *
      * @return string
      */
-    private function get_protocol()
+    private function getProtocol()
     {
         // Check for Apache HTTPS.
         if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1)) {
@@ -243,7 +296,11 @@ class Core
                     if (isset($this->modules[$_access_name])) {
                         throw new Exception("Module '\$this->$_access_name' has already been set, could not instantiate module '$_module_name'!");
                     } else {
-                        if (isset($config) && $config !== null) {
+                        if ((isset($config) && $config !== null) || (isset($_configs) && $_configs !== null)) {
+                            if (isset($_configs) && $_configs !== null) {
+                                $config = $_configs;
+                            }
+
                             try {
                                 $this->modules[$_access_name] = new $_module_namespace($this, $config);
                             } catch (Exception $e) {
@@ -269,7 +326,10 @@ class Core
     }
 
     /**
-     * Handles the routing
+     * Routing Caller
+     *
+     * We run the routing after all the modules etc have been loaded to make sure that
+     * the correct Control is called.
      *
      * @throws Exception
      * @return void
@@ -306,7 +366,7 @@ class Core
      * and if needed returns that value to be included in other views.
      *
      * <code>
-     *     $core->view()
+     *     $this->core->view()
      * </code>
      *
      * @param mixed   $_view   Name of the view to be called.
@@ -345,6 +405,3 @@ class Core
     }
 
 }
-
-require_once 'Module.php';
-require_once 'Control.php';
