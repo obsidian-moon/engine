@@ -77,11 +77,9 @@ and add the basic functionality with the following:
 
 ```php
 <?php
-// If you need to add to the include path and create a session.
 include '/home/user/ObsidianMoonEngine/Core.php';
 session_start();
 
-// Include and instantiate the class
 use \ObsidianMoonEngine\Core;
 $conf = array(
     'defcon'    => 'Main',
@@ -93,7 +91,6 @@ try {
 } catch (Exception $e) {
     echo 'There was an error initializing the system: '.$e->getMessage();
 }
-// The Core will echo out the output buffer after the class finishes
 ```
 
 ### Overview of the Base Methods
