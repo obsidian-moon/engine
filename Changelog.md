@@ -1,8 +1,6 @@
 ## Obsidian Moon Engine Change Log
 
 #### Version 1.3.0
-- The framework will now only be able to be called from a singleton using `Core::start()`
-  which will use a single instance.
 - The Obsidian Moon Engine will now use the `ObsidianMoonEngine` namespace for all of it's
   components, and will be required in all of your applications components.
 - Removed `CoreMysql` module from the framework with the deprecation of MySQL class in PHP 5.5.

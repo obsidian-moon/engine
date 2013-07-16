@@ -83,7 +83,7 @@ class Core
      *
      * @throws Exception
      */
-    protected function __construct($conf = null)
+    public function __construct($conf = null)
     {
         $this->globals['systime'] = time();
         $this->globals['is_ajax'] = $this->getAjax();
@@ -341,22 +341,6 @@ class Core
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
-    }
-
-    /**
-     * Creating an instance of the ObsidianMoonCore Class.
-     *
-     * @param mixed $conf The configurations to be passed to the constructor.
-     *
-     * @return Core
-     */
-    public static function start($conf)
-    {
-        if (self::$instance === null) {
-            self::$instance = new self($conf);
-        }
-
-        return self::$instance;
     }
 
     /**

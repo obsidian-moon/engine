@@ -85,20 +85,10 @@ session_start();
 use \ObsidianMoonEngine\Core;
 $conf = array(
     'defcon'    => 'Main',
-    // Default control that will be used if none are called for
     'modules'   => array('CoreInput'),
-    // This lists all of the classes you want to load automatically
-    'routing'   => 'CoreRouting',
-    // The class that will handle routing, default is CoreRouting
-    'subdir'    => 'application',
-    // Subdirectory routing if needed, eg. 'http://my-obsidian.com/application/'
-    'mycontrol' => 'MyControl',
-    // Load a custom Control interface/abstract from app Modules directory
-    'mymodule'  => 'MyModule',
-    // Load a custom Module interface/abstract from app Modules directory
 );
 try {
-    $core = Core::start($conf);
+    $core = new Core($conf);
     $core->routing();
 } catch (Exception $e) {
     error_log('Error on OME Construct: '.$e->getMessage());
