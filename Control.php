@@ -37,6 +37,11 @@ abstract class Control
     protected $core;
 
     /**
+     * @var mixed
+     */
+    protected $routes = array();
+
+    /**
      * Constructor class for a standard module.
      *
      * This function will be called when the control is instantiated. It automatically
@@ -45,9 +50,9 @@ abstract class Control
      * they want to totally overwrite the constructor:
      *
      * <code>
-     *     public function __construct(Core $core)
+     *     public function __construct(Core $core, $routing)
      *     {
-     *         parent::__construct($core);
+     *         parent::__construct($core, $routing);
      *         // Add any custom coding to your constructor.
      *     }
      * </code>
@@ -55,11 +60,15 @@ abstract class Control
      * This helps ensure that all modules are using the same implementation and that the module
      * creator has an easier time with creating modules.
      *
-     * @param Core $core The reference to the Core Class.
+     * @param Core  $core   The reference to the Core class.
+     * @param mixed $routes Any extra routing that we get from routing module.
+     *
+     * @return \ObsidianMoonEngine\Control
      */
-    public function __construct(Core $core)
+    public function __construct(Core $core, $routes)
     {
-        $this->core = $core;
+        $this->core   = $core;
+        $this->routes = $routes;
     }
 
     /**

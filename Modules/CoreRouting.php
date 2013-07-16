@@ -42,7 +42,7 @@ class CoreRouting extends Module
     /**
      * @var mixed
      */
-    protected $params;
+    protected $params = array();
 
     /**
      * @var mixed
@@ -103,7 +103,8 @@ class CoreRouting extends Module
 
         $control_name = "\\ObsidianMoonEngine\\Control{$this->primary}";
         if (class_exists($control_name)) {
-            $this->control = new $control_name($this->core);
+            // If the control exists we pass core and params to it.
+            $this->control = new $control_name($this->core, $this->params);
             $this->control->start();
         }
 

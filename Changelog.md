@@ -12,6 +12,8 @@
   your application.
 - Allowing users to customize their apps by adding additional optional configurations, `mycontrol` & `mymodule`.
 - Added the ability to overwrite the configurations stored in  `Libraries/Configs` by passing an array to `module()`.
+- Additional routing info will be passed to Control class into `$this->routes` to be used by an Controls that you
+  create, this functionality will be included as a part of the CoreRouting module.
 
 #### Version 1.2.3
 - Replaced Facebook Enhanced with Facebook Ignited `Version 1.3.1`, `not-ignited` branch.
