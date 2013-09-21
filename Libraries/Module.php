@@ -13,6 +13,8 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
+namespace ObsidianMoonEngine;
+
 /**
  * Class Module
  *
@@ -27,7 +29,7 @@
  * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  * @since     1.3.0 Allowing for implementations of modules.
  */
-abstract class Module
+abstract class AbstractModule
 {
 
     /**
@@ -62,7 +64,7 @@ abstract class Module
      * @param Core  $core    The reference to the Core Class.
      * @param mixed $configs The configurations being passed to the module.
      *
-     * @return Module
+     * @return AbstractModule
      */
     public function __construct(Core $core, $configs = null)
     {
@@ -83,5 +85,4 @@ abstract class Module
     public function start()
     {
     }
-
 }

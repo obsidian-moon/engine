@@ -5,12 +5,11 @@
                 "name": "darkprospect/obsidian-moon-engine",
                 "description": "An Open Source, Lightweight and 100% Modular Framework in PHP",
                 "version": "1.3.0",
-                "type": "project",
                 "keywords": [
                     "framework"
                 ],
                 "homepage": "https://darkprospect.net",
-                "license": "proprietary",
+                "license": "BSD-3-Clause",
                 "authors": [
                     {
                         "name": "Alfonso E Martinez, III",
@@ -32,10 +31,14 @@
                 },
                 "autoload": {
                     "classmap": [
-                        "Libraries"
+                        "Libraries",
+                        "Libraries/Core.php"
                     ]
                 },
-                "minimum-stability": "stable"
+                "config": {
+                    "preferred-install": "dist"
+                },
+                "minimum-stability": "dev"
             }
         }
     }

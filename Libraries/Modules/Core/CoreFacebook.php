@@ -13,6 +13,13 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
+namespace ObsidianMoonEngine\Modules\Core;
+
+use \ObsidianMoonEngine\Core;
+use \ObsidianMoonEngine\AbstractModule;
+use \Facebook;
+use \FacebookApiException;
+
 /**
  * Module CoreFacebook
  *
@@ -32,7 +39,7 @@
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  * @link      https://github.com/DarkProspectGames/Facebook-Ignited
  */
-class CoreFacebook extends Module
+class CoreFacebook extends AbstractModule
 {
 
     /**
@@ -48,7 +55,7 @@ class CoreFacebook extends Module
     /**
      * @var array this variable holds all of the global settings for Facebook Ignited
      */
-    private $_globals;
+    private $globals;
 
     /**
      * @var int this variable holds the Facebook user's id
@@ -77,7 +84,7 @@ class CoreFacebook extends Module
             $_REQUEST['code'] = $fb_query_strings['code'];
         }
 
-        $fb_params      = $this->fb_set_globals($configs);
+        $fb_params      = $this->setglobals($configs);
         $this->facebook = new Facebook($fb_params);
         $this->userid   = $this->facebook->getUser();
     }
@@ -101,10 +108,10 @@ class CoreFacebook extends Module
             try {
                 $value = $this->wrap_call_user_func_array($this->facebook, $method, $params);
             } catch (FacebookApiException $e) {
-                throw new CoreFacebookException("Error trying {$method}(): " . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+                throw new CoreFacebookException("Error trying {$method}(): " . $e->getMessage(), $e, $this->globals['fb_logexcept']);
             }
         } else {
-            throw new CoreFacebookException("Could not find the method {$method} in Facebook Class.", null, null, $this->_globals['fb_logexcept']);
+            throw new CoreFacebookException("Could not find the method {$method} in Facebook Class.", null, null, $this->globals['fb_logexcept']);
         }
 
         return $value;
@@ -142,7 +149,7 @@ class CoreFacebook extends Module
                 try {
                     $result = $this->facebook->api($full_request_id, 'DELETE');
                 } catch (FacebookApiException $e) {
-                    throw new CoreFacebookException($e->getMessage(), $e, $this->_globals['fb_logexcept']);
+                    throw new CoreFacebookException($e->getMessage(), $e, $this->globals['fb_logexcept']);
                 }
                 if ($result) {
                     if (strlen($result_value) > 0) {
@@ -173,7 +180,7 @@ class CoreFacebook extends Module
         try {
             $data = $this->fb_fql("SELECT {$perm} FROM permissions WHERE uid = me()");
         } catch (CoreFacebookException $e) {
-            throw new CoreFacebookException('fb_fql() : ' . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+            throw new CoreFacebookException('fb_fql() : ' . $e->getMessage(), $e, $this->globals['fb_logexcept']);
         }
         $permission = implode(',', array_keys(array_diff($data[0], array(1))));
         if (!$permission) {
@@ -216,7 +223,7 @@ class CoreFacebook extends Module
         try {
             $eventID = $this->facebook->api($param);
         } catch (FacebookApiException $e) {
-            throw new CoreFacebookException('fb_create_event() - Facebook::api() exception caught: ' . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+            throw new CoreFacebookException('fb_create_event() - Facebook::api() exception caught: ' . $e->getMessage(), $e, $this->globals['fb_logexcept']);
         }
 
         return $eventID;
@@ -242,16 +249,17 @@ class CoreFacebook extends Module
             try {
                 $response = $this->facebook->api("/$id/feed", 'post', $values);
             } catch (FacebookApiException $e) {
-                throw new CoreFacebookException('fb_feed() - Facebook::api() exception caught: ' . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+                throw new CoreFacebookException('fb_feed() - Facebook::api() exception caught: ' . $e->getMessage(), $e, $this->globals['fb_logexcept']);
             }
             if (!preg_match('/^[0-9_]+$/', $response)) {
-                throw new CoreFacebookException('fb_feed() - Facebook::api() returned an invalid value.', null, $this->_globals['fb_logexcept']);
+                throw new CoreFacebookException('fb_feed() - Facebook::api() returned an invalid value.', null, $this->globals['fb_logexcept']);
             }
         } else if ($method == 'delete') {
             try {
                 $response = $this->facebook->api("/$id", 'delete');
             } catch (CoreFacebookException $e) {
-                throw new CoreFacebookException('fb_feed() - Facebook::api() exception caught: ' . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+                throw new CoreFacebookException(
+                    'fb_feed() - Facebook::api() exception caught: ' . $e->getMessage(), $e, $this->globals['fb_logexcept']);
             }
         }
 
@@ -268,7 +276,7 @@ class CoreFacebook extends Module
      * @return mixed
      * @throws CoreFacebookException
      */
-    public function fb_fql($fqlquery)
+    public function fql($fqlquery)
     {
         if (is_array($fqlquery)) {
             $fqlquery = json_encode($fqlquery);
@@ -277,7 +285,11 @@ class CoreFacebook extends Module
         try {
             $fql_obj = $this->facebook->api(array('method' => 'fql.query', 'query' => $fqlquery));
         } catch (FacebookApiException $e) {
-            throw new CoreFacebookException('fb_fql() - Facebook::api() exception caught: ' . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+            throw new CoreFacebookException(
+                'fql() - Facebook::api() exception caught: ' . $e->getMessage(),
+                $e,
+                $this->globals['fb_logexcept']
+            );
         }
 
         return $fql_obj;
@@ -292,16 +304,16 @@ class CoreFacebook extends Module
      *
      * @return array|bool
      */
-    public function fb_get_app($variable = '')
+    public function app($variable = '')
     {
         if ($variable != '') {
-            if (isset($this->_globals[$variable])) {
-                return $this->_globals[$variable];
+            if (isset($this->globals[$variable])) {
+                return $this->globals[$variable];
             } else {
                 return false;
             }
         } else {
-            return $this->_globals;
+            return $this->globals;
         }
     }
 
@@ -318,24 +330,24 @@ class CoreFacebook extends Module
      * @return mixed
      * @throws CoreFacebookException
      */
-    public function fb_get_me($redirect = false, $script = true)
+    public function me($redirect = false, $script = true)
     {
         if ($this->userid != null) {
             try {
                 $me = $this->facebook->api('/me');
             } catch (FacebookApiException $e) {
                 $this->userid = null;
-                throw new CoreFacebookException('fb_get_me(): ' . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+                throw new CoreFacebookException('me(): ' . $e->getMessage(), $e, $this->globals['fb_logexcept']);
             }
 
             return $me;
         } else {
             if ($redirect == true) {
-                $loc = $this->fb_login_url(array('script' => $script));
+                $loc = $this->loginUrl(array('script' => $script));
                 if ($script == true) {
                     echo $loc;
                 } else {
-                    $this->xtra_redirect($loc);
+                    $this->xtraRedirect($loc);
                 }
 
                 exit;
@@ -353,12 +365,16 @@ class CoreFacebook extends Module
      * @return boolean
      * @throws CoreFacebookException
      */
-    public function fb_is_bookmarked()
+    public function bookmarked()
     {
         try {
             $datas = $this->fb_fql('SELECT bookmarked FROM permissions WHERE uid = me()');
         } catch (CoreFacebookException $e) {
-            throw new CoreFacebookException('fb_is_bookmarked(): ' . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+            throw new CoreFacebookException(
+                'bookmarked(): ' . $e->getMessage(),
+                $e,
+                $this->globals['fb_logexcept']
+            );
         }
         if ($datas) {
             return true;
@@ -375,12 +391,16 @@ class CoreFacebook extends Module
      * @return boolean
      * @throws CoreFacebookException
      */
-    public function fb_is_liked()
+    public function liked()
     {
         try {
             $request = $this->facebook->api("/{$this->userid}/likes/APP_ID");
         } catch (FacebookApiException $e) {
-            throw new CoreFacebookException('fb_is_liked() - exception caught: ' . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+            throw new CoreFacebookException(
+                'liked() - exception caught: ' . $e->getMessage(),
+                $e,
+                $this->globals['fb_logexcept']
+            );
         }
         if ($request['data'] || $request->data) {
             return true;
@@ -401,7 +421,7 @@ class CoreFacebook extends Module
      * @return mixed
      * @throws CoreFacebookException
      */
-    public function fb_list_friends($value = 'uid', $list = '')
+    public function friends($value = 'uid', $list = '')
     {
         if ($list == 'full') {
             $fquery = "SELECT {$value} FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me())";
@@ -412,7 +432,11 @@ class CoreFacebook extends Module
         try {
             $friends = $this->fb_fql($fquery);
         } catch (CoreFacebookException $e) {
-            throw new CoreFacebookException('fb_list_friends(): ' . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+            throw new CoreFacebookException(
+                'friends(): ' . $e->getMessage(),
+                $e,
+                $this->globals['fb_logexcept']
+            );
         }
 
         return $friends;
@@ -429,14 +453,14 @@ class CoreFacebook extends Module
      * @return string
      * @throws CoreFacebookException
      */
-    public function fb_login_url($params = null)
+    public function loginUrl($params = null)
     {
         if (!isset($params['scope'])) {
-            $params['scope'] = $this->_globals['fb_auth'];
+            $params['scope'] = $this->globals['fb_auth'];
         }
 
         if (!isset($params['redirect'])) {
-            $params['redirect'] = $this->_globals['fb_canvas'];
+            $params['redirect'] = $this->globals['fb_canvas'];
         }
 
         $url = $this->facebook->getLoginUrl(
@@ -466,12 +490,12 @@ class CoreFacebook extends Module
      * @return string
      * @throws CoreFacebookException
      */
-    public function fb_logout_url($next = '', $script = false)
+    public function logoutUrl($next = '', $script = false)
     {
-        if (substr($this->_globals['fb_canvas'], -1) == '/') {
-            $redirect = $this->_globals['fb_canvas'] . $next;
+        if (substr($this->globals['fb_canvas'], -1) == '/') {
+            $redirect = $this->globals['fb_canvas'] . $next;
         } else {
-            $redirect = $this->_globals['fb_canvas'] . '/' . $next;
+            $redirect = $this->globals['fb_canvas'] . '/' . $next;
         }
 
         $url = $this->facebook->getLogoutUrl(array('next' => $redirect));
@@ -493,21 +517,25 @@ class CoreFacebook extends Module
      * @return mixed
      * @throws CoreFacebookException
      */
-    public function fb_notification($message, $user_id = null)
+    public function notification($message, $user_id = null)
     {
         if ($user_id === null) {
             $user_id = $this->userid;
         }
 
         $data = array(
-                 'href'         => $this->_globals['fb_canvas'],
+                 'href'         => $this->globals['fb_canvas'],
                  'access_token' => $this->facebook->getAccessToken(),
                  'template'     => $message,
                 );
         try {
             $send_result = $this->facebook->api("/$user_id/notifications", 'post', $data);
         } catch (FacebookApiException $e) {
-            throw new CoreFacebookException('fb_notification() - exception caught: ' . $e->getMessage(), $e, $this->_globals['fb_logexcept']);
+            throw new CoreFacebookException(
+                'notification() - exception caught: ' . $e->getMessage(),
+                $e,
+                $this->globals['fb_logexcept']
+            );
         }
 
         return $send_result;
@@ -518,7 +546,7 @@ class CoreFacebook extends Module
      *
      * @return void
      */
-    public function fb_post_activity()
+    public function activity()
     {
 
     }
@@ -531,15 +559,19 @@ class CoreFacebook extends Module
      * @return string
      * @throws CoreFacebookException
      */
-    public function fb_process_credits()
+    public function credits()
     {
         $data    = array('content' => array());
         $request = $this->facebook->getSignedRequest();
         if ($request == null) {
-            throw new CoreFacebookException('Bad signed request in fb_process_credits()', null, $this->_globals['fb_logexcept']);
+            throw new CoreFacebookException(
+                'Bad signed request in fb_process_credits()',
+                null,
+                $this->globals['fb_logexcept']
+            );
         }
 
-        $me       = $this->fb_get_me();
+        $me       = $this->me();
         $payload  = $request['credits'];
         $func     = $_REQUEST['method'];
         $order_id = $payload['order_id'];
@@ -548,21 +580,26 @@ class CoreFacebook extends Module
             if ($status == 'placed') {
                 $next_state                = 'settled';
                 $data['content']['status'] = $next_state;
-                $sql                       = "UPDATE `fb_item_cache` SET `finalized` = 1 WHERE `order_id` = {$order_id}";
-                mysql_query($sql);
+                $this->core->db->query(
+                    "UPDATE `fb_item_cache` SET `finalized` = 1 WHERE `order_id` = {$order_id}"
+                );
             }
 
             $data['content']['order_id'] = $order_id;
-        } else if ($func == 'payments_get_items') {
+        } elseif ($func == 'payments_get_items') {
             $order_info = stripcslashes($payload['order_info']);
             $item_info  = json_decode($order_info, true);
             $item       = null;
             if ($item_info != '') {
-                $sql   = "SELECT `title`, `price`, `description`, `image_url`, `product_url` FROM `fb_item_store` WHERE `item_id` = {$item_info}";
-                $query = mysql_query($sql);
-                $item  = mysql_fetch_array($query);
-                $sql   = "INSERT INTO `fb_item_cache`(`userid`,`item_id`,`order_id`,`finalized`,`time`) VALUES('{$me['id']}','{$item_info}','{$order_id}','0','" . time() . "')";
-                mysql_query($sql);
+                $this->core->db->query(
+                    "SELECT `title`, `price`, `description`, `image_url`, `product_url`
+                    FROM `fb_item_store` WHERE `item_id` = {$item_info}"
+                );
+                $item  = $this->core->db->fetchArray();
+                $this->core->db->query(
+                    "INSERT INTO `fb_item_cache`(`userid`,`item_id`,`order_id`,`finalized`,`time`)
+                    VALUES('{$me['id']}','{$item_info}','{$order_id}','0','" . time() . "')"
+                );
             }
 
             $url_key = array(
@@ -593,41 +630,41 @@ class CoreFacebook extends Module
      *
      * @return mixed
      */
-    private function fb_set_globals($params)
+    private function setglobals($params)
     {
         $param_array = array();
         if (is_numeric($params['fb_appid'])) {
             $param_array['appId']      = $params['fb_appid'];
-            $this->_globals['fb_appid'] = $params['fb_appid'];
+            $this->globals['fb_appid'] = $params['fb_appid'];
         }
 
         if (ctype_alnum($params['fb_secret'])) {
             $param_array['secret']      = $params['fb_secret'];
-            $this->_globals['fb_secret'] = $params['fb_secret'];
+            $this->globals['fb_secret'] = $params['fb_secret'];
         }
 
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-            $this->_globals['protocol'] = 'https';
+            $this->globals['protocol'] = 'https';
         } else {
-            $this->_globals['protocol'] = 'http';
+            $this->globals['protocol'] = 'http';
         }
 
-        $this->_globals['fb_auth']    = $params['fb_auth'];
-        $this->_globals['fb_apptype'] = $params['fb_apptype'];
-        if ($this->_globals['fb_apptype'] == 'iframe') {
-            $this->_globals['fb_canvas'] = "{$this->_globals['protocol']}://apps.facebook.com/{$params['fb_canvas']}/";
-        } else if ($this->_globals['fb_apptype'] == 'connect') {
+        $this->globals['fb_auth']    = $params['fb_auth'];
+        $this->globals['fb_apptype'] = $params['fb_apptype'];
+        if ($this->globals['fb_apptype'] == 'iframe') {
+            $this->globals['fb_canvas'] = "{$this->globals['protocol']}://apps.facebook.com/{$params['fb_canvas']}/";
+        } elseif ($this->globals['fb_apptype'] == 'connect') {
             if (preg_match('/^http:\/\//', $params['fb_canvas']) || preg_match('/^https:\/\//', $params['fb_canvas'])) {
-                $this->_globals['fb_canvas'] = $params['fb_canvas'];
+                $this->globals['fb_canvas'] = $params['fb_canvas'];
             } else {
-                $this->_globals['fb_canvas'] = "{$this->_globals['protocol']}://{$params['fb_canvas']}/";
+                $this->globals['fb_canvas'] = "{$this->globals['protocol']}://{$params['fb_canvas']}/";
             }
         }
 
         if ($params === false) {
-            $this->_globals['fb_logexcept'] = false;
+            $this->globals['fb_logexcept'] = false;
         } else {
-            $this->_globals['fb_logexcept'] = true;
+            $this->globals['fb_logexcept'] = true;
         }
 
         return $param_array;
@@ -642,19 +679,19 @@ class CoreFacebook extends Module
      *
      * @return mixed
      */
-    protected function wrap_call_user_func_array($c, $a, $p)
+    protected function wrapCallUserFuncArray($c, $a, $p)
     {
         if (count($p) == 0) {
             $functional = $c->{$a}();
-        } else if (count($p) == 1) {
+        } elseif (count($p) == 1) {
             $functional = $c->{$a}($p[0]);
-        } else if (count($p) == 2) {
+        } elseif (count($p) == 2) {
             $functional = $c->{$a}($p[0], $p[1]);
-        } else if (count($p) == 3) {
+        } elseif (count($p) == 3) {
             $functional = $c->{$a}($p[0], $p[1], $p[2]);
-        } else if (count($p) == 4) {
+        } elseif (count($p) == 4) {
             $functional = $c->{$a}($p[0], $p[1], $p[2], $p[3]);
-        } else if (count($p) == 5) {
+        } elseif (count($p) == 5) {
             $functional = $c->{$a}($p[0], $p[1], $p[2], $p[3], $p[4]);
         } else {
             $functional = call_user_func_array(array($c, $a), $p);
@@ -675,21 +712,29 @@ class CoreFacebook extends Module
      *
      * @return void
      */
-    protected function xtra_database_insert($request_ids)
+    protected function xtraDatabaseInsert($request_ids)
     {
         foreach ($request_ids as $value) {
             $request_data = $this->facebook->api('/' . $value);
             $user_id      = $this->facebook->getUser();
             $other_id     = $request_data['from']['id'];
             if ($request_data['from']) {
-                $query = mysql_query("SELECT * FROM `user_friends` WHERE `id` = '" . $user_id . "', `friend` = '" . $other_id . "'");
-                if (mysql_num_rows($query) == 0) {
-                    mysql_query("INSERT INTO `user_friends' (`id`, `friend`) VALUES ('" . $user_id . "', '" . $other_id . "')");
+                $this->core->db->query(
+                    "SELECT * FROM `user_friends` WHERE `id` = '" . $user_id . "', `friend` = '" . $other_id . "'"
+                );
+                if ($this->core->db->numRows() == 0) {
+                    $this->core->db->query(
+                        "INSERT INTO `user_friends' (`id`, `friend`) VALUES ('" . $user_id . "', '" . $other_id . "')"
+                    );
                 }
 
-                $query = mysql_query("SELECT * FROM `user_friends` WHERE `id` = '" . $other_id . "', `friend` = '" . $user_id . "'");
-                if (mysql_num_rows($query) == 0) {
-                    mysql_query("INSERT INTO `user_friends' (`id`, `friend`) VALUES ('" . $other_id . "', '" . $user_id . "')");
+                $this->core->db->query(
+                    "SELECT * FROM `user_friends` WHERE `id` = '" . $other_id . "', `friend` = '" . $user_id . "'"
+                );
+                if ($this->core->db->numRows() == 0) {
+                    $this->core->db->query(
+                        "INSERT INTO `user_friends' (`id`, `friend`) VALUES ('" . $other_id . "', '" . $user_id . "')"
+                    );
                 }
             }
         }
@@ -704,10 +749,10 @@ class CoreFacebook extends Module
      *
      * @return void
      */
-    protected function xtra_redirect($uri = '', $method = 'location', $http_response_code = 302)
+    protected function xtraRedirect($uri = '', $method = 'location', $http_response_code = 302)
     {
         if (!preg_match('#^https?://#i', $uri)) {
-            $uri = site_url($uri);
+            //$uri = site_url($uri);
         }
 
         if ($method == 'refresh') {
@@ -716,5 +761,4 @@ class CoreFacebook extends Module
             header("Location: $uri", true, $http_response_code);
         }
     }
-
 }

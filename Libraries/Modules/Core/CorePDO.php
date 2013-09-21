@@ -13,6 +13,15 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
+namespace ObsidianMoonEngine\Modules\Core;
+
+use \ObsidianMoonEngine\Core;
+use \ObsidianMoonEngine\AbstractModule;
+use \PDO;
+use \PDOException;
+use \PDOStatement;
+use \Exception;
+
 /**
  * Module CorePDO
  *
@@ -26,7 +35,7 @@
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  * @link      http://www.php.net/manual/en/book.pdo.php
  */
-class CorePDO extends Module
+class CorePDO extends AbstractModule
 {
 
     /**
@@ -149,16 +158,16 @@ class CorePDO extends Module
     {
         if (count($this->values) == 0) {
             return false;
-        } else if (count($this->values) > 1) {
+        } elseif (count($this->values) > 1) {
             return $this->values;
         } else {
             if ($params === true) {
                 return $this->values;
-            } else if ($params['item']) {
+            } elseif ($params['item']) {
                 $item = $params['item'];
                 if ($this->values[$item]) {
                     return $this->values[$item];
-                } else if ($this->values[0][$item]) {
+                } elseif ($this->values[0][$item]) {
                     return $this->values[0][$item];
                 } else {
                     return false;

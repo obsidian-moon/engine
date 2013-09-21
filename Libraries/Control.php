@@ -13,6 +13,8 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
+namespace ObsidianMoonEngine;
+
 /**
  * Class Control
  *
@@ -27,7 +29,7 @@
  * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  * @since     1.3.0 Allowing for implementations of modules.
  */
-abstract class Control
+abstract class AbstractControl
 {
 
     /**
@@ -62,7 +64,7 @@ abstract class Control
      * @param Core  $core   The reference to the Core class.
      * @param mixed $routes Any extra routing that we get from routing module.
      *
-     * @return \obsidian-moon-engine-core\Control
+     * @return AbstractControl
      */
     public function __construct(Core $core, $routes)
     {
@@ -92,5 +94,4 @@ abstract class Control
      * @return void
      */
     abstract public function start();
-
 }

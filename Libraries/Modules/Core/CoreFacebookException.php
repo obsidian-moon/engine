@@ -14,6 +14,9 @@
  * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  *
  */
+namespace ObsidianMoonEngine\Modules\Core;
+
+use \Exception;
 /**
  * Facebook Ignited by Dark Prospect Games
  *

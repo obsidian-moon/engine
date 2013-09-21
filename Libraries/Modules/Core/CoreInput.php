@@ -13,6 +13,10 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
+namespace ObsidianMoonEngine\Modules\Core;
+
+use \ObsidianMoonEngine\AbstractModule;
+
 /**
  * Module CoreInput
  *
@@ -25,7 +29,7 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
-class CoreInput extends Module
+class CoreInput extends AbstractModule
 {
 
     /**

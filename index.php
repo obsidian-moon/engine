@@ -27,8 +27,8 @@ if (file_exists('vendor/autoload.php')) {
     require 'vendor/autoload.php';
 }
 
-// Then we need to load the Core into the system so that we can use it.
-require 'Libraries/Core.php';
+use \ObsidianMoonEngine\Core;
+
 session_start();
 
 // Set the default control for app and load input module.

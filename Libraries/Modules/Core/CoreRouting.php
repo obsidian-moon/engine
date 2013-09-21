@@ -13,6 +13,11 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
+namespace ObsidianMoonEngine\Modules\Core;
+
+use \ObsidianMoonEngine\Core;
+use \ObsidianMoonEngine\AbstractModule;
+
 /**
  * Module ObsidianMoonCore\CoreRouting
  *
@@ -25,7 +30,7 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
-class CoreRouting extends Module
+class CoreRouting extends AbstractModule
 {
 
     /**
@@ -91,16 +96,16 @@ class CoreRouting extends Module
     public function start()
     {
         if (file_exists("{$this->core->conf_libs}/Controls/{$this->primary}.php")) {
-            include "{$this->core->conf_libs}/Controls/{$this->primary}.php";
-        } else if ($this->primary == '') {
-            include "{$this->core->conf_libs}/Controls/{$this->core->conf_defcon}.php";
+            require_once "{$this->core->conf_libs}/Controls/{$this->primary}.php";
+        } elseif ($this->primary == '') {
+            require_once "{$this->core->conf_libs}/Controls/{$this->core->conf_defcon}.php";
             $this->primary = $this->core->conf_defcon;
         } else {
-            include "{$this->core->conf_libs}/Controls/Error404.php";
+            require_once "{$this->core->conf_libs}/Controls/Error404.php";
             $this->primary = 'Error404';
         }
 
-        $control_name = "Control{$this->primary}";
+        $control_name = "\\ObsidianMoonEngine\\Libraries\\Controls\\Control{$this->primary}";
         if (class_exists($control_name)) {
             // If the control exists we pass core and params to it.
             $this->control = new $control_name($this->core, $this->params);
@@ -116,5 +121,4 @@ class CoreRouting extends Module
             $this->control->index();
         }
     }
-
 }

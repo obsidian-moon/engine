@@ -13,9 +13,10 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
+namespace ObsidianMoonEngine;
 
-require_once 'Module.php';
-require_once 'Control.php';
+use \Exception;
+
 /**
  * Class Core
  *
@@ -104,7 +105,7 @@ class Core
 
         // Check if a custom Control class is defined.
         if (isset($this->configs['mycontrol'])) {
-            require_once $this->configs['libs'].'/Modules/'.$this->configs['mycontrol'].'.php';
+            require_once $this->configs['libs'] . '/Modules/' . $this->configs['mycontrol'] . '.php';
         }
 
         // Check if a custom Module class is defined.
@@ -153,9 +154,9 @@ class Core
                     "Could not find a variable by the name 'conf_{$name}'!"
                 );
             }
-        } else if (isset($this->modules[$name])) {
+        } elseif (isset($this->modules[$name])) {
             return $this->modules[$name];
-        } else if (isset($this->globals[$name])) {
+        } elseif (isset($this->globals[$name])) {
             return $this->globals[$name];
         } else {
             throw new Exception("Could not find a variable by the name '{$name}'!");
@@ -209,8 +210,8 @@ class Core
      */
     private function getAjax()
     {
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
-        ) {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             return true;
         } else {
             return false;
@@ -261,7 +262,7 @@ class Core
 
             if (preg_match('/\//', $_module)) {
                 $_module_name = end(explode('/', $_module));
-            } else if ($_class_name !== null) {
+            } elseif ($_class_name !== null) {
                 $_module_name = $_class_name;
             } else {
                 $_module_name = $_module;
@@ -270,17 +271,24 @@ class Core
             if (preg_match('/^Core/', $_module)) {
                 $_module_location = "{$this->configs['core']}/Modules/Core/{$_module_name}.php";
                 $configs_location = "{$this->configs['libs']}/Configs/Core/{$_module_name}.php";
+                $_module_namespace = "\\ObsidianMoonEngine\\Libraries\\Modules\\Core\\{$_module_name}";
             } else {
                 $_module_location = "{$this->configs['libs']}/Modules/{$_module}.php";
                 $configs_location = "{$this->configs['libs']}/Configs/{$_module}.php";
+                $_module_namespace = "\\ObsidianMoonEngine\\Libraries\\Modules\\{$_module_name}";
             }
 
             if (!file_exists($_module_location)) {
-                throw new Exception("Module '$_module_name' location does not exist, please check the location and try again!");
+                throw new Exception(
+                    "Module '$_module_name' location does not exist, please check the location and try again!"
+                );
             } else {
                 include $_module_location;
-                if (!class_exists($_module_name)) {
-                    throw new Exception("Module '$_module_name' could not be found in the provided file, please check the name and try again!");
+                if (!class_exists($_module_namespace)) {
+                    throw new Exception(
+                        "Module '$_module_namespace' could not be found in the"
+                        . "provided file, please check the name and try again!"
+                    );
                 } else {
                     if (file_exists($configs_location)) {
                         include $configs_location;
@@ -291,7 +299,10 @@ class Core
                     }
 
                     if (isset($this->modules[$_access_name])) {
-                        throw new Exception("Module '\$this->$_access_name' has already been set, could not instantiate module '$_module_name'!");
+                        throw new Exception(
+                            "Module '\$this->$_access_name' has already been set,"
+                            ."could not instantiate module '$_module_name'!"
+                        );
                     } else {
                         if ((isset($config) && $config !== null) || (isset($_configs) && $_configs !== null)) {
                             if (isset($_configs) && $_configs !== null) {
@@ -299,15 +310,15 @@ class Core
                             }
 
                             try {
-                                $this->modules[$_access_name] = new $_module_name($this, $config);
+                                $this->modules[$_access_name] = new $_module_namespace($this, $config);
                             } catch (Exception $e) {
-                                throw new Exception("Error Loading Module {$_module_name}: " . $e->getMessage());
+                                throw new Exception("Error Loading Module {$_module_namespace}: " . $e->getMessage());
                             }
                         } else {
                             try {
-                                $this->modules[$_access_name] = new $_module_name($this);
+                                $this->modules[$_access_name] = new $_module_namespace($this);
                             } catch (Exception $e) {
-                                throw new Exception("Error Loading Module {$_module_name}: " . $e->getMessage());
+                                throw new Exception("Error Loading Module {$_module_namespace}: " . $e->getMessage());
                             }
                         }
 
@@ -361,9 +372,9 @@ class Core
      */
     public function view($_view, $_data = null, $_return = false)
     {
-        if (!file_exists("{$this->configs['libs']}/Views/{$_view}.php") && $_view !== null) {
+        if (!file_exists($this->configs['libs'] . '/Views/' . $_view . '.php') && $_view !== null) {
             throw new Exception("No view data could be found for 'Views/{$_view}.php'!");
-        } else if ($_view === null) {
+        } elseif ($_view === null) {
             $this->output .= $_data;
         } else {
             if ($_data !== null) {
@@ -372,7 +383,7 @@ class Core
 
             $core =& $this;
             ob_start();
-            include "{$this->configs['libs']}/Views/{$_view}.php";
+            include $this->configs['libs'] . '/Views/' . $_view . '.php';
             $buffer = ob_get_contents();
             @ob_end_clean();
             if ($_return) {
@@ -384,5 +395,4 @@ class Core
 
         return true;
     }
-
 }

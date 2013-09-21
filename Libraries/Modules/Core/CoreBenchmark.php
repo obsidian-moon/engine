@@ -13,6 +13,10 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
+namespace ObsidianMoonEngine\Modules\Core;
+
+use \ObsidianMoonEngine\AbstractModule;
+
 /**
  * Module CoreBenchmark
  *
@@ -27,13 +31,13 @@
  * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  *
  */
-class CoreBenchmark extends Module
+class CoreBenchmark extends AbstractModule
 {
 
     /**
      * @var array List of all benchmark markers and when they were added.
      */
-    private $_marker = array();
+    private $marker = array();
 
     /**
      * Set a benchmark marker
@@ -49,7 +53,7 @@ class CoreBenchmark extends Module
      */
     public function mark($name)
     {
-        $this->_marker[$name] = microtime();
+        $this->marker[$name] = microtime();
     }
 
     /**
@@ -74,16 +78,16 @@ class CoreBenchmark extends Module
             return '{elapsed_time}';
         }
 
-        if (!isset($this->_marker[$point1])) {
+        if (!isset($this->marker[$point1])) {
             return '';
         }
 
-        if (!isset($this->_marker[$point2])) {
-            $this->_marker[$point2] = microtime();
+        if (!isset($this->marker[$point2])) {
+            $this->marker[$point2] = microtime();
         }
 
-        list($sm, $ss) = explode(' ', $this->_marker[$point1]);
-        list($em, $es) = explode(' ', $this->_marker[$point2]);
+        list($sm, $ss) = explode(' ', $this->marker[$point1]);
+        list($em, $es) = explode(' ', $this->marker[$point2]);
 
         return number_format((($em + $es) - ($sm + $ss)), $decimals);
     }

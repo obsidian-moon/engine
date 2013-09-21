@@ -13,6 +13,10 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
+namespace ObsidianMoonEngine\Modules\Core;
+
+use \Exception;
+
 /**
  * Module CoreException
  *
@@ -73,5 +77,4 @@ class CoreException extends Exception
     {
         return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
-
 }

@@ -13,6 +13,10 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
+namespace ObsidianMoonEngine\Modules\Core;
+
+use \ObsidianMoonEngine\AbstractModule;
+
 /**
  * Module CoreCouchDB
  *
@@ -26,18 +30,18 @@
  * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  *
  */
-class CoreCouchDB extends Module
+class CoreCouchDB extends AbstractModule
 {
 
     /**
      * @var mixed
      */
-    private $_headers;
+    private $headers;
 
     /**
      * @var mixed
      */
-    private $_body;
+    private $body;
 
     /**
      * Send the request for CouchDB
@@ -60,7 +64,8 @@ class CoreCouchDB extends Module
         $request = "$method $url HTTP/1.0\r\nHost: {$this->configs['host']}\r\n";
 
         if ($this->configs['user']) {
-            $request .= 'Authorization: Basic ' . base64_encode("{$this->configs['user']}:{$this->configs['pass']}") . "\r\n";
+            $request .= 'Authorization: Basic '.
+                base64_encode("{$this->configs['user']}:{$this->configs['pass']}") . "\r\n";
         }
 
         if ($post_data) {
@@ -77,9 +82,8 @@ class CoreCouchDB extends Module
             $response .= fgets($s);
         }
 
-        list($this->_headers, $this->_body) = explode("\r\n\r\n", $response);
+        list($this->headers, $this->body) = explode("\r\n\r\n", $response);
 
-        return $this->_body;
+        return $this->body;
     }
-
 }
