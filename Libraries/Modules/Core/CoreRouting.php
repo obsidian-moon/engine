@@ -6,25 +6,24 @@
  *
  * PHP version 5
  *
- * @category  ObsidianMoonEngine
- * @package   ObsidianMoonEngine
+ * @category  obsidian-moon-engine-core
+ * @package   obsidian-moon-engine-core
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
-namespace ObsidianMoonEngine;
 /**
  * Module ObsidianMoonCore\CoreRouting
  *
  * This module will handle the routing for the application.
  *
- * @category  ObsidianMoonEngine
+ * @category  obsidian-moon-engine-core
  * @package   CoreRouting
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
 class CoreRouting extends Module
 {
@@ -76,7 +75,7 @@ class CoreRouting extends Module
         $this->params  = array_slice($uri, 1);
 
         // If there is a second parameter we want to pull that and use it.
-        if ($this->params[0]) {
+        if (isset($this->params[0])) {
             $this->secondary = $this->params[0];
             $this->params    = array_slice($this->params, 1);
         }
@@ -101,10 +100,13 @@ class CoreRouting extends Module
             $this->primary = 'Error404';
         }
 
-        $control_name = "\\ObsidianMoonEngine\\Control{$this->primary}";
+        $control_name = "Control{$this->primary}";
         if (class_exists($control_name)) {
             // If the control exists we pass core and params to it.
             $this->control = new $control_name($this->core, $this->params);
+        }
+
+        if (method_exists($this->control, 'start')) {
             $this->control->start();
         }
 

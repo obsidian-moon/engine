@@ -6,26 +6,25 @@
  *
  * PHP version 5
  *
- * @category  ObsidianMoonEngine
- * @package   ObsidianMoonEngine
+ * @category  obsidian-moon-engine-core
+ * @package   obsidian-moon-engine-core
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
-namespace ObsidianMoonEngine;
 /**
- * Class ObsidianMoonEngine\Module
+ * Class Module
  *
  * This class is the structure of the modules used by the framework which are
  * loaded into the framework for later use for your applications.
  *
- * @category  ObsidianMoonEngine
+ * @category  obsidian-moon-engine-core
  * @package   Module
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  * @since     1.3.0 Allowing for implementations of modules.
  */
 abstract class Module

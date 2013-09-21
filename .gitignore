@@ -1,3 +1,5 @@
 .idea
 error_log
 atlassian-ide-plugin.xml
+vendor
+composer.lock

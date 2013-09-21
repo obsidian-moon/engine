@@ -1,0 +1,2 @@
+# Additional denials to users for security
+Deny from all

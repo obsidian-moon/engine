@@ -1,8 +1,6 @@
 ## Obsidian Moon Engine Change Log
 
 #### Version 1.3.0
-- The Obsidian Moon Engine will now use the `ObsidianMoonEngine` namespace for all of it's
-  components, and will be required in all of your applications components.
 - Removed `CoreMysql` module from the framework with the deprecation of MySQL class in PHP 5.5.
   Please, use the `CorePDO` module instead, more optimizations will be introduced at a later time.
 - Modules and Controls will not extend a superclass designed to provide a skeleton for each.
@@ -14,6 +12,7 @@
 - Added the ability to overwrite the configurations stored in  `Libraries/Configs` by passing an array to `module()`.
 - Additional routing info will be passed to Control class into `$this->routes` to be used by an Controls that you
   create, this functionality will be included as a part of the CoreRouting module.
+- Added the ability to modify how the routing runs by making sure it calls a `start()` method if exists.
 
 #### Version 1.2.3
 - Replaced Facebook Enhanced with Facebook Ignited `Version 1.3.1`, `not-ignited` branch.

@@ -6,30 +6,28 @@
  *
  * PHP version 5
  *
- * @category  ObsidianMoonEngine
- * @package   ObsidianMoonEngine
+ * @category  obsidian-moon-engine-core
+ * @package   obsidian-moon-engine-core
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
-namespace ObsidianMoonEngine;
-use Exception;
 
 require_once 'Module.php';
 require_once 'Control.php';
 /**
- * Class ObsidianMoonEngine\Core
+ * Class Core
  *
  * This class is the core of the framework and handles all of the loading and processing
  * of modules and controls that will be used by your application.
  *
- * @category  ObsidianMoonEngine
+ * @category  obsidian-moon-engine-core
  * @package   Core
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
 class Core
 {
@@ -270,7 +268,7 @@ class Core
             }
 
             if (preg_match('/^Core/', $_module)) {
-                $_module_location = "{$this->configs['core']}/Modules/{$_module_name}.php";
+                $_module_location = "{$this->configs['core']}/Modules/Core/{$_module_name}.php";
                 $configs_location = "{$this->configs['libs']}/Configs/Core/{$_module_name}.php";
             } else {
                 $_module_location = "{$this->configs['libs']}/Modules/{$_module}.php";
@@ -278,12 +276,11 @@ class Core
             }
 
             if (!file_exists($_module_location)) {
-                throw new Exception("Module '$_module_name' does not exist, please check the location and try again!");
+                throw new Exception("Module '$_module_name' location does not exist, please check the location and try again!");
             } else {
                 include $_module_location;
-                $_module_namespace = "\\ObsidianMoonEngine\\$_module_name";
-                if (!class_exists($_module_namespace)) {
-                    throw new Exception("Module '$_module_namespace' could not be found in the provided file, please check the name and try again!");
+                if (!class_exists($_module_name)) {
+                    throw new Exception("Module '$_module_name' could not be found in the provided file, please check the name and try again!");
                 } else {
                     if (file_exists($configs_location)) {
                         include $configs_location;
@@ -302,15 +299,15 @@ class Core
                             }
 
                             try {
-                                $this->modules[$_access_name] = new $_module_namespace($this, $config);
+                                $this->modules[$_access_name] = new $_module_name($this, $config);
                             } catch (Exception $e) {
-                                throw new Exception("Error Loading Module {$_module_namespace}: " . $e->getMessage());
+                                throw new Exception("Error Loading Module {$_module_name}: " . $e->getMessage());
                             }
                         } else {
                             try {
-                                $this->modules[$_access_name] = new $_module_namespace($this);
+                                $this->modules[$_access_name] = new $_module_name($this);
                             } catch (Exception $e) {
-                                throw new Exception("Error Loading Module {$_module_namespace}: " . $e->getMessage());
+                                throw new Exception("Error Loading Module {$_module_name}: " . $e->getMessage());
                             }
                         }
 

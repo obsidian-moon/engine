@@ -6,25 +6,24 @@
  *
  * PHP version 5
  *
- * @category  ObsidianMoonEngine
- * @package   ObsidianMoonEngine
+ * @category  obsidian-moon-engine-core
+ * @package   obsidian-moon-engine-core
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
-namespace ObsidianMoonEngine;
 /**
- * Module ObsidianMoonEngine\CorePDO
+ * Module CorePDO
  *
  * Database class using PDO
  *
- * @category  ObsidianMoonEngine
+ * @category  obsidian-moon-engine-core
  * @package   CorePDO
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
  * @link      http://www.php.net/manual/en/book.pdo.php
  */
 class CorePDO extends Module
@@ -45,8 +44,8 @@ class CorePDO extends Module
      */
     protected $configs = array(
                           'type'       => 'mysql',
-                          'fetch_mode' => \PDO::FETCH_ASSOC,
-                          'error_mode' => \PDO::ERRMODE_EXCEPTION,
+                          'fetch_mode' => PDO::FETCH_ASSOC,
+                          'error_mode' => PDO::ERRMODE_EXCEPTION,
                          );
 
     /**
@@ -57,7 +56,7 @@ class CorePDO extends Module
     /**
      * Creates a new object to access database via PDO.
      *
-     * @param mixed $core    A reference to the ObsidianMoonEngine Core class.
+     * @param mixed $core    A reference to the obsidian-moon-engine-core Core class.
      * @param mixed $configs The parameters that we will be passing to PDO.
      *
      * @throws \Exception
@@ -71,8 +70,8 @@ class CorePDO extends Module
 
         try {
             $this->connect();
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -93,10 +92,10 @@ class CorePDO extends Module
 
         $dsn = "{$this->configs['type']}:dbname={$this->configs['name']};host={$this->configs['host']}";
         try {
-            $this->connection = new \PDO($dsn, $this->configs['user'], $this->configs['pass']);
-            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, $this->configs['error_mode']);
-        } catch (\PDOException $e) {
-            throw new \Exception('CorePDO::__construct()->PDO::__construct() : ' . $e->getMessage());
+            $this->connection = new PDO($dsn, $this->configs['user'], $this->configs['pass']);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, $this->configs['error_mode']);
+        } catch (PDOException $e) {
+            throw new Exception('CorePDO::__construct()->PDO::__construct() : ' . $e->getMessage());
         }
     }
 
@@ -116,14 +115,14 @@ class CorePDO extends Module
         $stmt         = 'prepare_' . $stmt;
         try {
             $sth = $this->$stmt->execute($array);
-        } catch (\PDOException $e) {
-            throw new \Exception('CorePDO::execute()->PDOStatement::execute() : ' . $e->getMessage());
+        } catch (PDOException $e) {
+            throw new Exception('CorePDO::execute()->PDOStatement::execute() : ' . $e->getMessage());
         }
-        if ($sth instanceof \PDOStatement) {
+        if ($sth instanceof PDOStatement) {
             try {
                 $this->values = $sth->fetchAll($this->configs['fetch_mode']);
-            } catch (\PDOException $e) {
-                throw new \Exception('CorePDO::execute()->PDOStatement::fetchAll() : ' . $e->getMessage());
+            } catch (PDOException $e) {
+                throw new Exception('CorePDO::execute()->PDOStatement::fetchAll() : ' . $e->getMessage());
             }
         }
 
@@ -131,8 +130,8 @@ class CorePDO extends Module
         if (preg_match('/insert/i', $this->$store_sql)) {
             try {
                 $this->lastid = $this->connection->lastInsertId();
-            } catch (\PDOException $e) {
-                throw new \Exception('CorePDO::execute()->PDO::lastInsertId() : ' . $e->getMessage());
+            } catch (PDOException $e) {
+                throw new Exception('CorePDO::execute()->PDO::lastInsertId() : ' . $e->getMessage());
             }
         }
 
@@ -204,8 +203,8 @@ class CorePDO extends Module
         $stmt = 'prepare_' . $stmt;
         try {
             $this->$stmt = $this->connection->prepare($sql);
-        } catch (\PDOException $e) {
-            throw new \Exception('CorePDO::prepare()->PDO::prepare() : ' . $e->getMessage());
+        } catch (PDOException $e) {
+            throw new Exception('CorePDO::prepare()->PDO::prepare() : ' . $e->getMessage());
         }
         $store_sql        = $stmt . '_sql';
         $this->$store_sql = $sql;
@@ -228,41 +227,41 @@ class CorePDO extends Module
         $this->values = array();
         $this->lastid = null;
         if ($sql == '') {
-            throw new \Exception('CorePDO::query(): Query was undefined, please make sure you pass one.');
+            throw new Exception('CorePDO::query(): Query was undefined, please make sure you pass one.');
         }
 
         if ($params === null) {
             try {
                 $sth = $this->connection->query($sql);
-            } catch (\PDOException $e) {
-                throw new \Exception('CorePDO::query()->PDO::query() : ' . $e->getMessage());
+            } catch (PDOException $e) {
+                throw new Exception('CorePDO::query()->PDO::query() : ' . $e->getMessage());
             }
         } else {
             try {
                 $sth = $this->connection->prepare($sql);
-            } catch (\PDOException $e) {
-                throw new \Exception('CorePDO::query()->PDO::prepare() : ' . $e->getMessage());
+            } catch (PDOException $e) {
+                throw new Exception('CorePDO::query()->PDO::prepare() : ' . $e->getMessage());
             }
             try {
                 $sth->execute($params);
-            } catch (\PDOException $e) {
-                throw new \Exception('CorePDO::query()->PDO::execute() : ' . $e->getMessage());
+            } catch (PDOException $e) {
+                throw new Exception('CorePDO::query()->PDO::execute() : ' . $e->getMessage());
             }
         }
 
-        if ($sth instanceof \PDOStatement && preg_match('/select/i', $sql)) {
+        if ($sth instanceof PDOStatement && preg_match('/select/i', $sql)) {
             try {
                 $this->values = $sth->fetchAll($this->configs['fetch_mode']);
-            } catch (\PDOException $e) {
-                throw new \Exception('CorePDO::query()->PDOStatement::fetchAll() : ' . $e->getMessage());
+            } catch (PDOException $e) {
+                throw new Exception('CorePDO::query()->PDOStatement::fetchAll() : ' . $e->getMessage());
             }
         }
 
         if (preg_match('/insert/i', $sql)) {
             try {
                 $this->lastid = $this->connection->lastInsertId();
-            } catch (\PDOException $e) {
-                throw new \Exception('CorePDO::query()->PDO::lastInsertId() : ' . $e->getMessage());
+            } catch (PDOException $e) {
+                throw new Exception('CorePDO::query()->PDO::lastInsertId() : ' . $e->getMessage());
             }
         }
 

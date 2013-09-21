@@ -6,26 +6,25 @@
  *
  * PHP version 5
  *
- * @category  ObsidianMoonEngine
- * @package   ObsidianMoonEngine
+ * @category  obsidian-moon-engine-core
+ * @package   obsidian-moon-engine-core
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  */
-namespace ObsidianMoonEngine;
 /**
- * Class ObsidianMoonEngine\Control
+ * Class Control
  *
  * This class is the structure of the controls used by the framework which are
  * called by the framework in order to guide the application's flow.
  *
- * @category  ObsidianMoonEngine
+ * @category  obsidian-moon-engine-core
  * @package   Control
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/ObsidianMoonEngine
+ * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
  * @since     1.3.0 Allowing for implementations of modules.
  */
 abstract class Control
@@ -63,7 +62,7 @@ abstract class Control
      * @param Core  $core   The reference to the Core class.
      * @param mixed $routes Any extra routing that we get from routing module.
      *
-     * @return \ObsidianMoonEngine\Control
+     * @return \obsidian-moon-engine-core\Control
      */
     public function __construct(Core $core, $routes)
     {
