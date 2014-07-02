@@ -13,9 +13,9 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/obsidian-moon-engine
  */
-namespace ObsidianMoonEngine\Controls;
+namespace DarkProspectGames\ObsidianMoonEngine\Controls;
 
-use ObsidianMoonEngine\AbstractControl;
+use \DarkProspectGames\ObsidianMoonEngine\AbstractControl;
 
 /**
  * Control ControlError404
@@ -28,7 +28,7 @@ use ObsidianMoonEngine\AbstractControl;
  * @license  BSD https://darkprospect.net/BSD-License.txt
  * @link     https://github.com/DarkProspectGames/obsidian-moon-engine
  */
-class ControlError404 extends AbstractControl
+class Error404 extends AbstractControl
 {
 
     /**
@@ -70,5 +70,4 @@ class ControlError404 extends AbstractControl
     public function start()
     {
     }
-
 }

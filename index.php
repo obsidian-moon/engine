@@ -27,7 +27,7 @@ if (file_exists('vendor/autoload.php')) {
     require 'vendor/autoload.php';
 }
 
-use \ObsidianMoonEngine\Core;
+use \DarkProspectGames\ObsidianMoonEngine\Core;
 
 session_start();
 
@@ -35,7 +35,7 @@ session_start();
 $conf = array(
     'defcon'  => 'Main',
     'modules' => array(
-                  'CoreInput' => 'input',
+                  'Core/Input' => 'input',
                  ),
 );
 try {

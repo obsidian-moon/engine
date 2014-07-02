@@ -11,11 +11,11 @@
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
+ * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace ObsidianMoonEngine\Modules\Core;
+namespace DarkProspect\ObsidianMoonEngine\Modules\Core;
 
-use \ObsidianMoonEngine\AbstractModule;
+use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 
 /**
  * Module CoreBenchmark
@@ -28,10 +28,10 @@ use \ObsidianMoonEngine\AbstractModule;
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
+ * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  *
  */
-class CoreBenchmark extends AbstractModule
+class Benchmark extends AbstractModule
 {
 
     /**
@@ -107,5 +107,4 @@ class CoreBenchmark extends AbstractModule
     {
         return '{memory_usage}';
     }
-
 }

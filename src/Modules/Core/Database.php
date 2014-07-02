@@ -11,12 +11,12 @@
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
+ * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace ObsidianMoonEngine\Modules\Core;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
-use \ObsidianMoonEngine\Core;
-use \ObsidianMoonEngine\AbstractModule;
+use \DarkProspectGames\ObsidianMoonEngine\Core;
+use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 use \PDO;
 use \PDOException;
 use \PDOStatement;
@@ -32,10 +32,10 @@ use \Exception;
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
+ * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  * @link      http://www.php.net/manual/en/book.pdo.php
  */
-class CorePDO extends AbstractModule
+class Database extends AbstractModule
 {
 
     /**

@@ -11,9 +11,9 @@
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
+ * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace ObsidianMoonEngine;
+namespace DarkProspectGames\ObsidianMoonEngine;
 
 /**
  * Class Control
@@ -26,7 +26,7 @@ namespace ObsidianMoonEngine;
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://github.com/DarkProspectGames/obsidian-moon-engine-core
+ * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  * @since     1.3.0 Allowing for implementations of modules.
  */
 abstract class AbstractControl
@@ -41,6 +41,11 @@ abstract class AbstractControl
      * @var mixed
      */
     protected $routes = array();
+
+    /**
+     * @var mixed
+     */
+    protected $data = array();
 
     /**
      * Constructor class for a standard module.

@@ -11,12 +11,12 @@
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
+ * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace ObsidianMoonEngine\Modules\Core;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
-use \ObsidianMoonEngine\Core;
-use \ObsidianMoonEngine\AbstractModule;
+use \DarkProspectGames\ObsidianMoonEngine\Core;
+use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 
 /**
  * Module ObsidianMoonCore\CoreRouting
@@ -28,9 +28,9 @@ use \ObsidianMoonEngine\AbstractModule;
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
+ * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-class CoreRouting extends AbstractModule
+class Routing extends AbstractModule
 {
 
     /**
@@ -59,8 +59,8 @@ class CoreRouting extends AbstractModule
      * This will load the routing information, it will load the primary route first
      * and then the secondary if set. Below are examples of what is called:
      *
-     * - `/main/` loads `libraries/Controls/main.php` with class and method `control_main::index()`
-     * - `/main/about/` loads `libraries/Controls/main.php` with class and method `control_main::about()`
+     * - `/main/` loads `libraries/Controls/Main.php` with class and method `control_main::index()`
+     * - `/main/about/` loads `libraries/Controls/Main.php` with class and method `ControlMain::about()`
      *
      * @param Core  $core    The reference to the Core Class.
      * @param mixed $configs The configurations being passed to the module.
@@ -72,7 +72,7 @@ class CoreRouting extends AbstractModule
         // Get the URI from the system and process it into $this->primary and $this->params.
         $filter = array('/\?.*$/i');
         if (isset($this->core->conf_subdir)) {
-            $filter[] = "/{$this->core->conf_subdir}\//i";
+            $filter[] = "/{$this->core->conf_subdir}/i";
         }
 
         $uri           = explode('/', trim(preg_replace($filter, '', $_SERVER['REQUEST_URI']), '/'));
@@ -105,7 +105,7 @@ class CoreRouting extends AbstractModule
             $this->primary = 'Error404';
         }
 
-        $control_name = "\\ObsidianMoonEngine\\Libraries\\Controls\\Control{$this->primary}";
+        $control_name = "\\DarkProspect\\ObsidianMoonEngine\\Controls\\{$this->primary}";
         if (class_exists($control_name)) {
             // If the control exists we pass core and params to it.
             $this->control = new $control_name($this->core, $this->params);

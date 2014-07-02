@@ -11,9 +11,9 @@
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
+ * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace ObsidianMoonEngine;
+namespace DarkProspectGames\ObsidianMoonEngine;
 
 use \Exception;
 
@@ -28,7 +28,7 @@ use \Exception;
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2013 Dark Prospect Games, LLC
  * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://github.com/DarkProspectGames/obsidian-moon-engine-core
+ * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
 class Core
 {
@@ -96,7 +96,7 @@ class Core
 
         $this->configs['core'] = dirname(__FILE__);
         $this->configs['base'] = dirname($_SERVER['SCRIPT_FILENAME']);
-        $this->configs['libs'] = $this->configs['base'] . '/Libraries';
+        $this->configs['libs'] = $this->configs['base'] . '/src';
 
         // CoreRouting is default routing method, can be overwritten when specified.
         if (!isset($this->configs['routing'])) {
@@ -261,71 +261,56 @@ class Core
             }
 
             if (preg_match('/\//', $_module)) {
-                $_module_name = end(explode('/', $_module));
+                $_module_name = str_replace('/', '\\', $_module);
             } elseif ($_class_name !== null) {
                 $_module_name = $_class_name;
             } else {
                 $_module_name = $_module;
             }
 
-            if (preg_match('/^Core/', $_module)) {
-                $_module_location = "{$this->configs['core']}/Modules/Core/{$_module_name}.php";
-                $configs_location = "{$this->configs['libs']}/Configs/Core/{$_module_name}.php";
-                $_module_namespace = "\\ObsidianMoonEngine\\Libraries\\Modules\\Core\\{$_module_name}";
-            } else {
-                $_module_location = "{$this->configs['libs']}/Modules/{$_module}.php";
-                $configs_location = "{$this->configs['libs']}/Configs/{$_module}.php";
-                $_module_namespace = "\\ObsidianMoonEngine\\Libraries\\Modules\\{$_module_name}";
-            }
+            $_module_namespace = "\\DarkProspectGames\\ObsidianMoonEngine\\Modules\\" . $_module_name;
 
-            if (!file_exists($_module_location)) {
+            if (!class_exists($_module_namespace)) {
                 throw new Exception(
-                    "Module '$_module_name' location does not exist, please check the location and try again!"
+                    "Module '$_module_namespace' could not be found in the"
+                    . "provided file, please check the name and try again!"
                 );
             } else {
-                include $_module_location;
-                if (!class_exists($_module_namespace)) {
+                if (file_exists($configs_location)) {
+                    include $configs_location;
+                }
+
+                if ($_access_name == '') {
+                    $_access_name = $_module_name;
+                }
+
+                if (isset($this->modules[$_access_name])) {
                     throw new Exception(
-                        "Module '$_module_namespace' could not be found in the"
-                        . "provided file, please check the name and try again!"
+                        "Module '\$this->$_access_name' has already been set,"
+                        ."could not instantiate module '$_module_name'!"
                     );
                 } else {
-                    if (file_exists($configs_location)) {
-                        include $configs_location;
-                    }
+                    if ((isset($config) && $config !== null) || (isset($_configs) && $_configs !== null)) {
+                        if (isset($_configs) && $_configs !== null) {
+                            $config = $_configs;
+                        }
 
-                    if ($_access_name == '') {
-                        $_access_name = $_module_name;
-                    }
-
-                    if (isset($this->modules[$_access_name])) {
-                        throw new Exception(
-                            "Module '\$this->$_access_name' has already been set,"
-                            ."could not instantiate module '$_module_name'!"
-                        );
+                        try {
+                            $this->modules[$_access_name] = new $_module_namespace($this, $config);
+                        } catch (Exception $e) {
+                            throw new Exception("Error Loading Module {$_module_namespace}: " . $e->getMessage());
+                        }
                     } else {
-                        if ((isset($config) && $config !== null) || (isset($_configs) && $_configs !== null)) {
-                            if (isset($_configs) && $_configs !== null) {
-                                $config = $_configs;
-                            }
-
-                            try {
-                                $this->modules[$_access_name] = new $_module_namespace($this, $config);
-                            } catch (Exception $e) {
-                                throw new Exception("Error Loading Module {$_module_namespace}: " . $e->getMessage());
-                            }
-                        } else {
-                            try {
-                                $this->modules[$_access_name] = new $_module_namespace($this);
-                            } catch (Exception $e) {
-                                throw new Exception("Error Loading Module {$_module_namespace}: " . $e->getMessage());
-                            }
+                        try {
+                            $this->modules[$_access_name] = new $_module_namespace($this);
+                        } catch (Exception $e) {
+                            throw new Exception("Error Loading Module {$_module_namespace}: " . $e->getMessage());
                         }
+                    }
 
-                        if (method_exists($this->modules[$_access_name], 'start')) {
-                            $this->modules[$_access_name]->start();
-                        }
-                    }//end if
+                    if (method_exists($this->modules[$_access_name], 'start')) {
+                        $this->modules[$_access_name]->start();
+                    }
                 }//end if
             }//end if
         }//end foreach

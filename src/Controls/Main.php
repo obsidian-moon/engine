@@ -13,9 +13,9 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://github.com/DarkProspectGames/obsidian-moon-engine
  */
-namespace ObsidianMoonEngine\Controls;
+namespace DarkProspectGames\ObsidianMoonEngine\Controls;
 
-use ObsidianMoonEngine\AbstractControl;
+use \DarkProspectGames\ObsidianMoonEngine\AbstractControl;
 
 /**
  * Control ControlMain
@@ -28,7 +28,7 @@ use ObsidianMoonEngine\AbstractControl;
  * @license  BSD https://darkprospect.net/BSD-License.txt
  * @link     https://github.com/DarkProspectGames/obsidian-moon-engine
  */
-class ControlMain extends AbstractControl
+class Main extends AbstractControl
 {
 
     /**

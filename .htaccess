@@ -1,10 +1,9 @@
 # Enabling the mod_rewrite module in this folder
 RewriteEngine On
 Options +FollowSymLinks
-RewriteBase /
 
 # Protecting access to secure locations
-RewriteCond %{REQUEST_URI} ^Libraries.*
+RewriteCond %{REQUEST_URI} ^src.*
 RewriteRule ^(.*)$ /index.php?/$1 [L]
 
 # Redirects invalid locations to index

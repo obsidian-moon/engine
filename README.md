@@ -8,7 +8,7 @@ Alfonso E Martinez, III of Dark Prospect Games, LLC
 
 ### Installing Obsidian Moon Engine
 
-[Installing Obsidian Moon Engine on Wiki]( https://github.com/DarkProspectGames/obsidian-moon-engine-core/wiki/Installing-Obsidian-Moon-Engine)
+[Installing Obsidian Moon Engine on Wiki]( https://gitlab.com/dark-prospect-games/obsidian-moon-engine/wiki/Installing-Obsidian-Moon-Engine)
 
 Using [Composer](http://getcomposer.org) is the recommended way to install the Obsidian Moon Engine.
 In order to use the Obsidian Moon Engin through Composer, you enter the following into your `composer.json` file:
@@ -16,7 +16,7 @@ In order to use the Obsidian Moon Engin through Composer, you enter the followin
 ```json
 {
     "require": {
-        "darkprospect/obsidian-moon-engine": "1.3.*"
+        "dark-prospect-games/obsidian-moon-engine": "1.3.*"
     }
 }
 ```
@@ -38,7 +38,7 @@ php composer.phar install
 Within the Obsidian Moon Engine there are a few functions that you will need to keep in mind when using using the framework.
 The first of all is that the system uses a path routing system that you will need to declare in the configurations. The files
 used to manage the flow of application's called Controls. In order to provide an ease of use upon installation, Obsidian Moon
-Engine comes with a default routing module ([CoreRouting]( https://github.com/DarkProspectGames/obsidian-moon-engine-core/wiki/Module-CoreRouting))
+Engine comes with a default routing module ([CoreRouting]( https://gitlab.com/dark-prospect-games/obsidian-moon-engine//wiki/Module-CoreRouting))
 that you use or extend and/or overwrite.
 
 Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any errors that
