@@ -8,7 +8,7 @@ Alfonso E Martinez, III of Dark Prospect Games, LLC
 
 ### Installing Obsidian Moon Engine
 
-[Installing Obsidian Moon Engine on Wiki]( https://gitlab.com/dark-prospect-games/obsidian-moon-engine/wiki/Installing-Obsidian-Moon-Engine)
+[Installing Obsidian Moon Engine on Wiki](https://gitlab.com/dark-prospect-games/obsidian-moon-engine/wiki/Installing-Obsidian-Moon-Engine)
 
 Using [Composer](http://getcomposer.org) is the recommended way to install the Obsidian Moon Engine.
 In order to use the Obsidian Moon Engin through Composer, you enter the following into your `composer.json` file:

@@ -95,13 +95,9 @@ class Routing extends AbstractModule
      */
     public function start()
     {
-        if (file_exists("{$this->core->conf_libs}/Controls/{$this->primary}.php")) {
-            require_once "{$this->core->conf_libs}/Controls/{$this->primary}.php";
-        } elseif ($this->primary == '') {
-            require_once "{$this->core->conf_libs}/Controls/{$this->core->conf_defcon}.php";
+        if ($this->primary == '') {
             $this->primary = $this->core->conf_defcon;
         } else {
-            require_once "{$this->core->conf_libs}/Controls/Error404.php";
             $this->primary = 'Error404';
         }
 

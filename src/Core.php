@@ -100,17 +100,7 @@ class Core
 
         // CoreRouting is default routing method, can be overwritten when specified.
         if (!isset($this->configs['routing'])) {
-            $this->configs['routing'] = 'CoreRouting';
-        }
-
-        // Check if a custom Control class is defined.
-        if (isset($this->configs['mycontrol'])) {
-            require_once $this->configs['libs'] . '/Modules/' . $this->configs['mycontrol'] . '.php';
-        }
-
-        // Check if a custom Module class is defined.
-        if (isset($this->configs['mymodule'])) {
-            require_once $this->configs['libs'] . '/Modules/' . $this->configs['mymodule'] . '.php';
+            $this->configs['routing'] = 'Core\Routing';
         }
 
         if (isset($conf['modules'])) {
@@ -330,7 +320,7 @@ class Core
     public function routing()
     {
         try {
-            $this->module(array($this->configs['routing'] => 'core_routing'));
+            $this->module(array($this->configs['routing'] => 'routing'));
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
