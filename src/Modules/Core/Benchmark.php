@@ -13,7 +13,7 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace DarkProspect\ObsidianMoonEngine\Modules\Core;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
 use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 
