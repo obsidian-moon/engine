@@ -30,7 +30,7 @@
     "squizlabs/php_codesniffer": "1.*"
   },
   "autoload": {
-    "psr-0": {
+    "psr-4": {
       "DarkProspectGames\\ObsidianMoonEngine\\": "src/"
     }
   },
