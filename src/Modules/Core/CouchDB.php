@@ -13,7 +13,7 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
 use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 
@@ -30,7 +30,7 @@ use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
  * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  *
  */
-class Core_CouchDB extends AbstractModule
+class CouchDB extends AbstractModule
 {
 
     /**

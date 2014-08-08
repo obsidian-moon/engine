@@ -13,7 +13,7 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
 use \DarkProspectGames\ObsidianMoonEngine\Core;
 use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
@@ -39,7 +39,7 @@ use \FacebookApiException;
  * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  * @link      https://github.com/DarkProspectGames/Facebook-Ignited
  */
-class Core_FacebookIgnited extends AbstractModule
+class FacebookIgnited extends AbstractModule
 {
 
     /**

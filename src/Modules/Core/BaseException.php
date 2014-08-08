@@ -13,7 +13,7 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
 use \Exception;
 
@@ -32,7 +32,7 @@ use \Exception;
  * @version   Release: 1.3.2
  * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-class Core_BaseException extends Exception
+class BaseException extends Exception
 {
 
     /**
