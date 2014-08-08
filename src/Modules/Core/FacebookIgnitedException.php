@@ -14,7 +14,7 @@
  * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  *
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
 use \Exception;
 
@@ -36,7 +36,7 @@ use \Exception;
  * @link     https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  * @link     https://gitlab.com/dark-prospect-games/facebook-ignited/
  */
-class FacebookIgnitedException extends Exception
+class Core_FacebookIgnitedException extends Exception
 {
 
     /**

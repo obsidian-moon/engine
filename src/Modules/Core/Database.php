@@ -13,7 +13,7 @@
  * @license   BSD https://darkprospect.net/BSD-License.txt
  * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
 use \DarkProspectGames\ObsidianMoonEngine\Core;
 use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
@@ -35,7 +35,7 @@ use \Exception;
  * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
  * @link      http://www.php.net/manual/en/book.pdo.php
  */
-class Database extends AbstractModule
+class Core_Database extends AbstractModule
 {
 
     /**
