@@ -105,7 +105,9 @@ class Core
 
         if (isset($conf['modules'])) {
             try {
-                $this->module($conf['modules']);
+                foreach ($conf['modules'] as $key => $value) {
+                    $this->module($key, $value);
+                }
             } catch (Exception $e) {
                 throw new Exception($e->getMessage());
             }
