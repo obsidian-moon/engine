@@ -16,6 +16,7 @@
 namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
 use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
+use \DarkProspectGames\ObsidianMoonEngine\Core;
 use \PDO;
 use \PDOException;
 use \PDOStatement;
@@ -64,11 +65,12 @@ class Database extends AbstractModule
     /**
      * Creates a new object to access database via PDO.
      *
+     * @param Core  $core    The core system object that will be passed to use.
      * @param mixed $configs The parameters that we will be passing to PDO.
      *
      * @throws \Exception
      */
-    public function __construct($configs = null)
+    public function __construct(Core $core, $configs = null)
     {
         $this->core = $core;
         if ($configs !== null) {
