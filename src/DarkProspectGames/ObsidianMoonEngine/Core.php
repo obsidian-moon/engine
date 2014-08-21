@@ -232,78 +232,39 @@ class Core
      * This function will load classes as needed for the user to use.
      * It will allow them to be accessible via $core->modulename.
      *
-     * @param array $_modules This is the array of modules that will be loaded into the Core.
+     * @param string $moduleName This is the modules that will be loaded into the Core.
+     * @param string $accessName This is the modules that will be loaded into the Core.
+     * @param array  $config     This is the modules that will be loaded into the Core.
      *
      * @return boolean
      * @throws Exception
      */
-    public function module($_modules)
+    public function module($moduleName, $accessName, $config = null)
     {
-        foreach ($_modules as $_module => $_access_name) {
-            $_class_name = null;
-            $_configs    = null;
-            if (is_array($_access_name)) {
-                list($_access_name, $_class_name, $_configs) = $_access_name;
-            }
-
-            if (is_numeric($_module)) {
-                $_module = $_access_name;
-            }
-
-            if (preg_match('/\//', $_module)) {
-                $_module_name = str_replace('/', '\\', $_module);
-            } elseif ($_class_name !== null) {
-                $_module_name = $_class_name;
-            } else {
-                $_module_name = $_module;
-            }
-
-            $_module_namespace = "\\DarkProspectGames\\ObsidianMoonEngine\\Modules\\" . $_module_name;
-
-            if (!class_exists($_module_namespace)) {
-                throw new Exception(
-                    "Module '$_module_namespace' could not be found in the"
-                    . "provided file, please check the name and try again!"
-                );
-            } else {
-                if (file_exists($configs_location)) {
-                    include $configs_location;
+        if (isset($this->modules[$accessName])) {
+            throw new Exception(
+                "Module '\$this->$accessName' has already been set,"
+                ."could not instantiate module '$moduleName'!"
+            );
+        } else {
+            if (isset($config) && $config !== null) {
+                try {
+                    $this->modules[$accessName] = new $moduleName($this, $config);
+                } catch (Exception $e) {
+                    throw new Exception("Error Loading Module {$moduleName}: " . $e->getMessage());
                 }
-
-                if ($_access_name == '') {
-                    $_access_name = $_module_name;
+            } else {
+                try {
+                    $this->modules[$accessName] = new $moduleName($this);
+                } catch (Exception $e) {
+                    throw new Exception("Error Loading Module {$moduleName}: " . $e->getMessage());
                 }
+            }
 
-                if (isset($this->modules[$_access_name])) {
-                    throw new Exception(
-                        "Module '\$this->$_access_name' has already been set,"
-                        ."could not instantiate module '$_module_name'!"
-                    );
-                } else {
-                    if ((isset($config) && $config !== null) || (isset($_configs) && $_configs !== null)) {
-                        if (isset($_configs) && $_configs !== null) {
-                            $config = $_configs;
-                        }
-
-                        try {
-                            $this->modules[$_access_name] = new $_module_namespace($this, $config);
-                        } catch (Exception $e) {
-                            throw new Exception("Error Loading Module {$_module_namespace}: " . $e->getMessage());
-                        }
-                    } else {
-                        try {
-                            $this->modules[$_access_name] = new $_module_namespace($this);
-                        } catch (Exception $e) {
-                            throw new Exception("Error Loading Module {$_module_namespace}: " . $e->getMessage());
-                        }
-                    }
-
-                    if (method_exists($this->modules[$_access_name], 'start')) {
-                        $this->modules[$_access_name]->start();
-                    }
-                }//end if
-            }//end if
-        }//end foreach
+            if (method_exists($this->modules[$accessName], 'start')) {
+                $this->modules[$accessName]->start();
+            }
+        }
 
         return true;
     }
@@ -320,7 +281,7 @@ class Core
     public function routing()
     {
         try {
-            $this->module(array($this->configs['routing'] => 'routing'));
+            $this->module('\\DarkProspectGames\\Modules\\Core\\Routing', 'routing');
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
