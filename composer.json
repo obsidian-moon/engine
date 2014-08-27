@@ -18,8 +18,8 @@
   "support": {
     "email": "admin@darkprospect.net",
     "forum": "https://darkprospect.net/forums/",
-    "issues": "https://gitlab.com/dark-prospect-games/obsidian-moon-engine/issues",
-    "source": "https://gitlab.com/dark-prospect-games/obsidian-moon-engine/tree/master"
+    "issues": "https://github.com/dark-prospect-games/obsidian-moon-engine/issues",
+    "source": "https://github.com/dark-prospect-games/obsidian-moon-engine"
   },
   "require": {
     "php": ">=5.4.0"

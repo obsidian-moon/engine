@@ -1,5 +1,5 @@
-## Obsidian Moon Engine v1.3.0 Documentation
-This is a project that I have worked on for several months after being inspired
+## Obsidian Moon Engine
+This is a project that I have worked on for several months after being originally inspired
 by CodeIgniter. After setting up the initial steps of the system I am opening the
 project up for open source. Feel free to contribute and peer review my work, please
 not that there are a few pieces that are based on CodeIgniter that need to be worked on.
@@ -7,8 +7,6 @@ not that there are a few pieces that are based on CodeIgniter that need to be wo
 Alfonso E Martinez, III of Dark Prospect Games, LLC
 
 ### Installing Obsidian Moon Engine
-
-[Installing Obsidian Moon Engine on Wiki](https://gitlab.com/dark-prospect-games/obsidian-moon-engine/wiki/Installing-Obsidian-Moon-Engine)
 
 Using [Composer](http://getcomposer.org) is the recommended way to install the Obsidian Moon Engine.
 In order to use the Obsidian Moon Engin through Composer, you enter the following into your `composer.json` file:
