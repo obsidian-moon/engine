@@ -51,11 +51,11 @@ class Database extends AbstractModule
     /**
      * @var mixed
      */
-    protected $configs = array(
+    protected $configs = [
                           'type'       => 'mysql',
                           'fetch_mode' => PDO::FETCH_ASSOC,
                           'error_mode' => PDO::ERRMODE_EXCEPTION,
-                         );
+                         ];
 
     /**
      * @var mixed
@@ -96,7 +96,7 @@ class Database extends AbstractModule
     protected function connect($configs = null)
     {
         if ($configs !== null) {
-            $this->configs = $configs;
+            $this->configs = array_replace($this->configs, $configs);
         }
 
         $dsn = "{$this->configs['type']}:dbname={$this->configs['name']};host={$this->configs['host']}";
