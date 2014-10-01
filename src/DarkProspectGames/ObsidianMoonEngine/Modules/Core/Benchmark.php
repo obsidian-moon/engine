@@ -6,12 +6,12 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine-core
- * @package   obsidian-moon-engine-core
- * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2013 Dark Prospect Games, LLC
- * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
+ * @category  obsidian-moon-engine
+ * @package   obsidian-moon-engine
+ * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @license   MIT https://darkprospect.net/MIT-License.txt
+ * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
 namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
@@ -24,11 +24,11 @@ use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
  * time it takes to load the application's resources.
  *
  * @category  obsidian-moon-engine-core
- * @package   CoreBenchmark
- * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2013 Dark Prospect Games, LLC
- * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
+ * @package   Benchmark
+ * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @license   MIT https://darkprospect.net/MIT-License.txt
+ * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  *
  */
 class Benchmark extends AbstractModule
@@ -37,7 +37,7 @@ class Benchmark extends AbstractModule
     /**
      * @var array List of all benchmark markers and when they were added.
      */
-    private $marker = array();
+    private $marker = [];
 
     /**
      * Set a benchmark marker

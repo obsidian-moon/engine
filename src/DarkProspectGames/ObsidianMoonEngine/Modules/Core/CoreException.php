@@ -6,33 +6,32 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine-core
- * @package   obsidian-moon-engine-core
- * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2013 Dark Prospect Games, LLC
- * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
+ * @category  obsidian-moon-engine
+ * @package   obsidian-moon-engine
+ * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @license   MIT https://darkprospect.net/MIT-License.txt
+ * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
 namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
 use \Exception;
 
 /**
- * Module CoreException
+ * DarkProspectGames\ObsidianMoonEngine\Modules\Core\CoreException
  *
  * Used to handle any issues that we may have with the application.
  * You will be able to log errors automatically instead of dealing
  * with error_log() directly.
  *
- * @category  obsidian-moon-engine-core
- * @package   Exception
- * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2013 Dark Prospect Games, LLC
- * @license   BSD https://darkprospect.net/BSD-License.txt
- * @version   Release: 1.3.2
- * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
+ * @category  obsidian-moon-engine
+ * @package   CoreException
+ * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @license   MIT https://darkprospect.net/MIT-License.txt
+ * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
-class BaseException extends Exception
+class CoreException extends Exception
 {
 
     /**

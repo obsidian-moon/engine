@@ -6,12 +6,12 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine-core
- * @package   obsidian-moon-engine-core
- * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2013 Dark Prospect Games, LLC
- * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
+ * @category  obsidian-moon-engine
+ * @package   obsidian-moon-engine
+ * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @license   MIT https://darkprospect.net/MIT-License.txt
+ * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
 namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
@@ -19,16 +19,16 @@ use \DarkProspectGames\ObsidianMoonEngine\Core;
 use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 
 /**
- * Module ObsidianMoonCore\CoreRouting
+ * DarkProspectGames\ObsidianMoonEngine\Modules\Core\Routing
  *
  * This module will handle the routing for the application.
  *
- * @category  obsidian-moon-engine-core
- * @package   CoreRouting
- * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2013 Dark Prospect Games, LLC
- * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
+ * @category  obsidian-moon-engine
+ * @package   Routing
+ * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @license   MIT https://darkprospect.net/MIT-License.txt
+ * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
 class Routing extends AbstractModule
 {
@@ -46,7 +46,7 @@ class Routing extends AbstractModule
     /**
      * @var mixed
      */
-    protected $params = array();
+    protected $params = [];
 
     /**
      * @var mixed
@@ -70,7 +70,7 @@ class Routing extends AbstractModule
         parent::__construct($core, $configs);
 
         // Get the URI from the system and process it into $this->primary and $this->params.
-        $filter = array('/\?.*$/i');
+        $filter = ['/\?.*$/i'];
         if (isset($this->core->conf_subdir)) {
             $filter[] = "/{$this->core->conf_subdir}/i";
         }
@@ -112,7 +112,7 @@ class Routing extends AbstractModule
         }
 
         if (isset($this->secondary) && method_exists($this->control, $this->secondary)) {
-            call_user_func_array(array($this->control, $this->secondary), $this->params);
+            call_user_func_array([$this->control, $this->secondary], $this->params);
         } else {
             $this->control->index();
         }

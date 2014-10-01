@@ -6,12 +6,12 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine-core
- * @package   obsidian-moon-engine-core
- * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2013 Dark Prospect Games, LLC
- * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
+ * @category  obsidian-moon-engine
+ * @package   obsidian-moon-engine
+ * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @license   MIT https://darkprospect.net/MIT-License.txt
+ * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
 namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
 
@@ -20,19 +20,18 @@ use \DarkProspectGames\ObsidianMoonEngine\Core;
 use \PDO;
 use \PDOException;
 use \PDOStatement;
-use \Exception;
 
 /**
- * Module CorePDO
+ * DarkProspectGames\ObsidianMoonEngine\Modules\Core\Database
  *
  * Database class using PDO
  *
- * @category  obsidian-moon-engine-core
- * @package   CorePDO
+ * @category  obsidian-moon-engine
+ * @package   Database
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2013 Dark Prospect Games, LLC
- * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link       https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
+ * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @license   MIT https://darkprospect.net/MIT-License.txt
+ * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @link      http://www.php.net/manual/en/book.pdo.php
  */
 class Database extends AbstractModule
@@ -68,7 +67,7 @@ class Database extends AbstractModule
      * @param Core  $core    The core system object that will be passed to use.
      * @param mixed $configs The parameters that we will be passing to PDO.
      *
-     * @throws \Exception
+     * @throws CoreException
      */
     public function __construct(Core $core, $configs = null)
     {
@@ -79,8 +78,8 @@ class Database extends AbstractModule
 
         try {
             $this->connect();
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        } catch (CoreException $e) {
+            throw new CoreException($e->getMessage());
         }
     }
 
@@ -90,7 +89,7 @@ class Database extends AbstractModule
      * @param null $configs These are the details pertaining to a newly created connection,
      *                      if not set it uses the config params.
      *
-     * @throws \Exception
+     * @throws CoreException
      * @return mixed
      */
     protected function connect($configs = null)
@@ -104,7 +103,7 @@ class Database extends AbstractModule
             $this->connection = new PDO($dsn, $this->configs['user'], $this->configs['pass']);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, $this->configs['error_mode']);
         } catch (PDOException $e) {
-            throw new Exception('CorePDO::__construct()->PDO::__construct() : ' . $e->getMessage());
+            throw new CoreException(__CLASS__.'::__construct()->PDO::__construct() : ' . $e->getMessage());
         }
     }
 
@@ -115,23 +114,23 @@ class Database extends AbstractModule
      * @param string $stmt  The name of the variable where the statement was stored.
      *
      * @return $this
-     * @throws \Exception
+     * @throws CoreException
      */
     public function execute($array, $stmt = 'stmt')
     {
-        $this->values = array();
+        $this->values = [];
         $this->lastid = null;
         $stmt         = 'prepare_' . $stmt;
         try {
             $sth = $this->$stmt->execute($array);
         } catch (PDOException $e) {
-            throw new Exception('CorePDO::execute()->PDOStatement::execute() : ' . $e->getMessage());
+            throw new CoreException(__CLASS__.'::execute()->PDOStatement::execute() : ' . $e->getMessage());
         }
         if ($sth instanceof PDOStatement) {
             try {
                 $this->values = $sth->fetchAll($this->configs['fetch_mode']);
             } catch (PDOException $e) {
-                throw new Exception('CorePDO::execute()->PDOStatement::fetchAll() : ' . $e->getMessage());
+                throw new CoreException(__CLASS__.'::execute()->PDOStatement::fetchAll() : ' . $e->getMessage());
             }
         }
 
@@ -140,7 +139,7 @@ class Database extends AbstractModule
             try {
                 $this->lastid = $this->connection->lastInsertId();
             } catch (PDOException $e) {
-                throw new Exception('CorePDO::execute()->PDO::lastInsertId() : ' . $e->getMessage());
+                throw new CoreException(__CLASS__.'::execute()->PDO::lastInsertId() : ' . $e->getMessage());
             }
         }
 
@@ -205,7 +204,7 @@ class Database extends AbstractModule
      * @param string $stmt The statement will be saved into this space.
      *
      * @return $this
-     * @throws \Exception
+     * @throws CoreException
      */
     public function prepare($sql, $stmt = 'stmt')
     {
@@ -213,7 +212,7 @@ class Database extends AbstractModule
         try {
             $this->$stmt = $this->connection->prepare($sql);
         } catch (PDOException $e) {
-            throw new Exception('CorePDO::prepare()->PDO::prepare() : ' . $e->getMessage());
+            throw new CoreException(__CLASS__.'::prepare()->PDO::prepare() : ' . $e->getMessage());
         }
         $store_sql        = $stmt . '_sql';
         $this->$store_sql = $sql;
@@ -228,33 +227,33 @@ class Database extends AbstractModule
      * @param null  $params The parameters of the query.
      *
      * @return $this|bool
-     * @throws \Exception
+     * @throws CoreException
      */
     public function query($sql, $params = null)
     {
         $sth          = null;
-        $this->values = array();
+        $this->values = [];
         $this->lastid = null;
         if ($sql == '') {
-            throw new Exception('CorePDO::query(): Query was undefined, please make sure you pass one.');
+            throw new CoreException(__CLASS__.'::query(): Query was undefined, please make sure you pass one.');
         }
 
         if ($params === null) {
             try {
                 $sth = $this->connection->query($sql);
             } catch (PDOException $e) {
-                throw new Exception('CorePDO::query()->PDO::query() : ' . $e->getMessage());
+                throw new CoreException(__CLASS__.'::query()->PDO::query() : ' . $e->getMessage());
             }
         } else {
             try {
                 $sth = $this->connection->prepare($sql);
             } catch (PDOException $e) {
-                throw new Exception('CorePDO::query()->PDO::prepare() : ' . $e->getMessage());
+                throw new CoreException(__CLASS__.'::query()->PDO::prepare() : ' . $e->getMessage());
             }
             try {
                 $sth->execute($params);
             } catch (PDOException $e) {
-                throw new Exception('CorePDO::query()->PDO::execute() : ' . $e->getMessage());
+                throw new CoreException(__CLASS__.'::query()->PDO::execute() : ' . $e->getMessage());
             }
         }
 
@@ -262,7 +261,7 @@ class Database extends AbstractModule
             try {
                 $this->values = $sth->fetchAll($this->configs['fetch_mode']);
             } catch (PDOException $e) {
-                throw new Exception('CorePDO::query()->PDOStatement::fetchAll() : ' . $e->getMessage());
+                throw new CoreException(__CLASS__.'::query()->PDOStatement::fetchAll() : ' . $e->getMessage());
             }
         }
 
@@ -270,10 +269,25 @@ class Database extends AbstractModule
             try {
                 $this->lastid = $this->connection->lastInsertId();
             } catch (PDOException $e) {
-                throw new Exception('CorePDO::query()->PDO::lastInsertId() : ' . $e->getMessage());
+                throw new CoreException(__CLASS__.'::query()->PDO::lastInsertId() : ' . $e->getMessage());
             }
         }
 
         return $this;
+    }
+
+    /**
+     * Allows the user to set configurations after the object is instantiated
+     *
+     * @param string $name  name of the config that you want to change
+     * @param mixed  $value value of the config to set
+     *
+     * @return mixed
+     */
+    public function setConfig($name, $value)
+    {
+        if (isset($this->configs[$name])) {
+            $this->configs[$name] = $value;
+        }
     }
 }

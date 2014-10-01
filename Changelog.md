@@ -1,5 +1,11 @@
 ## Obsidian Moon Engine Change Log
 
+#### Version 1.3.1
+- Added the ability to change configs after the instantiation of the Database class.
+- Removed the CouchDB class.
+- Converted the license from BSD-3 to MIT.
+- Updated all of the PhpDoc commentation.
+
 #### Version 1.3.0
 - Removed `CoreMysql` module from the framework with the deprecation of MySQL class in PHP 5.5.
   Please, use the `CorePDO` module instead, more optimizations will be introduced at a later time.

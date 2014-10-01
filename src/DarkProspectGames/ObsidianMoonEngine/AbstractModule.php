@@ -6,27 +6,27 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine-core
- * @package   obsidian-moon-engine-core
- * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2013 Dark Prospect Games, LLC
- * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
+ * @category  obsidian-moon-engine
+ * @package   obsidian-moon-engine
+ * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @license   MIT https://darkprospect.net/MIT-License.txt
+ * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
 namespace DarkProspectGames\ObsidianMoonEngine;
 
 /**
- * Class Module
+ * DarkProspectGames\ObsidianMoonEngine\AbstractModule
  *
  * This class is the structure of the modules used by the framework which are
  * loaded into the framework for later use for your applications.
  *
  * @category  obsidian-moon-engine-core
- * @package   Module
- * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2013 Dark Prospect Games, LLC
- * @license   BSD https://darkprospect.net/BSD-License.txt
- * @link      https://gitlab.com/dark-prospect-games/obsidian-moon-engine/
+ * @package   AbstractModule
+ * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @license   MIT https://darkprospect.net/MIT-License.txt
+ * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since     1.3.0 Allowing for implementations of modules.
  */
 abstract class AbstractModule
