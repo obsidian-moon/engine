@@ -6,30 +6,46 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine
- * @package   obsidian-moon-engine
+ * @category  Frameworks
+ * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @copyright 2011-2015 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
 namespace DarkProspectGames\ObsidianMoonEngine;
 
 /**
- * DarkProspectGames\ObsidianMoonEngine\AbstractControl
+ * Class AbstractController
  *
  * This class is the structure of the controls used by the framework which are
  * called by the framework in order to guide the application's flow.
  *
- * @category  obsidian-moon-engine-core
- * @package   AbstractControl
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
- * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
- * @since     1.3.0 Allowing for implementations of modules.
+ * Extend the Abstract Module:
+ *
+ * <code>
+ * <?php
+ * // ./src/Controllers/MyController.php
+ * namespace MyCompanyNamespace\MyApplication;
+ *
+ * use \DarkProspectGames\ObsidianMoonEngine\AbstractController;
+ * use \DarkProspectGames\ObsidianMoonEngine\Core;
+ *
+ * class MyController extends AbstractController
+ * {
+ *     //...
+ * }
+ *
+ * </code>
+ *
+ * @category Core
+ * @package  DarkProspectGames\ObsidianMoonEngine
+ * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @since    1.3.0 Allowing for control routing.
+ * @uses     Core
+ * @abstract
  */
-abstract class AbstractControl
+abstract class AbstractController
 {
 
     /**
@@ -55,23 +71,25 @@ abstract class AbstractControl
      * following if they want to modify the default behaviour of the constructor, unless
      * they want to totally overwrite the constructor:
      *
+     *
      * <code>
-     *     public function __construct(Core $core, $routing)
-     *     {
-     *         parent::__construct($core, $routing);
-     *         // Add any custom coding to your constructor.
-     *     }
+     * public function __construct(Core $core, array $routes = [])
+     * {
+     *     parent::__construct($core, $routes);
+     *     //...
+     * }
      * </code>
      *
      * This helps ensure that all modules are using the same implementation and that the module
      * creator has an easier time with creating modules.
      *
      * @param Core  $core   The reference to the Core class.
-     * @param mixed $routes Any extra routing that we get from routing module.
+     * @param array $routes Any extra routing that we get from routing module.
      *
-     * @return AbstractControl
+     * @uses   Core               Core module used in all controlls.
+     * @return AbstractController
      */
-    public function __construct(Core $core, $routes)
+    public function __construct(Core $core, array $routes = [])
     {
         $this->core   = $core;
         $this->routes = $routes;

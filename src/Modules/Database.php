@@ -6,14 +6,14 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine
- * @package   obsidian-moon-engine
+ * @category  Frameworks
+ * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @copyright 2011-2015 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
 use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 use \DarkProspectGames\ObsidianMoonEngine\Core;
@@ -22,17 +22,17 @@ use \PDOException;
 use \PDOStatement;
 
 /**
- * DarkProspectGames\ObsidianMoonEngine\Modules\Core\Database
+ * Class Database
  *
  * Database class using PDO
  *
- * @category  obsidian-moon-engine
- * @package   Database
- * @author    Alfonso E Martinez, III <admin@darkprospect.net>
- * @copyright 2011-2014 Dark Prospect Games, LLC
- * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
- * @link      http://www.php.net/manual/en/book.pdo.php
+ * @category Modules
+ * @package  DarkProspectGames\ObsidianMoonEngine\Modules
+ * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @since    1.0.0
+ * @uses     AbstractModule
+ * @uses     Core
+ * @uses     CoreException
  */
 class Database extends AbstractModule
 {
@@ -51,10 +51,10 @@ class Database extends AbstractModule
      * @var mixed
      */
     protected $configs = [
-                          'type'       => 'mysql',
-                          'fetch_mode' => PDO::FETCH_ASSOC,
-                          'error_mode' => PDO::ERRMODE_EXCEPTION,
-                         ];
+        'type'       => 'mysql',
+        'fetch_mode' => PDO::FETCH_ASSOC,
+        'error_mode' => PDO::ERRMODE_EXCEPTION,
+    ];
 
     /**
      * @var mixed
@@ -69,12 +69,10 @@ class Database extends AbstractModule
      *
      * @throws CoreException
      */
-    public function __construct(Core $core, $configs = null)
+    public function __construct(Core $core, array $configs = [])
     {
         $this->core = $core;
-        if ($configs !== null) {
-            $this->configs = array_replace($this->configs, $configs);
-        }
+        $this->configs = array_replace($this->configs, $configs);
 
         try {
             $this->connect();

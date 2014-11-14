@@ -6,14 +6,14 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine
- * @package   obsidian-moon-engine
+ * @category  Frameworks
+ * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @copyright 2011-2015 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
 use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 
@@ -23,13 +23,10 @@ use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
  * Loosely inspired by CodeIgniter's benchmark class, this module calculates the
  * time it takes to load the application's resources.
  *
- * @category  obsidian-moon-engine-core
- * @package   Benchmark
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
- * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
- *
+ * @category Modules
+ * @package  DarkProspectGames\ObsidianMoonEngine\Modules
+ * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @uses     AbstractModule
  */
 class Benchmark extends AbstractModule
 {
@@ -69,7 +66,6 @@ class Benchmark extends AbstractModule
      * @param integer $decimals the number of decimal places
      *
      * @access public
-     *
      * @return mixed
      */
     public function elapsedTime($point1 = '', $point2 = '', $decimals = 4)

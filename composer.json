@@ -1,7 +1,7 @@
 {
   "name": "dark-prospect-games/obsidian-moon-engine",
   "description": "An Open Source, Lightweight and 100% Modular Framework in PHP",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "keywords": [
     "framework"
   ],
@@ -29,7 +29,7 @@
     "squizlabs/php_codesniffer": "1.*"
   },
   "autoload": {
-    "psr-0": {
+    "psr-4": {
       "DarkProspectGames\\ObsidianMoonEngine\\": "src/"
     }
   },

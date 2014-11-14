@@ -6,29 +6,28 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine
- * @package   obsidian-moon-engine
+ * @category  Frameworks
+ * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @copyright 2011-2015 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
 namespace DarkProspectGames\ObsidianMoonEngine;
 
-use \Exception;
+use \DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
 
 /**
- * DarkProspectGames\ObsidianMoonEngine\Core
+ * Class Core
  *
  * This class is the core of the framework and handles all of the loading and processing
  * of modules and controls that will be used by your application.
  *
- * @category  obsidian-moon-engine
- * @package   Core
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
- * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @category Core
+ * @package  DarkProspectGames\ObsidianMoonEngine
+ * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @uses     CoreException
+ * @since    1.0.0 Created core module
  */
 class Core
 {
@@ -36,7 +35,7 @@ class Core
     /**
      * @const Version of the Framework
      */
-    const VERSION = '1.3.0';
+    const VERSION = '1.3.2';
 
     /**
      * @var mixed
@@ -60,7 +59,7 @@ class Core
     protected $configs;
 
     /**
-     * @var mixed When the user creates variables in the Core, we assign them to this
+     * @var array When the user creates variables in the Core, we assign them to this
      *            array for later referencing by the app.
      */
     protected $globals;
@@ -80,7 +79,7 @@ class Core
      *
      * @param mixed $conf This is an array that holds the configurations passed to the class.
      *
-     * @throws Exception
+     * @throws CoreException
      */
     public function __construct($conf = null)
     {
@@ -108,8 +107,8 @@ class Core
                 foreach ($conf['modules'] as $key => $value) {
                     $this->module($key, $value);
                 }
-            } catch (Exception $e) {
-                throw new Exception($e->getMessage());
+            } catch (CoreException $e) {
+                throw new CoreException($e->getMessage());
             }
         }
     }
@@ -133,7 +132,7 @@ class Core
      * @param mixed $name The global variable that is trying to be set.
      *
      * @return mixed
-     * @throws Exception
+     * @throws CoreException
      */
     public function __get($name)
     {
@@ -142,7 +141,7 @@ class Core
             if (isset($this->configs[$name])) {
                 return $this->configs[$name];
             } else {
-                throw new Exception(
+                throw new CoreException(
                     "Could not find a variable by the name 'conf_{$name}'!"
                 );
             }
@@ -151,7 +150,7 @@ class Core
         } elseif (isset($this->globals[$name])) {
             return $this->globals[$name];
         } else {
-            throw new Exception("Could not find a variable by the name '{$name}'!");
+            throw new CoreException("Could not find a variable by the name '{$name}'!");
         }
     }
 
@@ -239,12 +238,12 @@ class Core
      * @param array  $config     This is the modules that will be loaded into the Core.
      *
      * @return boolean
-     * @throws Exception
+     * @throws CoreException
      */
     public function module($moduleName, $accessName, $config = null)
     {
         if (isset($this->modules[$accessName])) {
-            throw new Exception(
+            throw new CoreException(
                 "Module '\$this->$accessName' has already been set,"
                 ."could not instantiate module '$moduleName'!"
             );
@@ -252,14 +251,14 @@ class Core
             if (isset($config) && $config !== null) {
                 try {
                     $this->modules[$accessName] = new $moduleName($this, $config);
-                } catch (Exception $e) {
-                    throw new Exception("Error Loading Module {$moduleName}: " . $e->getMessage());
+                } catch (CoreException $e) {
+                    throw new CoreException("Error Loading Module {$moduleName}: " . $e->getMessage());
                 }
             } else {
                 try {
                     $this->modules[$accessName] = new $moduleName($this);
-                } catch (Exception $e) {
-                    throw new Exception("Error Loading Module {$moduleName}: " . $e->getMessage());
+                } catch (CoreException $e) {
+                    throw new CoreException("Error Loading Module {$moduleName}: " . $e->getMessage());
                 }
             }
 
@@ -277,15 +276,15 @@ class Core
      * We run the routing after all the modules etc have been loaded to make sure that
      * the correct Control is called.
      *
-     * @throws Exception
+     * @throws CoreException
      * @return void
      */
     public function routing()
     {
         try {
             $this->module('\\DarkProspectGames\\Modules\\Core\\Routing', 'routing');
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        } catch (CoreException $e) {
+            throw new CoreException($e->getMessage());
         }
     }
 
@@ -306,12 +305,12 @@ class Core
      *                         out to user otherwise append to the output buffer.
      *
      * @return mixed
-     * @throws Exception
+     * @throws CoreException
      */
     public function view($_view, $_data = null, $_return = false)
     {
         if (!file_exists($this->configs['libs'] . '/Views/' . $_view . '.php') && $_view !== null) {
-            throw new Exception("No view data could be found for 'Views/{$_view}.php'!");
+            throw new CoreException("Could not find View in './src/Views/{$_view}.php'!");
         } elseif ($_view === null) {
             $this->output .= $_data;
         } else {
@@ -323,7 +322,7 @@ class Core
             ob_start();
             include $this->configs['libs'] . '/Views/' . $_view . '.php';
             $buffer = ob_get_contents();
-            @ob_end_clean();
+            ob_end_clean();
             if ($_return) {
                 return $buffer;
             } else {

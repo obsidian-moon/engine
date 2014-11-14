@@ -6,28 +6,27 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine
- * @package   obsidian-moon-engine
+ * @category  Frameworks
+ * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @copyright 2011-2015 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
 use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 
 /**
- * DarkProspectGames\ObsidianMoonEngine\Modules\Core\Input
+ * Class Input
  *
  * A module to handle all of the input from $_POST, $_GET, $_SESSION, $_COOKIE and $_SERVER
  *
- * @category  obsidian-moon-engine
- * @package   Input
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
- * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @category Modules
+ * @package  DarkProspectGames\ObsidianMoonEngine\Modules
+ * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @since    1.0.0
+ * @uses     AbstractModule
  */
 class Input extends AbstractModule
 {
@@ -66,7 +65,7 @@ class Input extends AbstractModule
     public function get($index = null, $xss_clean = false)
     {
         if ($index === null && count($_GET) > 0) {
-            $get = array();
+            $get = [];
 
             // Loop through the full $_GET array.
             foreach (array_keys($_GET) as $key) {
@@ -91,7 +90,7 @@ class Input extends AbstractModule
     {
         // Check if a field has been provided.
         if ($index === null && count($_POST) > 0) {
-            $post = array();
+            $post = [];
 
             // Loop through the full $_POST array and return the value.
             foreach (array_keys($_POST) as $key) {

@@ -8,27 +8,50 @@ Alfonso E Martinez, III of Dark Prospect Games, LLC
 
 ### Installing Obsidian Moon Engine
 
-Using [Composer](http://getcomposer.org) is the recommended way to install the Obsidian Moon Engine.
-In order to use the Obsidian Moon Engin through Composer, you enter the following into your `composer.json` file:
-
-```json
-{
-    "require": {
-        "dark-prospect-games/obsidian-moon-engine": "1.3.*"
-    }
-}
-```
-
-If you do not have Composer you can install it by doing the following from your command line:
+Since Obsidian Moon Engine uses [Composer](http://getcomposer.org) you will need to install it before you can run the
+code with it. If you do not already have Composer you can install it by doing the following from your command line:
 
 ```bash
 curl -sS https://getcomposer.org/installer | php
 ```
 
-In order to install the project's dependencies, you will need to run an install.
+Once you have installed Composer you will then be able to install it automatically and configure the autoloader to load
+all of your application's files by entering the following into a `composer.json` file:
+
+```json
+{
+  "require": {
+    "dark-prospect-games/obsidian-moon-engine": "~1.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "MyCompanyNamespace\\MyApplication\\": "src/"
+    }
+  }
+}
+```
+
+After editing the file, you can simply run the following command to use the Composer file you installed:
 
 ```bash
 php composer.phar install
+```
+
+If you use apache you will be able to start setting up the routing by using the following in the app's root folder:
+
+```
+# Enabling the mod_rewrite module in this folder
+RewriteEngine On
+Options +FollowSymLinks
+
+# Protecting access to secure locations
+RewriteCond %{REQUEST_URI} ^src.*
+RewriteRule ^(.*)$ /index.php?/$1 [L]
+
+# Redirects invalid locations to index
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?/$1 [L]
 ```
 
 ### Overview of the Base Methods
@@ -36,11 +59,21 @@ php composer.phar install
 Within the Obsidian Moon Engine there are a few functions that you will need to keep in mind when using using the framework.
 The first of all is that the system uses a path routing system that you will need to declare in the configurations. The files
 used to manage the flow of application's called Controls. In order to provide an ease of use upon installation, Obsidian Moon
-Engine comes with a default routing module ([Core\Routing]( https://gitlab.com/dark-prospect-games/obsidian-moon-engine/wiki/Module-Routing))
+Engine comes with a default routing module 
 that you use or extend and/or overwrite.
 
 Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any errors that
 occur during the process of your application's life cycle.
+
+### Latest Changes
+
+- Converted to PSR-4 from PSR-0, since PHP-FIG is moving in favor of PSR-4.
+- Found extra information regarding PHPDocs so I include those changes as well.
+- Renamed `AbstractControl` to `AbstractController` and updated Documentation with examples.
+- All of the modules use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
+- Removed `.htaccess` and placed contents in `README.md` under installation information.
+
+[Complete List of Changes](Changelog.md)
 
 ### Summary of Obsidian Moon
 

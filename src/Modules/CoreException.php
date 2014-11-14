@@ -6,30 +6,29 @@
  *
  * PHP version 5
  *
- * @category  obsidian-moon-engine
- * @package   obsidian-moon-engine
+ * @category  Frameworks
+ * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
+ * @copyright 2011-2015 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules\Core;
+namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
 use \Exception;
 
 /**
- * DarkProspectGames\ObsidianMoonEngine\Modules\Core\CoreException
+ * Class CoreException
  *
  * Used to handle any issues that we may have with the application.
  * You will be able to log errors automatically instead of dealing
  * with error_log() directly.
  *
- * @category  obsidian-moon-engine
- * @package   CoreException
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2014 Dark Prospect Games, LLC
- * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @category Modules
+ * @package  DarkProspectGames\ObsidianMoonEngine\Modules
+ * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @since    1.3.0
+ * @uses     Exception
  */
 class CoreException extends Exception
 {
@@ -39,9 +38,10 @@ class CoreException extends Exception
      *
      * This extends the standard Exception class in order
      *
-     * @param null|string $message   The exception message
-     * @param Exception   $previous  Pass the Exception class to CoreException
-     * @param bool        $error_log Determines whether or not we will log the error in error_log
+     * @param  null|string   $message   The exception message
+     * @param  Exception     $previous  Pass the Exception class to CoreException
+     * @param  bool          $error_log Determines whether or not we will log the error in error_log
+     * @return CoreException
      */
     public function __construct($message = null, Exception $previous = null, $error_log = true)
     {

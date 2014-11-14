@@ -1,5 +1,12 @@
 ## Obsidian Moon Engine Change Log
 
+#### Version 1.3.2
+- Converted to PSR-4 from PSR-0, since PHP-FIG is moving in favor of PSR-4.
+- Found extra information regarding PHPDocs so I include those changes as well.
+- Renamed `AbstractControl` to `AbstractController` and updated Documentation with examples.
+- All of the modules use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
+- Removed `.htaccess` and placed contents in `README.md` under installation information.
+
 #### Version 1.3.1
 - Added the ability to change configs after the instantiation of the Database class.
 - Removed the CouchDB class.
@@ -12,7 +19,7 @@
 - Modules and Controls will not extend a superclass designed to provide a skeleton for each.
 - Routing is now handled by a routing module which will default to `CoreRouting` if not specified.
 - Added the ability to use subdirectories as the base of the application, for example:
-  `http://my-obsidian.com/application/`. Check documentation for methods of using this in
+  `http://myapplication.com/application/`. Check documentation for methods of using this in
   your application.
 - Allowing users to customize their apps by adding additional optional configurations, `mycontrol` & `mymodule`.
 - Added the ability to overwrite the configurations stored in  `Libraries/Configs` by passing an array to `module()`.
