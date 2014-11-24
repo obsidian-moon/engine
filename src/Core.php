@@ -38,12 +38,12 @@ class Core
     const VERSION = '1.3.2';
 
     /**
-     * @var mixed
+     * @var \DarkProspectGames\ObsidianMoonEngine\AbstractController[]
      */
     protected $controls;
 
     /**
-     * @var mixed
+     * @var string[]
      */
     public $errors = [];
 
