@@ -6,7 +6,6 @@
  *
  * PHP version 5
  *
- * @category  Frameworks
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @copyright 2011-2015 Dark Prospect Games, LLC
@@ -38,7 +37,6 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  *
  * </code>
  *
- * @category Core
  * @package  DarkProspectGames\ObsidianMoonEngine
  * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @since    1.3.0 Allowing for control routing.

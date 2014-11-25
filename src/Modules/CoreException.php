@@ -6,7 +6,6 @@
  *
  * PHP version 5
  *
- * @category  Frameworks
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @copyright 2011-2015 Dark Prospect Games, LLC
@@ -24,7 +23,6 @@ use \Exception;
  * You will be able to log errors automatically instead of dealing
  * with error_log() directly.
  *
- * @category Modules
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
  * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @since    1.3.0

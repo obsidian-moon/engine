@@ -6,7 +6,6 @@
  *
  * PHP version 5
  *
- * @category  Frameworks
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @copyright 2011-2015 Dark Prospect Games, LLC
@@ -22,7 +21,6 @@ use \DarkProspectGames\ObsidianMoonEngine\AbstractController;
  *
  * This is the default controller.
  *
- * @category Controllers
  * @package  DarkProspectGames\ObsidianMoonEngine\Controllers
  * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @since    1.3.2

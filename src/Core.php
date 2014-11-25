@@ -6,7 +6,6 @@
  *
  * PHP version 5
  *
- * @category  Frameworks
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @copyright 2011-2015 Dark Prospect Games, LLC
@@ -23,55 +22,31 @@ use \DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
  * This class is the core of the framework and handles all of the loading and processing
  * of modules and controls that will be used by your application.
  *
- * @category Core
  * @package  DarkProspectGames\ObsidianMoonEngine
  * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @uses     AbstractController
+ * @uses     AbstractModule
  * @uses     CoreException
  * @since    1.0.0 Created core module
  */
 class Core
 {
 
-    /**
-     * @const Version of the Framework
-     */
+    /** @const Version of the Framework */
     const VERSION = '1.3.2';
-
-    /**
-     * @var \DarkProspectGames\ObsidianMoonEngine\AbstractController[]
-     */
+    /** @var AbstractController[] Array of controllers that can be used by the app. */
     protected $controls;
-
-    /**
-     * @var string[]
-     */
+    /** @var string[]             Collection of errors passed from the framework. */
     public $errors = [];
-
-    /**
-     * @var mixed The variable that stores the output that will be returned at
-     *            the end of the script.
-     */
+    /** @var string               The variable that stores compiled output that will be returned at the end. */
     protected $output;
-
-    /**
-     * @var mixed An array holding all of the configurations that we created the Core with.
-     */
+    /** @var mixed[]              Array holding all of the configurations that we created the Core with. */
     protected $configs;
-
-    /**
-     * @var array When the user creates variables in the Core, we assign them to this
-     *            array for later referencing by the app.
-     */
+    /** @var mixed[]              Contains keys and values of variables set in app. */
     protected $globals;
-
-    /**
-     * @var Core The current instance of a Core object.
-     */
+    /** @var Core                 The current instance of a Core object. */
     protected static $instance = null;
-
-    /**
-     * @var mixed An array holding all of the Module objects currently loaded into Core.
-     */
+    /** @var AbstractModule[]     Array holding all of the Module objects currently loaded into Core. */
     protected $modules;
 
     /**
@@ -277,7 +252,6 @@ class Core
      * the correct Control is called.
      *
      * @throws CoreException
-     * @return void
      */
     public function routing()
     {

@@ -6,7 +6,6 @@
  *
  * PHP version 5
  *
- * @category  Frameworks
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @copyright 2011-2015 Dark Prospect Games, LLC
@@ -23,7 +22,6 @@ use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
  * Loosely inspired by CodeIgniter's benchmark class, this module calculates the
  * time it takes to load the application's resources.
  *
- * @category Modules
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
  * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @uses     AbstractModule

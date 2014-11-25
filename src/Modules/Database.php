@@ -6,7 +6,6 @@
  *
  * PHP version 5
  *
- * @category  Frameworks
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @copyright 2011-2015 Dark Prospect Games, LLC
@@ -26,7 +25,6 @@ use \PDOStatement;
  *
  * Database class using PDO
  *
- * @category Modules
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
  * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @since    1.0.0
