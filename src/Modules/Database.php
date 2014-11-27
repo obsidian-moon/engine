@@ -37,17 +37,17 @@ class Database extends AbstractModule
 {
 
     /**
-     * @var PDO
+     * @type PDO
      */
     protected $connection;
 
     /**
-     * @var int|null
+     * @type int|null
      */
     protected $lastid;
 
     /**
-     * @var mixed[]
+     * @type mixed[]
      */
     protected $configs = [
         'type'       => 'mysql',
@@ -56,7 +56,7 @@ class Database extends AbstractModule
     ];
 
     /**
-     * @var mixed[]
+     * @type mixed[]
      */
     protected $values;
 
@@ -96,7 +96,7 @@ class Database extends AbstractModule
 
         $dsn = "{$this->configs['type']}:dbname={$this->configs['name']};host={$this->configs['host']}";
         try {
-            /** @var PDO connection */
+            /** @type PDO connection */
             $this->connection = new PDO($dsn, $this->configs['user'], $this->configs['pass']);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, $this->configs['error_mode']);
         } catch (PDOException $e) {
@@ -237,14 +237,14 @@ class Database extends AbstractModule
 
         if ($params === null) {
             try {
-                /** @var PDOStatement $sth */
+                /** @type PDOStatement $sth */
                 $sth = $this->connection->query($sql);
             } catch (PDOException $e) {
                 throw new CoreException(__CLASS__.'::query()->PDO::query() : ' . $e->getMessage());
             }
         } else {
             try {
-                /** @var PDOStatement $sth */
+                /** @type PDOStatement $sth */
                 $sth = $this->connection->prepare($sql);
             } catch (PDOException $e) {
                 throw new CoreException(__CLASS__.'::query()->PDO::prepare() : ' . $e->getMessage());
@@ -258,7 +258,7 @@ class Database extends AbstractModule
 
         if ($sth instanceof PDOStatement && preg_match('/select/i', $sql)) {
             try {
-                /** @var array values */
+                /** @type array values */
                 $this->values = $sth->fetchAll($this->configs['fetch_mode']);
             } catch (PDOException $e) {
                 throw new CoreException(__CLASS__.'::query()->PDOStatement::fetchAll() : ' . $e->getMessage());
@@ -267,7 +267,7 @@ class Database extends AbstractModule
 
         if (preg_match('/insert/i', $sql)) {
             try {
-                /** @var int lastid */
+                /** @type int lastid */
                 $this->lastid = $this->connection->lastInsertId();
             } catch (PDOException $e) {
                 throw new CoreException(__CLASS__.'::query()->PDO::lastInsertId() : ' . $e->getMessage());

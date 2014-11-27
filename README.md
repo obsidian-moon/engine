@@ -1,4 +1,6 @@
-## Obsidian Moon Engine
+Obsidian Moon Engine
+====================
+
 This is a project that I have worked on for several months after being originally inspired
 by CodeIgniter. After setting up the initial steps of the system I am opening the
 project up for open source. Feel free to contribute and peer review my work, please
@@ -6,7 +8,8 @@ not that there are a few pieces that are based on CodeIgniter that need to be wo
 
 Alfonso E Martinez, III of Dark Prospect Games, LLC
 
-### Installing Obsidian Moon Engine
+<a name="installing"></a>
+## Installing Obsidian Moon Engine
 
 Since Obsidian Moon Engine uses [Composer](http://getcomposer.org) you will need to install it before you can run the
 code with it. If you do not already have Composer you can install it by doing the following from your command line:
@@ -54,7 +57,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?/$1 [L]
 ```
 
-### Overview of the Base Methods
+<a name="base-methods"></a>
+## Overview of the Base Methods
 
 Within the Obsidian Moon Engine there are a few functions that you will need to keep in mind when using using the framework.
 The first of all is that the system uses a path routing system that you will need to declare in the configurations. The files
@@ -65,17 +69,22 @@ that you use or extend and/or overwrite.
 Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any errors that
 occur during the process of your application's life cycle.
 
-### Latest Changes
+<a name="latest-changes"></a>
+## Latest Changes
 
 - Converted to PSR-4 from PSR-0, since PHP-FIG is moving in favor of PSR-4.
 - Found extra information regarding PHPDocs so I include those changes as well.
 - Renamed `AbstractControl` to `AbstractController` and updated Documentation with examples.
 - All of the modules use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
 - Removed `.htaccess` and placed contents in `README.md` under installation information.
+- Removed the unused dependencies in `require-dev`
+- Renamed the `Changelog.md` to `CHANGELOG.md`
 
 [Complete List of Changes](Changelog.md)
 
-### Summary of Obsidian Moon
+
+<a name="summary"></a>
+## Summary of Obsidian Moon Engine
 
 You will find that the Obsidian Moon Engine is 100% modular and will expand as you build code into it. Feel free to
 submit modules for addition into the core, tweak the code to suite your needs and add any features I have not thought of yet.

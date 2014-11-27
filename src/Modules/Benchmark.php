@@ -30,7 +30,7 @@ class Benchmark extends AbstractModule
 {
 
     /**
-     * @var array List of all benchmark markers and when they were added.
+     * @type array List of all benchmark markers and when they were added.
      */
     private $marker = [];
 

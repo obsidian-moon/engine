@@ -32,37 +32,41 @@ use \DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
 class Core
 {
 
-    /** @const Version of the Framework */
+    /** @type string               Framework Version */
     const VERSION = '1.3.2';
-    /** @var AbstractController[] Array of controllers that can be used by the app. */
+    /** @type AbstractController[] Collection of controllers that can be used by the app. */
     protected $controls;
-    /** @var string[]             Collection of errors passed from the framework. */
+    /** @type string[]             Collection of errors messages passed from the framework. */
     public $errors = [];
-    /** @var string               The variable that stores compiled output that will be returned at the end. */
+    /** @type string               The variable that stores compiled output that will be returned at the end. */
     protected $output;
-    /** @var mixed[]              Array holding all of the configurations that we created the Core with. */
+    /** @type mixed[]              Array holding all of the configurations that we created the Core with. */
     protected $configs;
-    /** @var mixed[]              Contains keys and values of variables set in app. */
+    /** @type mixed[]              Contains keys and values of variables set in app. */
     protected $globals;
-    /** @var Core                 The current instance of a Core object. */
+    /** @type Core                 The current instance of a Core object. */
     protected static $instance = null;
-    /** @var AbstractModule[]     Array holding all of the Module objects currently loaded into Core. */
+    /** @type AbstractModule[]     Array holding all of the Module objects currently loaded into Core. */
     protected $modules;
 
     /**
      * This creates an instance of the core class.
      *
-     * @param mixed $conf This is an array that holds the configurations passed to the class.
+     * @param array $conf {
+     *     @type string $core Directory root of the Core
+     *     @type string $base Directory root of the Application
+     *     @type string $libs Directory root of the Application sources
+     * }
      *
      * @throws CoreException
      */
-    public function __construct($conf = null)
+    public function __construct(array $conf = [])
     {
         $this->globals['systime'] = time();
         $this->globals['is_ajax'] = $this->getAjax();
         $this->globals['is_http'] = $this->getProtocol();
         // Assign all configuration values to $conf_**** variables.
-        if (isset($conf) == true && is_array($conf) == true) {
+        if (count($conf) > 0) {
             foreach ($conf as $key => $value) {
                 $this->configs[$key] = $value;
             }
@@ -104,7 +108,7 @@ class Core
      * This method will automatically grab the correct reference and return the
      * value as the app needs.
      *
-     * @param mixed $name The global variable that is trying to be set.
+     * @param string $name The global variable that is trying to be accessed.
      *
      * @return mixed
      * @throws CoreException
@@ -139,6 +143,8 @@ class Core
      * @param mixed $name  The global variable that is trying to be set.
      * @param mixed $value Value of the global that you are trying to set.
      *
+     * @uses globals to store value of $value
+     *
      * @return boolean
      */
     public function __set($name, $value)
@@ -166,7 +172,7 @@ class Core
      */
     public function __toString()
     {
-        return 'Obsidian Moon Engine v'.self::VERSION.', Copyright (c) 2011-2013 Dark Prospect Games, LLC';
+        return 'Obsidian Moon Engine v'.self::VERSION.', Copyright (c) 2011-2015 Dark Prospect Games, LLC';
     }
 
     /**
@@ -215,7 +221,7 @@ class Core
      * @return boolean
      * @throws CoreException
      */
-    public function module($moduleName, $accessName, $config = null)
+    public function module($moduleName, $accessName, array $config = [])
     {
         if (isset($this->modules[$accessName])) {
             throw new CoreException(
@@ -223,7 +229,7 @@ class Core
                 ."could not instantiate module '$moduleName'!"
             );
         } else {
-            if (isset($config) && $config !== null) {
+            if (!empty($config)) {
                 try {
                     $this->modules[$accessName] = new $moduleName($this, $config);
                 } catch (CoreException $e) {

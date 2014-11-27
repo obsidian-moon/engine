@@ -50,22 +50,22 @@ class Routing extends AbstractModule
 {
 
     /**
-     * @var string
+     * @type string
      */
     protected $primary = '';
 
     /**
-     * @var string
+     * @type string
      */
     protected $secondary = '';
 
     /**
-     * @var mixed
+     * @type mixed
      */
     protected $params = [];
 
     /**
-     * @var mixed
+     * @type mixed
      */
     protected $control;
 

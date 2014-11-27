@@ -25,8 +25,7 @@
     "php": ">=5.4.0"
   },
   "require-dev": {
-    "phpmd/phpmd": "1.4.*",
-    "squizlabs/php_codesniffer": "1.*"
+    "phpunit/phpunit": "~4.3.5"
   },
   "autoload": {
     "psr-4": {

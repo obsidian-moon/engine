@@ -41,18 +41,22 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
  * @since    1.3.0 Allowing for implementations of modules.
  * @uses     Core
+ * @used-by  Benchmark
+ * @used-by  CoreException
+ * @used-by  Input
+ * @used-by  Routing
  * @abstract
  */
 abstract class AbstractModule
 {
 
     /**
-     * @var Core This will hold a reference to the Core class.
+     * @type Core     This will hold a reference to the Core class.
      */
     protected $core;
 
     /**
-     * @var mixed This will hold the configurations for the module.
+     * @type mixed[] This will hold the configurations for the module.
      */
     protected $configs;
 

@@ -46,19 +46,11 @@ namespace DarkProspectGames\ObsidianMoonEngine;
 abstract class AbstractController
 {
 
-    /**
-     * @var Core
-     */
+    /** @type Core */
     protected $core;
-
-    /**
-     * @var mixed
-     */
+    /** @type mixed[] */
     protected $routes = [];
-
-    /**
-     * @var mixed
-     */
+    /** @type mixed[] */
     protected $data = [];
 
     /**
@@ -81,11 +73,10 @@ abstract class AbstractController
      * This helps ensure that all modules are using the same implementation and that the module
      * creator has an easier time with creating modules.
      *
-     * @param Core  $core   The reference to the Core class.
-     * @param array $routes Any extra routing that we get from routing module.
+     * @param Core     $core   The reference to the Core class.
+     * @param string[] $routes Any extra routing that we get from routing module.
      *
-     * @uses   Core               Core module used in all controlls.
-     * @return AbstractController
+     * @uses Core Core module used in all controlls.
      */
     public function __construct(Core $core, array $routes = [])
     {
