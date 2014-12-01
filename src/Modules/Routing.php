@@ -78,16 +78,15 @@ class Routing extends AbstractModule
      * - `/main/` loads `./src/Controllers/Main.php` with class and method `Main::index()`
      * - `/main/about/` loads `./src/Controllers/Main.php` with class and method `Main::about()`
      *
-     * @param Core  $core    The reference to the Core Class.
      * @param array $configs The configurations being passed to the module.
      *
      * @uses   AbstractModule
      * @uses   Core
      * @return Routing
      */
-    public function __construct(Core $core, $configs = [])
+    public function __construct($configs = [])
     {
-        parent::__construct($core, $configs);
+        parent::__construct($configs);
 
         // Get the URI from the system and process it into $this->primary and $this->params.
         $filter = ['/\?.*$/i'];
@@ -114,8 +113,9 @@ class Routing extends AbstractModule
      * To create your own routing you can create a new start method with your app's namespace and customize it:
      *
      * <code>
-     * public function start()
+     * public function start(Core $core)
      * {
+     *     parent::start($core);
      *     // check if we have a default controller set in our core configs, or use a default 404.
      *     if ($this->primary === '') {
      *         $this->primary = ($this->core->conf_defcon) ? $this->core->conf_defcon : 'Error404';
@@ -139,10 +139,13 @@ class Routing extends AbstractModule
      * }
      * </code>
      *
+     * @param Core  $core    The reference to the Core Class.
+     *
      * @return void
      */
-    public function start()
+    public function start(Core $core)
     {
+        parent::start($core);
         if ($this->primary === '') {
             $this->primary = ($this->core->conf_defcon) ? $this->core->conf_defcon : 'Error404';
         }

@@ -28,6 +28,7 @@ use \DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
  * @uses     AbstractModule
  * @uses     CoreException
  * @since    1.0.0 Created core module
+ * @since    1.3.2 Handling objects passed to module instead of strings
  */
 class Core
 {
@@ -44,8 +45,6 @@ class Core
     protected $configs;
     /** @type mixed[]              Contains keys and values of variables set in app. */
     protected $globals;
-    /** @type Core                 The current instance of a Core object. */
-    protected static $instance = null;
     /** @type AbstractModule[]     Array holding all of the Module objects currently loaded into Core. */
     protected $modules;
 
@@ -214,38 +213,21 @@ class Core
      * This function will load classes as needed for the user to use.
      * It will allow them to be accessible via $core->modulename.
      *
-     * @param string $moduleName This is the modules that will be loaded into the Core.
-     * @param string $accessName This is the modules that will be loaded into the Core.
-     * @param array  $config     This is the modules that will be loaded into the Core.
+     * @param string $moduleName This is key name that we will save the module to.
+     * @param object $moduleObject This is the modules that will be loaded into the Core.
      *
      * @return boolean
      * @throws CoreException
      */
-    public function module($moduleName, $accessName, array $config = [])
+    public function module($moduleName, $moduleObject)
     {
-        if (isset($this->modules[$accessName])) {
+        if (isset($this->modules[$moduleName])) {
             throw new CoreException(
-                "Module '\$this->$accessName' has already been set,"
-                ."could not instantiate module '$moduleName'!"
+                "Module '\$this->$moduleName' has already been set!"
             );
         } else {
-            if (!empty($config)) {
-                try {
-                    $this->modules[$accessName] = new $moduleName($this, $config);
-                } catch (CoreException $e) {
-                    throw new CoreException("Error Loading Module {$moduleName}: " . $e->getMessage());
-                }
-            } else {
-                try {
-                    $this->modules[$accessName] = new $moduleName($this);
-                } catch (CoreException $e) {
-                    throw new CoreException("Error Loading Module {$moduleName}: " . $e->getMessage());
-                }
-            }
-
-            if (method_exists($this->modules[$accessName], 'start')) {
-                $this->modules[$accessName]->start();
-            }
+            $moduleObject->start($this);
+            $this->modules[$moduleName] = $moduleObject;
         }
 
         return true;
@@ -278,16 +260,16 @@ class Core
      *     $this->core->view()
      * </code>
      *
-     * @param mixed   $_view   Name of the view to be called.
-     * @param mixed   $_data   Data that can be passed into the view to
+     * @param string  $_view   Name of the view to be called.
+     * @param mixed[] $_data   Data that can be passed into the view to
      *                         populate existing variables.
-     * @param boolean $_return If this is set to true it will pass the value
+     * @param bool    $_return If this is set to true it will pass the value
      *                         out to user otherwise append to the output buffer.
      *
      * @return mixed
      * @throws CoreException
      */
-    public function view($_view, $_data = null, $_return = false)
+    public function view($_view, array $_data = [], $_return = false)
     {
         if (!file_exists($this->configs['libs'] . '/Views/' . $_view . '.php') && $_view !== null) {
             throw new CoreException("Could not find View in './src/Views/{$_view}.php'!");

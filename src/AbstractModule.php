@@ -69,9 +69,9 @@ abstract class AbstractModule
      * constructor, unless they want to totally overwrite the constructor:
      *
      * <code>
-     * public function __construct(Core $core, array $configs = [])
+     * public function __construct(array $configs = [])
      * {
-     *     parent::__construct($core, $routing);
+     *     parent::__construct($configs);
      *     //...
      * }
      * </code>
@@ -79,27 +79,37 @@ abstract class AbstractModule
      * This helps ensure that all modules are using the same implementation and that the module
      * creator has an easier time with creating modules.
      *
-     * @param Core  $core    The reference to the Core Class.
      * @param array $configs The configurations being passed to the module.
      *
      * @uses   Core
      * @return AbstractModule
      */
-    public function __construct(Core $core, array $configs = [])
+    public function __construct(array $configs = [])
     {
-        $this->core    = $core;
         $this->configs = $configs;
     }
 
     /**
      * Post-initialization
      *
-     * This function will be called if the user needs to have any tasks happen after the
-     * initialization of the class.
+     * This function will be called to store the Core Class in the core property. Addditionally,
+     * if the user needs to have any tasks happen after the initialization of the class, they will
+     * be able to overload the method by doing the following:
+     *
+     * <code>
+     * public function start(Core $core)
+     * {
+     *     parent::start($core);
+     *     //...
+     * }
+     * </code>
+     *
+     * @param Core $core The reference to the Core Class.
      *
      * @return void
      */
-    public function start()
+    public function start(Core $core)
     {
+        $this->core = $core;
     }
 }

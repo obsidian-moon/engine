@@ -68,9 +68,8 @@ class Database extends AbstractModule
      *
      * @throws CoreException
      */
-    public function __construct(Core $core, array $configs = [])
+    public function __construct(array $configs = [])
     {
-        $this->core = $core;
         $this->configs = array_replace($this->configs, $configs);
 
         try {

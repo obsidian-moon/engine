@@ -63,9 +63,9 @@ abstract class AbstractController
      *
      *
      * <code>
-     * public function __construct(Core $core, array $routes = [])
+     * public function __construct(array $routes = [])
      * {
-     *     parent::__construct($core, $routes);
+     *     parent::__construct($routes);
      *     //...
      * }
      * </code>
@@ -73,14 +73,12 @@ abstract class AbstractController
      * This helps ensure that all modules are using the same implementation and that the module
      * creator has an easier time with creating modules.
      *
-     * @param Core     $core   The reference to the Core class.
      * @param string[] $routes Any extra routing that we get from routing module.
      *
      * @uses Core Core module used in all controlls.
      */
-    public function __construct(Core $core, array $routes = [])
+    public function __construct(array $routes = [])
     {
-        $this->core   = $core;
         $this->routes = $routes;
     }
 
