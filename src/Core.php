@@ -78,7 +78,7 @@ class Core
 
         // CoreRouting is default routing method, can be overwritten when specified.
         if (!isset($this->configs['routing'])) {
-            $this->configs['routing'] = 'Core\Routing';
+            $this->configs['routing'] = '\DarkProspectGames\ObsidianMoonEngine\Modules\Routing';
         }
 
         if (isset($conf['modules'])) {
@@ -246,8 +246,9 @@ class Core
      */
     public function routing()
     {
+        $routingClass = $this->configs['routing'];
         try {
-            $this->module('\\DarkProspectGames\\Modules\\Core\\Routing', 'routing');
+            $this->module('routing', new $routingClass());
         } catch (CoreException $e) {
             throw new CoreException($e->getMessage());
         }

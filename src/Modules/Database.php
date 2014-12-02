@@ -63,7 +63,6 @@ class Database extends AbstractModule
     /**
      * Creates a new object to access database via PDO.
      *
-     * @param Core    $core    The core system object that will be passed to use.
      * @param mixed[] $configs The parameters that we will be passing to PDO.
      *
      * @throws CoreException

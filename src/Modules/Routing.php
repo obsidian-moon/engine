@@ -70,42 +70,6 @@ class Routing extends AbstractModule
     protected $control;
 
     /**
-     * Constructor class for a standard module.
-     *
-     * This will load the routing information, it will load the primary route first
-     * and then the secondary if set. Below are examples of what is called:
-     *
-     * - `/main/` loads `./src/Controllers/Main.php` with class and method `Main::index()`
-     * - `/main/about/` loads `./src/Controllers/Main.php` with class and method `Main::about()`
-     *
-     * @param array $configs The configurations being passed to the module.
-     *
-     * @uses   AbstractModule
-     * @uses   Core
-     * @return Routing
-     */
-    public function __construct($configs = [])
-    {
-        parent::__construct($configs);
-
-        // Get the URI from the system and process it into $this->primary and $this->params.
-        $filter = ['/\?.*$/i'];
-        if (isset($this->core->conf_subdir)) {
-            $filter[] = "/{$this->core->conf_subdir}/i";
-        }
-
-        $uri           = explode('/', trim(preg_replace($filter, '', $_SERVER['REQUEST_URI']), '/'));
-        $this->primary = ucfirst($uri[0]);
-        $this->params  = array_slice($uri, 1);
-
-        // If there is a second parameter we want to pull that and use it.
-        if (isset($this->params[0])) {
-            $this->secondary = $this->params[0];
-            $this->params    = array_slice($this->params, 1);
-        }
-    }
-
-    /**
      * Calls control
      *
      * This will create and run all of the methods for a Control
@@ -150,7 +114,23 @@ class Routing extends AbstractModule
             $this->primary = ($this->core->conf_defcon) ? $this->core->conf_defcon : 'Error404';
         }
 
-        $control_name = "\\DarkProspectGames\\ObsidianMoonEngine\\Controllers\\{$this->primary}";
+        // Get the URI from the system and process it into $this->primary and $this->params.
+        $filter = ['/\?.*$/i'];
+        if (isset($this->core->conf_subdir)) {
+            $filter[] = "/{$this->core->conf_subdir}/i";
+        }
+
+        $uri           = explode('/', trim(preg_replace($filter, '', $_SERVER['REQUEST_URI']), '/'));
+        $this->primary = ucfirst($uri[0]);
+        $this->params  = array_slice($uri, 1);
+
+        // If there is a second parameter we want to pull that and use it.
+        if (isset($this->params[0])) {
+            $this->secondary = $this->params[0];
+            $this->params    = array_slice($this->params, 1);
+        }
+
+        $control_name = '\DarkProspectGames\ObsidianMoonEngine\Controllers\\'.$this->primary;
         if (class_exists($control_name)) {
             // If the control exists we pass core and params to it.
             $this->control = new $control_name($this->core, $this->params);
