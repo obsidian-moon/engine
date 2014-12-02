@@ -52,9 +52,10 @@ class Core
      * This creates an instance of the core class.
      *
      * @param array $conf {
-     *     @type string $core Directory root of the Core
-     *     @type string $base Directory root of the Application
-     *     @type string $libs Directory root of the Application sources
+     *     @type string   $core    Directory root of the Core
+     *     @type string   $base    Directory root of the Application
+     *     @type string   $libs    Directory root of the Application sources
+     *     @type object[] $modules Collection of modules to pass to module() method.
      * }
      *
      * @throws CoreException
@@ -226,7 +227,9 @@ class Core
                 "Module '\$this->$moduleName' has already been set!"
             );
         } else {
-            $moduleObject->start($this);
+            if (method_exists($moduleObject, 'start')) {
+                $moduleObject->start($this);
+            }
             $this->modules[$moduleName] = $moduleObject;
         }
 
