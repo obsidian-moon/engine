@@ -72,6 +72,7 @@ occur during the process of your application's life cycle.
 <a name="latest-changes"></a>
 ## Latest Changes
 
+- Raised minumum PHP version to v5.5.
 - Converted to PSR-4 from PSR-0, since PHP-FIG is moving in favor of PSR-4.
 - Found extra information regarding PHPDocs so I include those changes as well.
 - Renamed `AbstractControl` to `AbstractController` and updated Documentation with examples.

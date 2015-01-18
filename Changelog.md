@@ -1,6 +1,7 @@
 <a name="1.3.2"></a>
 ### 1.3.2 (0000-00-00)
 
+- Raised minumum PHP version to v5.5.
 - Converted to PSR-4 from PSR-0, since PHP-FIG is moving in favor of PSR-4.
 - Found extra information regarding PHPDocs so I include those changes as well.
 - Renamed `AbstractControl` to `AbstractController` and updated Documentation with examples.

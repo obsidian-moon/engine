@@ -62,9 +62,11 @@ class Core
      */
     public function __construct(array $conf = [])
     {
-        $this->globals['systime'] = time();
-        $this->globals['is_ajax'] = $this->getAjax();
-        $this->globals['is_http'] = $this->getProtocol();
+        $this->globals = [
+            'systime' => time(),
+            'isAjax'  => $this->getAjax(),
+            'isHttp'  => $this->getProtocol(),
+        ];
         // Assign all configuration values to $conf_**** variables.
         if (count($conf) > 0) {
             foreach ($conf as $key => $value) {
@@ -72,16 +74,18 @@ class Core
             }
         }
 
-        $this->configs['core'] = dirname(__FILE__);
-        $this->configs['base'] = dirname($_SERVER['SCRIPT_FILENAME']);
-        $this->configs['libs'] = $this->configs['base'] . '/src';
+        $this->configs = [
+            'core' => __DIR__,
+            'base' => dirname($_SERVER['SCRIPT_FILENAME']),
+            'libs' => $this->configs['base'] . '/src',
+        ];
 
         // CoreRouting is default routing method, can be overwritten when specified.
-        if (!isset($this->configs['routing'])) {
+        if (!array_key_exists('routing', $this->configs)) {
             $this->configs['routing'] = '\DarkProspectGames\ObsidianMoonEngine\Modules\Routing';
         }
 
-        if (isset($conf['modules'])) {
+        if (array_key_exists('modules', $conf)) {
             try {
                 foreach ($conf['modules'] as $key => $value) {
                     $this->module($key, $value);
@@ -117,16 +121,16 @@ class Core
     {
         if (preg_match('/^conf_/i', $name)) {
             $name = str_replace('conf_', '', $name);
-            if (isset($this->configs[$name])) {
+            if (array_key_exists($name, $this->configs)) {
                 return $this->configs[$name];
             } else {
                 throw new CoreException(
                     "Could not find a variable by the name 'conf_{$name}'!"
                 );
             }
-        } elseif (isset($this->modules[$name])) {
+        } elseif (array_key_exists($name, $this->modules)) {
             return $this->modules[$name];
-        } elseif (isset($this->globals[$name])) {
+        } elseif (array_key_exists($name, $this->globals)) {
             return $this->globals[$name];
         } else {
             throw new CoreException("Could not find a variable by the name '{$name}'!");
@@ -153,7 +157,7 @@ class Core
             $this->globals[$name] = $value;
 
             // Check to make sure that the value got set, and that it is correct.
-            if (isset($this->globals[$name]) && $this->globals[$name] == $value) {
+            if (array_key_exists($name, $this->globals) && $this->globals[$name] === $value) {
                 return true;
             } else {
                 return false;
@@ -182,8 +186,8 @@ class Core
      */
     private function getAjax()
     {
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        if (array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
             return true;
         } else {
             return false;
@@ -198,12 +202,12 @@ class Core
     private function getProtocol()
     {
         // Check for Apache HTTPS.
-        if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1)) {
+        if (array_key_exists('HTTPS', $_SERVER) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] === 1)) {
             return 'https';
         }
 
         // Check for Nginx HTTPS.
-        if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] === '443')) {
+        if (array_key_exists('SERVER_PORT', $_SERVER) && ($_SERVER['SERVER_PORT'] === '443')) {
             return 'https';
         }
 
@@ -222,7 +226,7 @@ class Core
      */
     public function module($moduleName, $moduleObject)
     {
-        if (isset($this->modules[$moduleName])) {
+        if (array_key_exists($moduleName, $this->modules)) {
             throw new CoreException(
                 "Module '\$this->$moduleName' has already been set!"
             );
@@ -275,7 +279,7 @@ class Core
      */
     public function view($_view, array $_data = [], $_return = false)
     {
-        if (!file_exists($this->configs['libs'] . '/Views/' . $_view . '.php') && $_view !== null) {
+        if ($_view !== null && ! file_exists($this->configs['libs'] . '/Views/' . $_view . '.php')) {
             throw new CoreException("Could not find View in './src/Views/{$_view}.php'!");
         } elseif ($_view === null) {
             $this->output .= $_data;
@@ -284,7 +288,7 @@ class Core
                 extract($_data, EXTR_OVERWRITE);
             }
 
-            $core =& $this;
+            $core = $this;
             ob_start();
             include $this->configs['libs'] . '/Views/' . $_view . '.php';
             $buffer = ob_get_contents();

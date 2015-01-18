@@ -43,12 +43,12 @@ class CoreException extends Exception
      */
     public function __construct($message = null, Exception $previous = null, $error_log = true)
     {
-        if ($message != null) {
+        if ($message !== null) {
             $this->message = $message;
         }
 
         if ($previous instanceof Exception) {
-            if ($message == null) {
+            if ($message === null) {
                 $this->message = $previous->getMessage();
             }
 

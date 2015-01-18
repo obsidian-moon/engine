@@ -150,18 +150,18 @@ class Database extends AbstractModule
      */
     public function fetchArray($params = false)
     {
-        if (count($this->values) == 0) {
+        if (count($this->values) === 0) {
             return false;
         } elseif (count($this->values) > 1) {
             return $this->values;
         } else {
             if ($params === true) {
                 return $this->values;
-            } elseif ($params['item']) {
+            } elseif (array_key_exists('item', $params)) {
                 $item = $params['item'];
-                if ($this->values[$item]) {
+                if (arary_key_exists($item, $this->values)) {
                     return $this->values[$item];
-                } elseif ($this->values[0][$item]) {
+                } elseif (arary_key_exists($item, $this->values[0])) {
                     return $this->values[0][$item];
                 } else {
                     return false;
@@ -229,7 +229,7 @@ class Database extends AbstractModule
         $sth          = null;
         $this->values = [];
         $this->lastid = null;
-        if ($sql == '') {
+        if ($sql === '') {
             throw new CoreException(__CLASS__.'::query(): Query was undefined, please make sure you pass one.');
         }
 
@@ -283,7 +283,7 @@ class Database extends AbstractModule
      */
     public function setConfig($name, $value)
     {
-        if (isset($this->configs[$name])) {
+        if (array_key_exists($name, $this->configs)) {
             $this->configs[$name] = $value;
         }
     }

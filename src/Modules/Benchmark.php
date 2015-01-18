@@ -68,15 +68,15 @@ class Benchmark extends AbstractModule
      */
     public function elapsedTime($point1 = '', $point2 = '', $decimals = 4)
     {
-        if ($point1 == '') {
+        if ($point1 === '') {
             return '{elapsed_time}';
         }
 
-        if (!isset($this->marker[$point1])) {
+        if (!array_key_exists($point1, $this->marker)) {
             return '';
         }
 
-        if (!isset($this->marker[$point2])) {
+        if (!array_key_exists($point2, $this->marker)) {
             $this->marker[$point2] = microtime();
         }
 

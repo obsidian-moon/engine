@@ -40,13 +40,13 @@ class Input extends AbstractModule
      */
     protected function fetchFromArray(&$array, $index = '', $xss_clean = false)
     {
-        if (!isset($array[$index])) {
+        if (!array_key_exists($index, $array)) {
             return false;
         }
 
         // Checks to see if the variable is set, since 0 returns as false.
-        if ($xss_clean == 'isset') {
-            return isset($array[$index]);
+        if ($xss_clean === 'isset') {
+            return array_key_exists($index, $array);
         }
 
         return $array[$index];
@@ -150,11 +150,12 @@ class Input extends AbstractModule
      */
     public function setSession($index = '', $value = '')
     {
-        if (isset($_SESSION[$index]) === false) {
-            $_SESSION[$index] = $value;
-        } else {
+        if (array_key_exists($index, $_SESSION))
+        {
             return false;
         }
+
+        $_SESSION[$index] = $value;
 
         return true;
     }
@@ -169,9 +170,12 @@ class Input extends AbstractModule
     public function unsetSession($index = '')
     {
         unset($_SESSION[$index]);
-        if (empty($_SESSION[$index])) {
+        if (!array_key_exists($index, $_SESSION))
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
