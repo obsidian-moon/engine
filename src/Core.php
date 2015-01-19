@@ -37,8 +37,8 @@ class Core
     const VERSION = '1.3.2';
     /** @type AbstractController[] Collection of controllers that can be used by the app. */
     protected $controls;
-    /** @type string[]             Collection of errors messages passed from the framework. */
-    public $errors = [];
+    /** @type mixed[]              Collection of models and modules that are available to all views. */
+    protected $viewData;
     /** @type string               The variable that stores compiled output that will be returned at the end. */
     protected $output;
     /** @type mixed[]              Array holding all of the configurations that we created the Core with. */
@@ -47,6 +47,9 @@ class Core
     protected $globals;
     /** @type AbstractModule[]     Array holding all of the Module objects currently loaded into Core. */
     protected $modules;
+
+    /** @type string[]             Collection of errors messages passed from the framework. */
+    public $errors = [];
 
     /**
      * This creates an instance of the core class.
@@ -279,13 +282,19 @@ class Core
      */
     public function view($_view, array $_data = [], $_return = false)
     {
+        /** Load the default data before  */
+        if (count($this->viewData) > 0)
+        {
+            extract($this->viewData, EXTR_SKIP);
+        }
+
         if ($_view !== null && ! file_exists($this->configs['libs'] . '/Views/' . $_view . '.php')) {
             throw new CoreException("Could not find View in './src/Views/{$_view}.php'!");
         } elseif ($_view === null) {
             $this->output .= $_data;
         } else {
-            if ($_data !== null) {
-                extract($_data, EXTR_OVERWRITE);
+            if (count($_data) > 0) {
+                extract($_data, EXTR_SKIP);
             }
 
             $core = $this;
@@ -301,5 +310,21 @@ class Core
         }//end if
 
         return true;
+    }
+
+    /**
+     * Create a
+     *
+     * @param array $modules A collection of modules that will be globally available in views.
+     * @param bool  $reset   Whether to empty the data set before assigning new data.
+     */
+    public function data(array $modules, $reset = false)
+    {
+        if ($reset)
+        {
+            $this->viewData = [];
+        }
+
+        $this->viewData = array_merge($this->viewData, $modules);
     }
 }
