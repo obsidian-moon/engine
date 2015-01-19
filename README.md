@@ -94,7 +94,7 @@ occur during the process of your application's life cycle.
   conflicting variables.
 - Renamed the following properties: `is_ajax` to `isAjax`; `is_http` to `isHttp`; `systime` to `systemTime`.
 
-[Complete List of Changes](Changelog.md)
+[Complete List of Changes](CHANGELOG.md)
 
 
 <a name="summary"></a>
@@ -106,6 +106,6 @@ of yet. If you do use this framework we would appreciate you any credit given an
 this page. Additionally if you happen to write code that improves on what I have already created, please feel free to
 share back! We will appreciate any assistance! Thanks and Enjoy!
 
-Regards,
-Alfonso E Martinez, III
+Regards,  
+Alfonso E Martinez, III  
 Dark Prospect Games, LLC
