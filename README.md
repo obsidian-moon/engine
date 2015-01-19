@@ -88,12 +88,14 @@ occur during the process of your application's life cycle.
 - Renamed `AbstractControl` to `AbstractController` and updated Documentation with examples.
 - All of the modules use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
 - `Core::module()` instead of instantiating an object for you, now only handles objects in the following manner:
-  ```php
-  use \DarkProspectGames\ObsidianMoonEngine\Modules\Input as CoreInput;
-  $core->module('newProperty', new CoreInput([/* array of configs */]));
-  // Use that new object
-  $core->newProperty->setSession('id', 1);
-  ```
+
+    ```php
+    use \DarkProspectGames\ObsidianMoonEngine\Modules\Input as CoreInput;
+    $core->module('newProperty', new CoreInput([/* array of configs */]));
+    // Use that new object
+    $core->newProperty->setSession('id', 1);
+    ```
+
 - View data will no longer overwrite using PHP's `EXTR_OVERWRITE`. Instead it will use `EXTR_SKIP` and thus skip any
   conflicting variables.
 - Renamed the following properties: `is_ajax` to `isAjax`; `is_http` to `isHttp`; `systime` to `systemTime`.
