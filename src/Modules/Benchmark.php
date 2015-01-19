@@ -14,7 +14,7 @@
  */
 namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
-use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
+use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 
 /**
  * Module CoreBenchmark

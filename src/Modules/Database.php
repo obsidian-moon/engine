@@ -14,11 +14,11 @@
  */
 namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
-use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
-use \DarkProspectGames\ObsidianMoonEngine\Core;
-use \PDO;
-use \PDOException;
-use \PDOStatement;
+use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
+use DarkProspectGames\ObsidianMoonEngine\Core;
+use PDO;
+use PDOException;
+use PDOStatement;
 
 /**
  * Class Database
@@ -69,6 +69,7 @@ class Database extends AbstractModule
      */
     public function __construct(array $configs = [])
     {
+        parent::__construct([]);
         $this->configs = array_replace($this->configs, $configs);
 
         try {

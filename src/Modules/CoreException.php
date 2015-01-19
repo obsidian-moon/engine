@@ -14,7 +14,7 @@
  */
 namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
-use \Exception;
+use Exception;
 
 /**
  * Class CoreException
