@@ -6,8 +6,6 @@ by CodeIgniter. After setting up the initial steps of the system I am opening th
 project up for open source. Feel free to contribute and peer review my work, please
 not that there are a few pieces that are based on CodeIgniter that need to be worked on.
 
-Alfonso E Martinez, III of Dark Prospect Games, LLC
-
 <a name="installing"></a>
 ## Installing Obsidian Moon Engine
 
