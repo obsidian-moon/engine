@@ -10,18 +10,18 @@
 - Renamed the `Changelog.md` to `CHANGELOG.md`
 - Added a core method named `data()` that will allow users to add view data that is available to all views, eg.:
 
-    ```php
-    use \DarkProspectGames\MyApplication\Models\User;
-    use \DarkProspectGames\MyApplication\Modules\Handler;
-    use \DarkProspectGames\MyApplication\Modules\Random;
-    
-    $user    = User::find(1);
-    $handler = new Handler();
-    $core->data(['user' => $user, 'handler' => $handler]);
-    // The above view data is now avaible to all views below, before view data passed to `view()`.
-    $header = $core->view('layout/header', ['random' => new Random()], true);
-    $core->view('layout/layout', ['header' => $header]);
-    ```
+  ```php
+  use DarkProspectGames\MyApplication\Models\User;
+  use DarkProspectGames\MyApplication\Modules\Handler;
+  use DarkProspectGames\MyApplication\Modules\Random;
+  
+  $user    = User::find(1);
+  $handler = new Handler();
+  $core->data(['user' => $user, 'handler' => $handler]);
+  // The above view data is now avaible to all views below, before view data passed to `view()`.
+  $header = $core->view('layout/header', ['random' => new Random()], true);
+  $core->view('layout/layout', ['header' => $header]);
+  ```
 
 <a name="1.4.0.breaking-changes"></a>
 ## Breaking Changes 
@@ -31,12 +31,13 @@
 - All of the modules use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
 - `Core::module()` instead of instantiating an object for you, now only handles objects in the following manner:
 
-    ```php
-    use \DarkProspectGames\ObsidianMoonEngine\Modules\Input as CoreInput;
-    $core->module('newProperty', new CoreInput([/* array of configs */]));
-    // Use that new object
-    $core->newProperty->setSession('id', 1);
-    ```
+  ```php
+  use DarkProspectGames\ObsidianMoonEngine\Modules\Input as CoreInput;
+  
+  $core->module('newProperty', new CoreInput([/* array of configs */]));
+  // Use that new object to set a session
+  $core->newProperty->setSession('id', 1);
+  ```
 
 - View data will no longer overwrite using PHP's `EXTR_OVERWRITE`. Instead it will use `EXTR_SKIP` and thus skip any
   conflicting variables.
