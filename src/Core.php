@@ -36,17 +36,17 @@ class Core
     /** @type string               Framework Version */
     const VERSION = '1.4.0';
     /** @type AbstractController[] Collection of controllers that can be used by the app. */
-    protected $controls;
+    protected $controls = [];
     /** @type mixed[]              Collection of models and modules that are available to all views. */
-    protected $viewData;
+    protected $viewData = [];
     /** @type string               The variable that stores compiled output that will be returned at the end. */
     protected $output;
     /** @type mixed[]              Array holding all of the configurations that we created the Core with. */
-    protected $configs;
+    protected $configs  = [];
     /** @type mixed[]              Contains keys and values of variables set in app. */
-    protected $globals;
+    protected $globals  = [];
     /** @type AbstractModule[]     Array holding all of the Module objects currently loaded into Core. */
-    protected $modules;
+    protected $modules  = [];
 
     /** @type string[]             Collection of errors messages passed from the framework. */
     public $errors = [];
