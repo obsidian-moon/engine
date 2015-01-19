@@ -28,13 +28,13 @@ use \DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
  * @uses     AbstractModule
  * @uses     CoreException
  * @since    1.0.0 Created core module
- * @since    1.3.2 Handling objects passed to module instead of strings
+ * @since    1.4.0 Handling objects passed to module instead of strings & added ability to have default view data.
  */
 class Core
 {
 
     /** @type string               Framework Version */
-    const VERSION = '1.3.2';
+    const VERSION = '1.4.0';
     /** @type AbstractController[] Collection of controllers that can be used by the app. */
     protected $controls;
     /** @type mixed[]              Collection of models and modules that are available to all views. */
@@ -66,7 +66,7 @@ class Core
     public function __construct(array $conf = [])
     {
         $this->globals = [
-            'systime' => time(),
+            'systemTime' => time(),
             'isAjax'  => $this->getAjax(),
             'isHttp'  => $this->getProtocol(),
         ];

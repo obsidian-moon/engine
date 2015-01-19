@@ -16,7 +16,7 @@
 - All of the modules use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
 - View data will no longer overwrite using PHP's `EXTR_OVERWRITE`. Instead it will use `EXTR_SKIP` and thus skip any
   conflicting variables.
-- Renamed the following properties: `is_ajax` to `isAjax`; `is_http` to 
+- Renamed the following properties: `is_ajax` to `isAjax`; `is_http` to `isHttp`; `systime` to `systemTime`.
 
 <a name="1.3.1"></a>
 # 1.3.1 (2014-10-01)
