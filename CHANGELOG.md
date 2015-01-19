@@ -1,6 +1,7 @@
 <a name="1.4.0"></a>
 # 1.4.0 (2015-01-18)
 
+<a name="1.4.0.features"></a>
 ## Features
 
 - Found extra information regarding PHPDocs so I include those changes as well.
@@ -17,11 +18,12 @@
     $user    = User::find(1);
     $handler = new Handler();
     $core->data(['user' => $user, 'handler' => $handler]);
-    // The above view data is now avaible to all views below, before the view data being passed to `view()`.
+    // The above view data is now avaible to all views below, before view data passed to `view()`.
     $header = $core->view('layout/header', ['random' => new Random()], true);
     $core->view('layout/layout', ['header' => $header]);
     ```
 
+<a name="1.4.0.breaking-changes"></a>
 ## Breaking Changes 
 
 - Raised minumum PHP version to v5.5.
