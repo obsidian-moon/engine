@@ -6,8 +6,6 @@ by CodeIgniter. After setting up the initial steps of the system I am opening th
 project up for open source. Feel free to contribute and peer review my work, please
 not that there are a few pieces that are based on CodeIgniter that need to be worked on.
 
-Alfonso E Martinez, III of Dark Prospect Games, LLC
-
 <a name="installing"></a>
 ## Installing Obsidian Moon Engine
 
@@ -80,27 +78,21 @@ occur during the process of your application's life cycle.
 - Removed the unused dependencies in `require-dev`
 - Renamed the `Changelog.md` to `CHANGELOG.md`
 - Added a core method named `data()` that will allow users to add view data that is available to all views.
+  [Go to CHANGELOG for Examples](CHANGELOG.md#1.4.0.features)
 
 <a name="latest-changes.breaking-changes"></a>
 ## Breaking Changes 
 
-- Raised minumum PHP version to v5.5.
-- Renamed `AbstractControl` to `AbstractController` and updated Documentation with examples.
+- Raised minumum PHP version from v5.4 to v5.5.
+- Renamed `AbstractControl` to `AbstractController` and updated code documentation with examples.
 - All of the modules use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
-- `Core::module()` instead of instantiating an object for you, now only handles objects in the following manner:
-
-    ```php
-    use \DarkProspectGames\ObsidianMoonEngine\Modules\Input as CoreInput;
-    $core->module('newProperty', new CoreInput([/* array of configs */]));
-    // Use that new object
-    $core->newProperty->setSession('id', 1);
-    ```
-
+- `Core::module()` instead of instantiating an object for you, now only handles objects in the following manner: 
+  [Go to CHANGELOG for Examples](CHANGELOG.md#1.4.0.breaking-changes)
 - View data will no longer overwrite using PHP's `EXTR_OVERWRITE`. Instead it will use `EXTR_SKIP` and thus skip any
   conflicting variables.
 - Renamed the following properties: `is_ajax` to `isAjax`; `is_http` to `isHttp`; `systime` to `systemTime`.
 
-[Complete List of Changes](Changelog.md)
+[Complete List of Changes](CHANGELOG.md)
 
 
 <a name="summary"></a>
@@ -112,6 +104,6 @@ of yet. If you do use this framework we would appreciate you any credit given an
 this page. Additionally if you happen to write code that improves on what I have already created, please feel free to
 share back! We will appreciate any assistance! Thanks and Enjoy!
 
-Regards,
-Alfonso E Martinez, III
+Regards,  
+Alfonso E Martinez, III  
 Dark Prospect Games, LLC
