@@ -80,7 +80,7 @@ class Core
         $this->configs = [
             'core' => __DIR__,
             'base' => dirname($_SERVER['SCRIPT_FILENAME']),
-            'libs' => $this->configs['base'] . '/src',
+            'libs' => dirname($_SERVER['SCRIPT_FILENAME']) . '/src',
         ];
 
         // CoreRouting is default routing method, can be overwritten when specified.

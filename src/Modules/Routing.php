@@ -116,7 +116,7 @@ class Routing extends AbstractModule
 
         // Get the URI from the system and process it into $this->primary and $this->params.
         $filter = ['/\?.*$/i'];
-        if (isset($this->core->conf_subdir)) {
+        if (property_exists($this->core, 'conf_subdir')) {
             $filter[] = "/{$this->core->conf_subdir}/i";
         }
 
@@ -125,12 +125,12 @@ class Routing extends AbstractModule
         $this->params  = array_slice($uri, 1);
 
         // If there is a second parameter we want to pull that and use it.
-        if (isset($this->params[0])) {
+        if (array_key_exists(0, $this->params)) {
             $this->secondary = $this->params[0];
             $this->params    = array_slice($this->params, 1);
         }
 
-        $control_name = '\DarkProspectGames\ObsidianMoonEngine\Controllers\\'.$this->primary;
+        $control_name = '\\DarkProspectGames\\ObsidianMoonEngine\\Controllers\\' . $this->primary;
         if (class_exists($control_name)) {
             // If the control exists we pass core and params to it.
             $this->control = new $control_name($this->core, $this->params);
@@ -140,7 +140,7 @@ class Routing extends AbstractModule
             $this->control->start();
         }
 
-        if (isset($this->secondary) && method_exists($this->control, $this->secondary)) {
+        if (property_exists($this, 'secondary') && method_exists($this->control, $this->secondary)) {
             call_user_func_array([$this->control, $this->secondary], $this->params);
         } else {
             $this->control->index();
