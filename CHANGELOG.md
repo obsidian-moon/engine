@@ -1,3 +1,11 @@
+<a name="1.4.1"></a>
+# 1.4.1 (2015-01-18)
+
+<a name="1.4.1.features"></a>
+## Features
+
+- Correcting an issue where we are checking for array key on a boolean.
+
 <a name="1.4.0"></a>
 # 1.4.0 (2015-01-18)
 
