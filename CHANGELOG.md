@@ -1,5 +1,14 @@
+<a name="1.4.2"></a>
+# 1.4.2 (2015-01-25)
+
+<a name="1.4.2.features"></a>
+## Features
+
+- Correcting an issue where I was seeing a general warning coming off of a query that contained a `SELECT` within a
+  `WHERE` clause like the  following: `DELETE FROM table_name WHERE field_name NOT IN (SELECT field FROM other_table)`
+
 <a name="1.4.1"></a>
-# 1.4.1 (2015-01-18)
+# 1.4.1 (2015-01-24)
 
 <a name="1.4.1.features"></a>
 ## Features
