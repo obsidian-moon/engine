@@ -157,7 +157,7 @@ class Database extends AbstractModule
         } else {
             if ($params === true) {
                 return $this->values;
-            } elseif (array_key_exists('item', $params)) {
+            } elseif (is_array($params) && array_key_exists('item', $params)) {
                 $item = $params['item'];
                 if (arary_key_exists($item, $this->values)) {
                     return $this->values[$item];
