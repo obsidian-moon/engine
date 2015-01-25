@@ -254,7 +254,7 @@ class Database extends AbstractModule
             }
         }
 
-        if ($sth instanceof PDOStatement && preg_match('/select/i', $sql)) {
+        if ($sth instanceof PDOStatement && preg_match('/^select/i', $sql)) {
             try {
                 /** @type array values */
                 $this->values = $sth->fetchAll($this->configs['fetch_mode']);
