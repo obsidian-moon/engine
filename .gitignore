@@ -1,6 +1,9 @@
-.idea
-atlassian-ide-plugin.xml
+extern
+node_modules
+tmp
 vendor
+.idea/workspace.xml
+.idea/misc.xml
 
 # System Files
 *.DS_Store
