@@ -28,6 +28,18 @@ use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
  */
 class Input extends AbstractModule
 {
+    /**
+     * Grab values from the $_COOKIE global.
+     *
+     * @param mixed   $index     The index that we will be searching for.
+     * @param boolean $xss_clean Whether we want to clean it or not.
+     *
+     * @return mixed
+     */
+    public function cookie($index = '', $xss_clean = false)
+    {
+        return $this->fetchFromArray($_COOKIE, $index, $xss_clean);
+    }
 
     /**
      * The function that will handle getting the data from the arrays.
@@ -38,14 +50,16 @@ class Input extends AbstractModule
      *
      * @return bool
      */
-    protected function fetchFromArray(&$array, $index = '', $xss_clean = false)
+    protected function fetchFromArray($array, $index = '', $xss_clean = false)
     {
-        if (!array_key_exists($index, $array)) {
+        if (!array_key_exists($index, $array))
+        {
             return false;
         }
 
         // Checks to see if the variable is set, since 0 returns as false.
-        if ($xss_clean === 'isset') {
+        if ($xss_clean === 'isset')
+        {
             return array_key_exists($index, $array);
         }
 
@@ -77,6 +91,36 @@ class Input extends AbstractModule
     }
 
     /**
+     * Grab values from the $_REQUEST global.
+     *
+     * @param mixed   $index     The index that we will be searching for.
+     * @param boolean $xss_clean Whether we want to clean it or not.
+     *
+     * @since  1.5.0
+     * @return mixed
+     */
+    public function request($index = null, $xss_clean = false)
+    {
+        // Check if a field has been provided.
+        if ($index === null && count($_REQUEST) > 0)
+        {
+            $post = [];
+
+            // Loop through the full $_REQUEST array and return the value.
+            foreach (array_keys($_REQUEST) as $key)
+            {
+                $post[$key] = $this->fetchFromArray($_REQUEST, $key, $xss_clean);
+            }
+
+            return $post;
+        }
+        else
+        {
+            return $this->fetchFromArray($_REQUEST, $index, $xss_clean);
+        }
+    }
+
+    /**
      * Grab values from the $_POST global.
      *
      * @param mixed   $index     The index that we will be searching for.
@@ -99,19 +143,6 @@ class Input extends AbstractModule
         } else {
             return $this->fetchFromArray($_POST, $index, $xss_clean);
         }
-    }
-
-    /**
-     * Grab values from the $_COOKIE global.
-     *
-     * @param mixed   $index     The index that we will be searching for.
-     * @param boolean $xss_clean Whether we want to clean it or not.
-     *
-     * @return mixed
-     */
-    public function cookie($index = '', $xss_clean = false)
-    {
-        return $this->fetchFromArray($_COOKIE, $index, $xss_clean);
     }
 
     /**

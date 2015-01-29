@@ -1,8 +1,17 @@
+<a name="1.5.0"></a>
+# 1.5.0 (0000-00-00)
+
+<a name="1.5.0.features"></a>
+## Features
+
+- Added a new method to `DarkProspectGames\ObsidianMoonEngine\Modules\Input` called `request()` that will handle
+`$_REQUEST` for you, however this should be used only for a single index due to security reasons.
+
 <a name="1.4.2"></a>
 # 1.4.2 (2015-01-25)
 
-<a name="1.4.2.features"></a>
-## Features
+<a name="1.4.2.bug-fixes"></a>
+## Bug Fixes
 
 - Correcting an issue where I was seeing a general warning coming off of a query that contained a `SELECT` within a
   `WHERE` clause like the  following: `DELETE FROM table_name WHERE field_name NOT IN (SELECT field FROM other_table)`
