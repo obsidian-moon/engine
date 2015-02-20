@@ -1,6 +1,8 @@
 Obsidian Moon Engine
 ====================
 
+[![Join the chat at https://gitter.im/dark-prospect-games/obsidian-moon-engine](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dark-prospect-games/obsidian-moon-engine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This is a project that I have worked on for several months after being originally inspired
 by CodeIgniter. After setting up the initial steps of the system I am opening the
 project up for open source. Feel free to contribute and peer review my work, please
