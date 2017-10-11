@@ -62,14 +62,13 @@ RewriteRule ^(.*)$ index.php?/$1 [L]
 <a name="base-methods"></a>
 ## Overview of the Base Methods
 
-Within the Obsidian Moon Engine there are a few functions that you will need to keep in mind when using using the framework.
-The first of all is that the system uses a path routing system that you will need to declare in the configurations. The files
-used to manage the flow of application's called Controls. In order to provide an ease of use upon installation, Obsidian Moon
-Engine comes with a default routing module 
-that you use or extend and/or overwrite.
+Within the Obsidian Moon Engine there are a few functions that you will need to keep in mind when using using the 
+framework. The first of all is that the system uses a path routing system that you will need to declare in the 
+configurations. The files used to manage the flow of application's called Controls. In order to provide an ease of use 
+upon installation, Obsidian Moon Engine comes with a default routing module that you use or extend and/or overwrite.
 
-Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any errors that
-occur during the process of your application's life cycle.
+Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any 
+errors that occur during the process of your application's life cycle.
 
 <a name="latest-changes"></a>
 ## Latest Changes
