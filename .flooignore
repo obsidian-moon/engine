@@ -4,7 +4,3 @@ tmp
 vendor
 .idea/workspace.xml
 .idea/misc.xml
-
-# System Files
-*.DS_Store
-error_log

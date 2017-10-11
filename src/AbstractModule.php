@@ -4,11 +4,11 @@
  *
  * An Open Source, Lightweight and 100% Modular Framework in PHP
  *
- * PHP version 5
+ * PHP version 7
  *
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2015 Dark Prospect Games, LLC
+ * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
@@ -38,7 +38,7 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  * </code>
  *
  * @package  DarkProspectGames\ObsidianMoonEngine
- * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @since    1.3.0 Allowing for implementations of modules.
  * @uses     Core
  * @used-by  Benchmark
@@ -82,6 +82,7 @@ abstract class AbstractModule
      * @param array $configs The configurations being passed to the module.
      *
      * @uses   Core
+     * @since  1.3.0
      * @return AbstractModule
      */
     public function __construct(array $configs = [])
@@ -106,6 +107,7 @@ abstract class AbstractModule
      *
      * @param Core $core The reference to the Core Class.
      *
+     * @since  1.3.0
      * @return void
      */
     public function start(Core $core)

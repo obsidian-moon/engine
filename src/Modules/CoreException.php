@@ -4,11 +4,11 @@
  *
  * An Open Source, Lightweight and 100% Modular Framework in PHP
  *
- * PHP version 5
+ * PHP version 7
  *
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2015 Dark Prospect Games, LLC
+ * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
@@ -24,7 +24,7 @@ use Exception;
  * with error_log() directly.
  *
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
- * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @since    1.3.0
  * @uses     Exception
  */
@@ -39,6 +39,8 @@ class CoreException extends Exception
      * @param  null|string   $message   The exception message
      * @param  Exception     $previous  Pass the Exception class to CoreException
      * @param  bool          $error_log Determines whether or not we will log the error in error_log
+     *
+     * @since  1.3.0
      * @return CoreException
      */
     public function __construct($message = null, Exception $previous = null, $error_log = true)
@@ -68,6 +70,7 @@ class CoreException extends Exception
      *
      * Allows a class to decide how it will react when it is treated like a string.
      *
+     * @since  1.3.0
      * @return string
      */
     public function __toString()

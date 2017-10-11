@@ -1,10 +1,13 @@
 Obsidian Moon Engine
 ====================
 
+[![Floobits Status](https://floobits.com/opensaurusrex/obsidian-moon-engine.svg)]
+(https://floobits.com/opensaurusrex/obsidian-moon-engine/redirect)
+
 This is a project that I have worked on for several months after being originally inspired
 by CodeIgniter. After setting up the initial steps of the system I am opening the
 project up for open source. Feel free to contribute and peer review my work, please
-not that there are a few pieces that are based on CodeIgniter that need to be worked on.
+note that there are a few pieces that are based on CodeIgniter that need to be worked on.
 
 <a name="installing"></a>
 ## Installing Obsidian Moon Engine
@@ -22,7 +25,7 @@ all of your application's files by entering the following into a `composer.json`
 ```json
 {
   "require": {
-    "dark-prospect-games/obsidian-moon-engine": "~1.4.0"
+    "dark-prospect-games/obsidian-moon-engine": "~1.5.0"
   },
   "autoload": {
     "psr-4": {
@@ -38,7 +41,8 @@ After editing the file, you can simply run the following command to use the Comp
 php composer.phar install
 ```
 
-If you use apache you will be able to start setting up the routing by using the following in the app's root folder:
+If you use apache you will be able to start setting up the routing by using the following in an `.htaccess` file in the 
+app's root folder:
 
 ```
 # Enabling the mod_rewrite module in this folder
@@ -58,14 +62,13 @@ RewriteRule ^(.*)$ index.php?/$1 [L]
 <a name="base-methods"></a>
 ## Overview of the Base Methods
 
-Within the Obsidian Moon Engine there are a few functions that you will need to keep in mind when using using the framework.
-The first of all is that the system uses a path routing system that you will need to declare in the configurations. The files
-used to manage the flow of application's called Controls. In order to provide an ease of use upon installation, Obsidian Moon
-Engine comes with a default routing module 
-that you use or extend and/or overwrite.
+Within the Obsidian Moon Engine there are a few functions that you will need to keep in mind when using using the 
+framework. The first of all is that the system uses a path routing system that you will need to declare in the 
+configurations. The files used to manage the flow of application's called Controls. In order to provide an ease of use 
+upon installation, Obsidian Moon Engine comes with a default routing module that you use or extend and/or overwrite.
 
-Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any errors that
-occur during the process of your application's life cycle.
+Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any 
+errors that occur during the process of your application's life cycle.
 
 <a name="latest-changes"></a>
 ## Latest Changes
@@ -73,27 +76,18 @@ occur during the process of your application's life cycle.
 <a name="latest-changes.features"></a>
 ### Features
 
-- Found extra information regarding PHPDocs so I include those changes as well.
-- Removed `.htaccess` and placed contents in `README.md` under installation information.
-- Removed the unused dependencies in `require-dev`
-- Renamed the `Changelog.md` to `CHANGELOG.md`
-- Added a core method named `data()` that will allow users to add view data that is available to all views.
-  [Go to CHANGELOG for Examples](CHANGELOG.md#1.4.0.features)
+- Updated the project to be compatible with PHP 7.0.
+- Added a new method to `DarkProspectGames\ObsidianMoonEngine\Modules\Input` called `request()` that will handle
+  `$_REQUEST` for you, however this should be used only for a single index due to security reasons.
+- Updated the contact information throughout the project to match current contact details.
 
-<a name="latest-changes.breaking-changes"></a>
-## Breaking Changes 
+<a name="latest-changes.bug-fixes"></a>
+### Bug Fixes
 
-- Raised minumum PHP version from v5.4 to v5.5.
-- Renamed `AbstractControl` to `AbstractController` and updated code documentation with examples.
-- All of the modules use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
-- `Core::module()` instead of instantiating an object for you, now only handles objects in the following manner: 
-  [Go to CHANGELOG for Examples](CHANGELOG.md#1.4.0.breaking-changes)
-- View data will no longer overwrite using PHP's `EXTR_OVERWRITE`. Instead it will use `EXTR_SKIP` and thus skip any
-  conflicting variables.
-- Renamed the following properties: `is_ajax` to `isAjax`; `is_http` to `isHttp`; `systime` to `systemTime`.
+- Corrected a misspelled call of `array_key_exists()` in `DarkProspectGames\ObsidianMoonEngine\Modules\Database` in the 
+  `fetchArray()` method.
 
 [Complete List of Changes](CHANGELOG.md)
-
 
 <a name="summary"></a>
 ## Summary of Obsidian Moon Engine
