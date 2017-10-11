@@ -7,7 +7,7 @@ Obsidian Moon Engine
 This is a project that I have worked on for several months after being originally inspired
 by CodeIgniter. After setting up the initial steps of the system I am opening the
 project up for open source. Feel free to contribute and peer review my work, please
-not that there are a few pieces that are based on CodeIgniter that need to be worked on.
+note that there are a few pieces that are based on CodeIgniter that need to be worked on.
 
 <a name="installing"></a>
 ## Installing Obsidian Moon Engine
@@ -25,7 +25,7 @@ all of your application's files by entering the following into a `composer.json`
 ```json
 {
   "require": {
-    "dark-prospect-games/obsidian-moon-engine": "~1.4.0"
+    "dark-prospect-games/obsidian-moon-engine": "~1.5.0"
   },
   "autoload": {
     "psr-4": {
@@ -41,7 +41,8 @@ After editing the file, you can simply run the following command to use the Comp
 php composer.phar install
 ```
 
-If you use apache you will be able to start setting up the routing by using the following in the app's root folder:
+If you use apache you will be able to start setting up the routing by using the following in an `.htaccess` file in the 
+app's root folder:
 
 ```
 # Enabling the mod_rewrite module in this folder
@@ -76,8 +77,16 @@ occur during the process of your application's life cycle.
 <a name="latest-changes.features"></a>
 ### Features
 
+- Updated the project to be compatible with PHP 7.0.
 - Added a new method to `DarkProspectGames\ObsidianMoonEngine\Modules\Input` called `request()` that will handle
-`$_REQUEST` for you, however this should be used only for a single index due to security reasons.
+  `$_REQUEST` for you, however this should be used only for a single index due to security reasons.
+- Updated the contact information throughout the project to match current contact details.
+
+<a name="latest-changes.bug-fixes"></a>
+### Bug Fixes
+
+- Corrected a misspelled call of `array_key_exists()` in `DarkProspectGames\ObsidianMoonEngine\Modules\Database` in the 
+  `fetchArray()` method.
 
 [Complete List of Changes](CHANGELOG.md)
 

@@ -4,11 +4,11 @@
  *
  * An Open Source, Lightweight and 100% Modular Framework in PHP
  *
- * PHP version 5
+ * PHP version 7
  *
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2015 Dark Prospect Games, LLC
+ * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
@@ -26,7 +26,7 @@ use PDOStatement;
  * Database class using PDO
  *
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
- * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @since    1.0.0
  * @uses     PDO
  * @uses     AbstractModule
@@ -65,10 +65,12 @@ class Database extends AbstractModule
      *
      * @param mixed[] $configs The parameters that we will be passing to PDO.
      *
+     * @since  1.0.0
      * @throws CoreException
      */
     public function __construct(array $configs = [])
     {
+    	parent::__construct($configs);
         $this->configs = array_replace($this->configs, $configs);
 
         try {
@@ -84,6 +86,7 @@ class Database extends AbstractModule
      * @param mixed[] $configs These are the details pertaining to a newly created connection,
      *                         if not set it uses the config params.
      *
+     * @since  1.0.0
      * @throws CoreException
      */
     protected function connect($configs = null)
@@ -108,6 +111,7 @@ class Database extends AbstractModule
      * @param array  $array An array holding the values to be used in a prepared statement.
      * @param string $stmt  The name of the variable where the statement was stored.
      *
+     * @since  1.0.0
      * @return Database
      * @throws CoreException
      */
@@ -146,6 +150,7 @@ class Database extends AbstractModule
      *
      * @param mixed[]|bool $params Specify the method that we are looking for.
      *
+     * @since  1.0.0
      * @return mixed[]|bool
      */
     public function fetchArray($params = false)
@@ -159,9 +164,9 @@ class Database extends AbstractModule
                 return $this->values;
             } elseif (is_array($params) && array_key_exists('item', $params)) {
                 $item = $params['item'];
-                if (arary_key_exists($item, $this->values)) {
+                if (array_key_exists($item, $this->values)) {
                     return $this->values[$item];
-                } elseif (arary_key_exists($item, $this->values[0])) {
+                } elseif (array_key_exists($item, $this->values[0])) {
                     return $this->values[0][$item];
                 } else {
                     return false;
@@ -175,6 +180,7 @@ class Database extends AbstractModule
     /**
      * Get the last id of the query that in an insert event.
      *
+     * @since  1.0.0
      * @return null|int
      */
     public function insertId()
@@ -185,6 +191,7 @@ class Database extends AbstractModule
     /**
      * Return the number of rows found in the database.
      *
+     * @since  1.0.0
      * @return int
      */
     public function numRows()
@@ -198,6 +205,7 @@ class Database extends AbstractModule
      * @param mixed  $sql  The SQL statement that will be prepared.
      * @param string $stmt The statement will be saved into this space.
      *
+     * @since  1.0.0
      * @return Database
      * @throws CoreException
      */
@@ -221,6 +229,7 @@ class Database extends AbstractModule
      * @param mixed $sql    The content of the SQL query.
      * @param null  $params The parameters of the query.
      *
+     * @since  1.0.0
      * @return Database
      * @throws CoreException
      */
@@ -280,6 +289,8 @@ class Database extends AbstractModule
      *
      * @param string $name  name of the config that you want to change
      * @param mixed  $value value of the config to set
+     *
+     * @since  1.0.0
      */
     public function setConfig($name, $value)
     {

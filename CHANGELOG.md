@@ -1,11 +1,19 @@
 <a name="1.5.0"></a>
-# 1.5.0 (0000-00-00)
+# 1.5.0 (2017-10-10)
 
 <a name="1.5.0.features"></a>
 ## Features
 
+- Raised minimum PHP version from v5.5 to v7.0.
 - Added a new method to `DarkProspectGames\ObsidianMoonEngine\Modules\Input` called `request()` that will handle
-`$_REQUEST` for you, however this should be used only for a single index due to security reasons.
+  `$_REQUEST` for you, however this should be used only for a single index due to security reasons.
+- Updated the contact information throughout the project to match current contact details.
+
+<a name="1.5.0.bug-fixes"></a>
+## Bug Fixes
+
+- Corrected a misspelled call of `array_key_exists()` in `DarkProspectGames\ObsidianMoonEngine\Modules\Database` in the 
+  `fetchArray()` method.
 
 <a name="1.4.2"></a>
 # 1.4.2 (2015-01-25)
@@ -52,7 +60,7 @@
 <a name="1.4.0.breaking-changes"></a>
 ## Breaking Changes 
 
-- Raised minumum PHP version from v5.4 to v5.5.
+- Raised minimum PHP version from v5.4 to v5.5.
 - Renamed `AbstractControl` to `AbstractController` and updated code documentation with examples.
 - All of the modules use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
 - `Core::module()` instead of instantiating an object for you, now only handles objects in the following manner:
@@ -75,7 +83,7 @@
 - Added the ability to change configs after the instantiation of the Database class.
 - Removed the CouchDB class.
 - Converted the license from BSD-3 to MIT.
-- Updated all of the PhpDoc commentation.
+- Updated all of the PhpDoc documentation.
 
 <a name="1.3.0"></a>
 # 1.3.0 (2014-08-27)
@@ -97,7 +105,7 @@
 # 1.2.3 (2013-04-12)
 
 - Replaced Facebook Enhanced with Facebook Ignited `Version 1.3.1`, `not-ignited` branch.
-- Added a check for isset to input module, so that we can see if the key is existant.
+- Added a check for `isset` to input module, so that we can see if the key is existent.
 
 <a name="1.2.2"></a>
 # 1.2.2 (2012-12-16)
@@ -111,7 +119,7 @@
 <a name="1.2.1"></a>
 # 1.2.1 (2012-07-31)
 
-- Removed a lot of the useless MySQL Extension functions that plainly aren't up to par with what I wanted.
+- Removed a lot of the useless MySQL Extension functions that plainly are not up to par with what I wanted.
 - Removed the MySQLi class.
 - Added the PDO Class to the system.
 - Added the `core_pdo::last_id()` method (grabs the last insert id) to MySQL Extension and PDO Classes.

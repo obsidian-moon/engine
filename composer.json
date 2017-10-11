@@ -10,19 +10,18 @@
   "authors": [
     {
       "name": "Alfonso E Martinez, III",
-      "email": "alfonso@opensaurusrex.com",
+      "email": "opensaurusrex@gmail.com",
       "homepage": "https://opensaurusrex.com",
       "role": "Lead Developer"
     }
   ],
   "support": {
-    "email": "admin@darkprospect.net",
-    "forum": "https://darkprospect.net/forums/",
+    "email": "opensaurusrex@gmail.com",
     "issues": "https://github.com/dark-prospect-games/obsidian-moon-engine/issues",
     "source": "https://github.com/dark-prospect-games/obsidian-moon-engine"
   },
   "require": {
-    "php": ">=5.5.0"
+    "php": ">=7.0.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.3.5"

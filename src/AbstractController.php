@@ -4,11 +4,11 @@
  *
  * An Open Source, Lightweight and 100% Modular Framework in PHP
  *
- * PHP version 5
+ * PHP version 7
  *
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2015 Dark Prospect Games, LLC
+ * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
@@ -38,7 +38,7 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  * </code>
  *
  * @package  DarkProspectGames\ObsidianMoonEngine
- * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @since    1.3.0 Allowing for control routing.
  * @uses     Core
  * @abstract
@@ -75,7 +75,8 @@ abstract class AbstractController
      *
      * @param string[] $routes Any extra routing that we get from routing module.
      *
-     * @uses Core Core module used in all controlls.
+     * @uses  Core Core module used in all controlls.
+     * @since 1.3.0
      */
     public function __construct(array $routes = [])
     {
@@ -85,6 +86,7 @@ abstract class AbstractController
     /**
      * This happens after all of the functions are complete.
      *
+     * @since  1.3.0
      * @return void
      */
     abstract public function end();
@@ -94,6 +96,7 @@ abstract class AbstractController
      *
      * This is used when there isn't any secondary parameter set.
      *
+     * @since  1.3.0
      * @return mixed
      */
     abstract public function index();
@@ -101,6 +104,7 @@ abstract class AbstractController
     /**
      * This is called when the class is created.
      *
+     * @since  1.3.0
      * @return void
      */
     abstract public function start();

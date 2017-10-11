@@ -4,11 +4,11 @@
  *
  * An Open Source, Lightweight and 100% Modular Framework in PHP
  *
- * PHP version 5
+ * PHP version 7
  *
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2015 Dark Prospect Games, LLC
+ * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
@@ -23,7 +23,7 @@ use \DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
  * of modules and controls that will be used by your application.
  *
  * @package  DarkProspectGames\ObsidianMoonEngine
- * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @uses     AbstractController
  * @uses     AbstractModule
  * @uses     CoreException
@@ -61,6 +61,7 @@ class Core
      *     @type object[] $modules Collection of modules to pass to module() method.
      * }
      *
+     * @since  1.0.0
      * @throws CoreException
      */
     public function __construct(array $conf = [])
@@ -297,7 +298,6 @@ class Core
                 extract($_data, EXTR_SKIP);
             }
 
-            $core = $this;
             ob_start();
             include $this->configs['libs'] . '/Views/' . $_view . '.php';
             $buffer = ob_get_contents();

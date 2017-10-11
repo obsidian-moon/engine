@@ -4,11 +4,11 @@
  *
  * An Open Source, Lightweight and 100% Modular Framework in PHP
  *
- * PHP version 5
+ * PHP version 7
  *
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <alfonso@opensaurusrex.com>
- * @copyright 2011-2015 Dark Prospect Games, LLC
+ * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
  */
@@ -22,7 +22,7 @@ use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
  * A module to handle all of the input from $_POST, $_GET, $_SESSION, $_COOKIE and $_SERVER
  *
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
- * @author   Alfonso E Martinez, III <alfonso@opensaurusrex.com>
+ * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @since    1.0.0
  * @uses     AbstractModule
  */
@@ -34,6 +34,7 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
+     * @since  1.0.0
      * @return mixed
      */
     public function cookie($index = '', $xss_clean = false)
@@ -48,6 +49,7 @@ class Input extends AbstractModule
      * @param string  $index     What we are looking for.
      * @param boolean $xss_clean Whether to clean it or not or not. Incomplete.
      *
+     * @since  1.0.0
      * @return bool
      */
     protected function fetchFromArray($array, $index = '', $xss_clean = false)
@@ -72,6 +74,7 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
+     * @since  1.0.0
      * @return mixed
      */
     public function get($index = null, $xss_clean = false)
@@ -126,6 +129,7 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
+     * @since  1.0.0
      * @return mixed
      */
     public function post($index = null, $xss_clean = false)
@@ -151,6 +155,7 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
+     * @since  1.0.0
      * @return mixed
      */
     public function server($index = '', $xss_clean = false)
@@ -164,6 +169,7 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
+     * @since  1.0.0
      * @return mixed
      */
     public function session($index = '', $xss_clean = false)
@@ -177,6 +183,7 @@ class Input extends AbstractModule
      * @param mixed $index The index that we will be setting.
      * @param mixed $value Value of what we will be setting in the index.
      *
+     * @since  1.0.0
      * @return mixed
      */
     public function setSession($index = '', $value = '')
@@ -196,6 +203,7 @@ class Input extends AbstractModule
      *
      * @param mixed $index The index that we will be removing.
      *
+     * @since  1.0.0
      * @return boolean
      */
     public function unsetSession($index = '')
