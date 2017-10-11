@@ -5,13 +5,12 @@
   "keywords": [
     "framework"
   ],
-  "homepage": "https://darkprospect.net",
+  "homepage": "https://github.com/dark-prospect-games/obsidian-moon-engine",
   "license": "MIT",
   "authors": [
     {
       "name": "Alfonso E Martinez, III",
       "email": "opensaurusrex@gmail.com",
-      "homepage": "https://opensaurusrex.com",
       "role": "Lead Developer"
     }
   ],
