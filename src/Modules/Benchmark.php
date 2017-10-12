@@ -46,7 +46,7 @@ class Benchmark extends AbstractModule
      *
      * @return void
      */
-    public function mark($name)
+    public function mark(string $name)
     {
         $this->marker[$name] = microtime();
     }
@@ -66,7 +66,7 @@ class Benchmark extends AbstractModule
      * @access public
      * @return mixed
      */
-    public function elapsedTime($point1 = '', $point2 = '', $decimals = 4)
+    public function elapsedTime(string $point1 = '', string $point2 = '', int $decimals = 4)
     {
         if ($point1 === '') {
             return '{elapsed_time}';

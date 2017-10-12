@@ -25,7 +25,7 @@ all of your application's files by entering the following into a `composer.json`
 ```json
 {
   "require": {
-    "dark-prospect-games/obsidian-moon-engine": "~1.5.0"
+    "dark-prospect-games/obsidian-moon-engine": "~1.5.1"
   },
   "autoload": {
     "psr-4": {
@@ -76,16 +76,9 @@ errors that occur during the process of your application's life cycle.
 <a name="latest-changes.features"></a>
 ### Features
 
-- Updated the project to be compatible with PHP 7.0.
-- Added a new method to `DarkProspectGames\ObsidianMoonEngine\Modules\Input` called `request()` that will handle
-  `$_REQUEST` for you, however this should be used only for a single index due to security reasons.
-- Updated the contact information throughout the project to match current contact details.
-
-<a name="latest-changes.bug-fixes"></a>
-### Bug Fixes
-
-- Corrected a misspelled call of `array_key_exists()` in `DarkProspectGames\ObsidianMoonEngine\Modules\Database` in the 
-  `fetchArray()` method.
+- Added [scalar type declarations](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
+  to many of the methods in the core classes.
+- Changed `use` calls of core classes to PHP 7.0 format.
 
 [Complete List of Changes](CHANGELOG.md)
 

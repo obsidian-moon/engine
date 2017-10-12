@@ -14,8 +14,7 @@
  */
 namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
-use DarkProspectGames\ObsidianMoonEngine\Core;
-use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
+use DarkProspectGames\ObsidianMoonEngine\{Core, AbstractModule};
 
 /**
  * Class Routing
