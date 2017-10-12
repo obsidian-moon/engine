@@ -34,7 +34,7 @@ class Core
 {
 
     /** @type string               Framework Version */
-    const VERSION = '1.5.0';
+    const VERSION = '1.5.1';
     /** @type AbstractController[] Collection of controllers that can be used by the app. */
     protected $controls = [];
     /** @type mixed[]              Collection of models and modules that are available to all views. */
@@ -71,18 +71,18 @@ class Core
             'isAjax'  => $this->getAjax(),
             'isHttp'  => $this->getProtocol(),
         ];
+
+	    $this->configs = [
+		    'core' => __DIR__,
+		    'base' => dirname($_SERVER['SCRIPT_FILENAME']),
+		    'libs' => dirname($_SERVER['SCRIPT_FILENAME']) . '/src',
+	    ];
         // Assign all configuration values to $conf_**** variables.
         if (count($conf) > 0) {
             foreach ($conf as $key => $value) {
                 $this->configs[$key] = $value;
             }
         }
-
-        $this->configs = [
-            'core' => __DIR__,
-            'base' => dirname($_SERVER['SCRIPT_FILENAME']),
-            'libs' => dirname($_SERVER['SCRIPT_FILENAME']) . '/src',
-        ];
 
         // CoreRouting is default routing method, can be overwritten when specified.
         if (!array_key_exists('routing', $this->configs)) {
@@ -121,7 +121,7 @@ class Core
      * @return mixed
      * @throws CoreException
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (preg_match('/^conf_/i', $name)) {
             $name = str_replace('conf_', '', $name);
@@ -155,7 +155,7 @@ class Core
      *
      * @return boolean
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value)
     {
         if (!preg_match('/^conf_/i', $name)) {
             $this->globals[$name] = $value;
@@ -180,7 +180,7 @@ class Core
      */
     public function __toString()
     {
-        return 'Obsidian Moon Engine v'.self::VERSION.', Copyright (c) 2011-2015 Dark Prospect Games, LLC';
+        return 'Obsidian Moon Engine v'.self::VERSION.', Copyright (c) 2011-2018 Dark Prospect Games, LLC';
     }
 
     /**
@@ -222,13 +222,13 @@ class Core
      * This function will load classes as needed for the user to use.
      * It will allow them to be accessible via $core->modulename.
      *
-     * @param string $moduleName This is key name that we will save the module to.
+     * @param string $moduleName   This is key name that we will save the module to.
      * @param object $moduleObject This is the modules that will be loaded into the Core.
      *
      * @return boolean
      * @throws CoreException
      */
-    public function module($moduleName, $moduleObject)
+    public function module(string $moduleName, $moduleObject)
     {
         if (array_key_exists($moduleName, $this->modules)) {
             throw new CoreException(
@@ -281,7 +281,7 @@ class Core
      * @return mixed
      * @throws CoreException
      */
-    public function view($_view, array $_data = [], $_return = false)
+    public function view($_view, array $_data = [], bool $_return = false)
     {
         /** Load the default data before  */
         if (count($this->viewData) > 0)
@@ -313,12 +313,14 @@ class Core
     }
 
     /**
-     * Create a
+     * Adds data to be used in views
+     *
+     * This method will merge the data with current `viewData` values.
      *
      * @param array $modules A collection of modules that will be globally available in views.
      * @param bool  $reset   Whether to empty the data set before assigning new data.
      */
-    public function data(array $modules, $reset = false)
+    public function data(array $modules, bool $reset = false)
     {
         if ($reset)
         {
