@@ -14,8 +14,7 @@
  */
 namespace DarkProspectGames\ObsidianMoonEngine\Modules;
 
-use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
-use DarkProspectGames\ObsidianMoonEngine\Core;
+use DarkProspectGames\ObsidianMoonEngine\{AbstractModule, Core};
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -209,7 +208,7 @@ class Database extends AbstractModule
      * @return Database
      * @throws CoreException
      */
-    public function prepare($sql, $stmt = 'stmt')
+    public function prepare($sql, string $stmt = 'stmt')
     {
         $stmt = 'prepare_' . $stmt;
         try {
@@ -233,7 +232,7 @@ class Database extends AbstractModule
      * @return Database
      * @throws CoreException
      */
-    public function query($sql, $params = null)
+    public function query($sql, $params = null): Database
     {
         $sth          = null;
         $this->values = [];
@@ -292,7 +291,7 @@ class Database extends AbstractModule
      *
      * @since  1.0.0
      */
-    public function setConfig($name, $value)
+    public function setConfig(string $name, $value)
     {
         if (array_key_exists($name, $this->configs)) {
             $this->configs[$name] = $value;

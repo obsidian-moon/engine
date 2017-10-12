@@ -1,3 +1,13 @@
+<a name="1.5.1"></a>
+# 1.5.1 (2017-10-11)
+
+<a name="1.5.1.features"></a>
+## Features
+
+- Added [scalar type declarations](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
+  to many of the methods in the core classes.
+- Changed `use` calls of core classes to PHP 7.0 format.
+
 <a name="1.5.0"></a>
 # 1.5.0 (2017-10-10)
 

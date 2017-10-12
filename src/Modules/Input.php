@@ -37,7 +37,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function cookie($index = '', $xss_clean = false)
+    public function cookie(string $index = '', bool $xss_clean = false)
     {
         return $this->fetchFromArray($_COOKIE, $index, $xss_clean);
     }
@@ -52,7 +52,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return bool
      */
-    protected function fetchFromArray($array, $index = '', $xss_clean = false)
+    protected function fetchFromArray(array $array, string $index = '', bool $xss_clean = false)
     {
         if (!array_key_exists($index, $array))
         {
@@ -77,7 +77,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function get($index = null, $xss_clean = false)
+    public function get(string $index = null, bool $xss_clean = false)
     {
         if ($index === null && count($_GET) > 0) {
             $get = [];
@@ -102,7 +102,7 @@ class Input extends AbstractModule
      * @since  1.5.0
      * @return mixed
      */
-    public function request($index = null, $xss_clean = false)
+    public function request(string $index = null, bool $xss_clean = false)
     {
         // Check if a field has been provided.
         if ($index === null && count($_REQUEST) > 0)
@@ -132,7 +132,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function post($index = null, $xss_clean = false)
+    public function post(string $index = null, bool $xss_clean = false)
     {
         // Check if a field has been provided.
         if ($index === null && count($_POST) > 0) {
@@ -158,7 +158,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function server($index = '', $xss_clean = false)
+    public function server(string $index = '', bool $xss_clean = false)
     {
         return $this->fetchFromArray($_SERVER, $index, $xss_clean);
     }
@@ -172,7 +172,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function session($index = '', $xss_clean = false)
+    public function session(string $index = '', bool $xss_clean = false)
     {
         return $this->fetchFromArray($_SESSION, $index, $xss_clean);
     }
@@ -186,7 +186,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function setSession($index = '', $value = '')
+    public function setSession(string $index = '', $value = '')
     {
         if (array_key_exists($index, $_SESSION))
         {
@@ -206,7 +206,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return boolean
      */
-    public function unsetSession($index = '')
+    public function unsetSession(string $index = '')
     {
         unset($_SESSION[$index]);
         if (!array_key_exists($index, $_SESSION))
