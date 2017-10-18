@@ -1,3 +1,13 @@
+<a name="1.5.2"></a>
+# 1.5.2 (2017-10-17)
+
+<a name="1.5.2.bug-fixes"></a>
+## Bug Fixes
+
+- Correcting an issue with the `DarkProspectGames\ObsidianMoonEngine\Modules\Database` class. It was not loading the 
+  drivers correctly. Declaring the configs in the class declaration was not working. I had to move the assigning to the 
+  `__construct()` method, after which it will be overwritten by the configs passed to it.
+
 <a name="1.5.1"></a>
 # 1.5.1 (2017-10-11)
 
