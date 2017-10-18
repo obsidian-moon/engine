@@ -60,14 +60,13 @@ class Database extends AbstractModule
      */
     public function __construct(array $configs = [])
     {
-    	$this->configs = [
-	        'type'       => 'mysql',
-	        'fetch_mode' => PDO::FETCH_ASSOC,
-	        'error_mode' => PDO::ERRMODE_EXCEPTION,
-        ];
-
-    	parent::__construct($configs);
-        $this->configs = array_replace($this->configs, $configs);
+	    // Set and replace the default configs
+	    $configs = array_replace([
+		    'type'       => 'mysql',
+		    'fetch_mode' => PDO::FETCH_ASSOC,
+		    'error_mode' => PDO::ERRMODE_EXCEPTION,
+	    ], $configs);
+	    parent::__construct($configs);
 
         try {
             $this->connect();

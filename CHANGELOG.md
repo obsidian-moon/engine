@@ -1,3 +1,15 @@
+<a name="1.5.3"></a>
+# 1.5.3 (2017-10-17)
+
+<a name="1.5.3.bug-fixes"></a>
+## Bug Fixes
+
+- Correcting an issue with the `DarkProspectGames\ObsidianMoonEngine\Modules\Database` class. It was not loading the 
+  drivers correctly. Had to pass the default configs to the `parent::__construct()` after an `array_replace()`. Will 
+  look into finding a better way to overload the inheritance that is compatible with PHP 7.0+.
+- Updating the `composer.lock` with the correct updated information, after having removed `PHPUnit` from the 
+  `composer.json`.
+
 <a name="1.5.2"></a>
 # 1.5.2 (2017-10-17)
 
@@ -6,7 +18,7 @@
 
 - Correcting an issue with the `DarkProspectGames\ObsidianMoonEngine\Modules\Database` class. It was not loading the 
   drivers correctly. Declaring the configs in the class declaration was not working. I had to move the assigning to the 
-  `__construct()` method, after which it will be overwritten by the configs passed to it.
+  `__construct()` method, after which it will be overwritten by the configs passed to it.  
 
 <a name="1.5.1"></a>
 # 1.5.1 (2017-10-11)
