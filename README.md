@@ -1,8 +1,7 @@
 Obsidian Moon Engine
 ====================
 
-[![Floobits Status](https://floobits.com/opensaurusrex/obsidian-moon-engine.svg)]
-(https://floobits.com/opensaurusrex/obsidian-moon-engine/redirect)
+[![Floobits Status](https://floobits.com/opensaurusrex/obsidian-moon-engine.svg)](https://floobits.com/opensaurusrex/obsidian-moon-engine/redirect)
 
 This is a project that I have worked on for several months after being originally inspired
 by CodeIgniter. After setting up the initial steps of the system I am opening the
@@ -77,8 +76,10 @@ errors that occur during the process of your application's life cycle.
 ### Bug Fixes
 
 - Correcting an issue with the `DarkProspectGames\ObsidianMoonEngine\Modules\Database` class. It was not loading the 
-  drivers correctly. Declaring the configs in the class declaration was not working. I had to move the assigning to the 
-  `__construct()` method, after which it will be overwritten by the configs passed to it.
+  drivers correctly. Had to pass the default configs to the `parent::__construct()` after an `array_replace()`. Will 
+  look into finding a better way to overload the inheritance that is compatible with PHP 7.0+.
+- Updating the `composer.lock` with the correct updated information, after having removed `PHPUnit` from the 
+  `composer.json`.
 
 [Complete List of Changes](CHANGELOG.md)
 
