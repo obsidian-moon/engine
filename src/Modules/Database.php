@@ -48,15 +48,6 @@ class Database extends AbstractModule
     /**
      * @type mixed[]
      */
-    protected $configs = [
-        'type'       => 'mysql',
-        'fetch_mode' => PDO::FETCH_ASSOC,
-        'error_mode' => PDO::ERRMODE_EXCEPTION,
-    ];
-
-    /**
-     * @type mixed[]
-     */
     protected $values;
 
     /**
@@ -69,6 +60,12 @@ class Database extends AbstractModule
      */
     public function __construct(array $configs = [])
     {
+    	$this->configs = [
+	        'type'       => 'mysql',
+	        'fetch_mode' => PDO::FETCH_ASSOC,
+	        'error_mode' => PDO::ERRMODE_EXCEPTION,
+        ];
+
     	parent::__construct($configs);
         $this->configs = array_replace($this->configs, $configs);
 
