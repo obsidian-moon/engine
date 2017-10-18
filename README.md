@@ -25,7 +25,7 @@ all of your application's files by entering the following into a `composer.json`
 ```json
 {
   "require": {
-    "dark-prospect-games/obsidian-moon-engine": "~1.5.1"
+    "dark-prospect-games/obsidian-moon-engine": "~1.5.0"
   },
   "autoload": {
     "psr-4": {
@@ -73,12 +73,12 @@ errors that occur during the process of your application's life cycle.
 <a name="latest-changes"></a>
 ## Latest Changes
 
-<a name="latest-changes.features"></a>
-### Features
+<a name="latest-changes.bug-fixes"></a>
+### Bug Fixes
 
-- Added [scalar type declarations](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
-  to many of the methods in the core classes.
-- Changed `use` calls of core classes to PHP 7.0 format.
+- Correcting an issue with the `DarkProspectGames\ObsidianMoonEngine\Modules\Database` class. It was not loading the 
+  drivers correctly. Declaring the configs in the class declaration was not working. I had to move the assigning to the 
+  `__construct()` method, after which it will be overwritten by the configs passed to it.
 
 [Complete List of Changes](CHANGELOG.md)
 
