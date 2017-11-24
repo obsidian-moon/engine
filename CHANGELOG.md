@@ -1,3 +1,11 @@
+<a name="1.6.0"></a>
+# 1.6.0 (0000-00-00)
+
+<a name="1.6.0.features"></a>
+## Features
+
+- Requiring PHP 7.1 as minimum requirement, due to it being the current stable.
+
 <a name="1.5.3"></a>
 # 1.5.3 (2017-10-17)
 

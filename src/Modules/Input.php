@@ -37,7 +37,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function cookie(string $index = '', bool $xss_clean = false)
+    public function cookie(string $index = '', $xss_clean = false)
     {
         return $this->fetchFromArray($_COOKIE, $index, $xss_clean);
     }
@@ -50,9 +50,9 @@ class Input extends AbstractModule
      * @param boolean $xss_clean Whether to clean it or not or not. Incomplete.
      *
      * @since  1.0.0
-     * @return bool
+     * @return mixed
      */
-    protected function fetchFromArray(array $array, string $index = '', bool $xss_clean = false)
+    protected function fetchFromArray(array $array, string $index = '', $xss_clean = false)
     {
         if (!array_key_exists($index, $array))
         {
@@ -77,7 +77,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function get(string $index = null, bool $xss_clean = false)
+    public function get(?string $index = null, $xss_clean = false)
     {
         if ($index === null && count($_GET) > 0) {
             $get = [];
@@ -88,9 +88,9 @@ class Input extends AbstractModule
             }
 
             return $get;
-        } else {
-            return $this->fetchFromArray($_GET, $index, $xss_clean);
         }
+
+        return $this->fetchFromArray($_GET, $index, $xss_clean);
     }
 
     /**
@@ -102,25 +102,23 @@ class Input extends AbstractModule
      * @since  1.5.0
      * @return mixed
      */
-    public function request(string $index = null, bool $xss_clean = false)
+    public function request(?string $index = null, $xss_clean = false)
     {
         // Check if a field has been provided.
         if ($index === null && count($_REQUEST) > 0)
         {
-            $post = [];
+            $request = [];
 
             // Loop through the full $_REQUEST array and return the value.
             foreach (array_keys($_REQUEST) as $key)
             {
-                $post[$key] = $this->fetchFromArray($_REQUEST, $key, $xss_clean);
+                $request[$key] = $this->fetchFromArray($_REQUEST, $key, $xss_clean);
             }
 
-            return $post;
+            return $request;
         }
-        else
-        {
-            return $this->fetchFromArray($_REQUEST, $index, $xss_clean);
-        }
+
+        return $this->fetchFromArray($_REQUEST, $index, $xss_clean);
     }
 
     /**
@@ -132,7 +130,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function post(string $index = null, bool $xss_clean = false)
+    public function post(?string $index = null, $xss_clean = false)
     {
         // Check if a field has been provided.
         if ($index === null && count($_POST) > 0) {
@@ -144,9 +142,9 @@ class Input extends AbstractModule
             }
 
             return $post;
-        } else {
-            return $this->fetchFromArray($_POST, $index, $xss_clean);
         }
+
+	    return $this->fetchFromArray($_POST, $index, $xss_clean);
     }
 
     /**
@@ -158,7 +156,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function server(string $index = '', bool $xss_clean = false)
+    public function server(string $index = '', $xss_clean = false)
     {
         return $this->fetchFromArray($_SERVER, $index, $xss_clean);
     }
@@ -172,7 +170,7 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return mixed
      */
-    public function session(string $index = '', bool $xss_clean = false)
+    public function session(string $index = '', $xss_clean = false)
     {
         return $this->fetchFromArray($_SESSION, $index, $xss_clean);
     }
@@ -206,16 +204,14 @@ class Input extends AbstractModule
      * @since  1.0.0
      * @return boolean
      */
-    public function unsetSession(string $index = '')
+    public function unsetSession(string $index = ''): bool
     {
         unset($_SESSION[$index]);
         if (!array_key_exists($index, $_SESSION))
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 }

@@ -81,7 +81,7 @@ class Routing extends AbstractModule
      *     parent::start($core);
      *     // check if we have a default controller set in our core configs, or use a default 404.
      *     if ($this->primary === '') {
-     *         $this->primary = ($this->core->conf_defcon) ? $this->core->conf_defcon : 'Error404';
+     *         $this->primary = $this->core->conf_defcon ?: 'Error404';
      *     }
      *
      *     $control_name = "\\MyCompanyNamespace\\MyApplication\\Controllers\\{$this->primary}";
@@ -111,7 +111,7 @@ class Routing extends AbstractModule
     {
         parent::start($core);
         if ($this->primary === '') {
-            $this->primary = ($this->core->conf_defcon) ? $this->core->conf_defcon : 'Error404';
+            $this->primary = $this->core->conf_defcon ?: 'Error404';
         }
 
         // Get the URI from the system and process it into $this->primary and $this->params.
