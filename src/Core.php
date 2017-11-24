@@ -34,7 +34,7 @@ class Core
 {
 
     /** @type string               Framework Version */
-    const VERSION = '1.5.1';
+    const VERSION = '1.6.0';
     /** @type AbstractController[] Collection of controllers that can be used by the app. */
     protected $controls = [];
     /** @type mixed[]              Collection of models and modules that are available to all views. */
@@ -123,14 +123,12 @@ class Core
      */
     public function __get(string $name)
     {
-        if (preg_match('/^conf_/i', $name)) {
+        if (0 === stripos($name, 'conf_')) {
             $name = str_replace('conf_', '', $name);
             if (array_key_exists($name, $this->configs)) {
                 return $this->configs[$name];
             } else {
-                throw new CoreException(
-                    "Could not find a variable by the name 'conf_{$name}'!"
-                );
+                throw new CoreException("Could not find a variable by the name 'conf_{$name}'!");
             }
         } elseif (array_key_exists($name, $this->modules)) {
             return $this->modules[$name];
@@ -157,7 +155,7 @@ class Core
      */
     public function __set(string $name, $value)
     {
-        if (!preg_match('/^conf_/i', $name)) {
+        if (0 !== stripos($name, 'conf_')) {
             $this->globals[$name] = $value;
 
             // Check to make sure that the value got set, and that it is correct.
@@ -171,7 +169,32 @@ class Core
         }
     }
 
-    /**
+	/**
+	 * Global Isset
+	 *
+	 * We use this to check if there is a global variable in the globals
+	 *
+	 * @param mixed $name The global variable that is going to be checked
+	 *
+	 * @uses globals to check if $name is a key
+	 *
+	 * @return boolean
+	 */
+	public function __isset($name)
+	{
+		if (0 === stripos($name, 'conf_')) {
+			$name = str_replace('conf_', '', $name);
+			if (array_key_exists($name, $this->configs)) {
+				return true;
+			}
+		} elseif (array_key_exists($name, $this->modules) || array_key_exists($name, $this->globals)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
      * Global toString
      *
      * We use this to return the name and version of Framework if they try to echo Core.
@@ -273,7 +296,7 @@ class Core
      * </code>
      *
      * @param string  $_view   Name of the view to be called.
-     * @param mixed[] $_data   Data that can be passed into the view to
+     * @param mixed   $_data   Data that can be passed into the view to
      *                         populate existing variables.
      * @param bool    $_return If this is set to true it will pass the value
      *                         out to user otherwise append to the output buffer.
@@ -281,7 +304,7 @@ class Core
      * @return mixed
      * @throws CoreException
      */
-    public function view($_view, array $_data = [], bool $_return = false)
+    public function view($_view, $_data = [], bool $_return = false)
     {
         /** Load the default data before  */
         if (count($this->viewData) > 0)

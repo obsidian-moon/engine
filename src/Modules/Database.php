@@ -189,7 +189,7 @@ class Database extends AbstractModule
      * @since  1.0.0
      * @return int
      */
-    public function numRows()
+    public function numRows(): int
     {
         return count($this->values);
     }
@@ -204,7 +204,7 @@ class Database extends AbstractModule
      * @return Database
      * @throws CoreException
      */
-    public function prepare($sql, string $stmt = 'stmt')
+    public function prepare($sql, string $stmt = 'stmt'): Database
     {
         $stmt = 'prepare_' . $stmt;
         try {
