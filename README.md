@@ -3,10 +3,8 @@ Obsidian Moon Engine
 
 [![Floobits Status](https://floobits.com/opensaurusrex/obsidian-moon-engine.svg)](https://floobits.com/opensaurusrex/obsidian-moon-engine/redirect)
 
-This is a project that I have worked on for several months after being originally inspired
-by CodeIgniter. After setting up the initial steps of the system I am opening the
-project up for open source. Feel free to contribute and peer review my work, please
-note that there are a few pieces that are based on CodeIgniter that need to be worked on.
+This is a project that I have worked on for several years after wanting a completely modular framework. I am aiming for 
+lightweight and able to include any modules from other applications, etc.
 
 <a name="installing"></a>
 ## Installing Obsidian Moon Engine
@@ -24,7 +22,7 @@ all of your application's files by entering the following into a `composer.json`
 ```json
 {
   "require": {
-    "dark-prospect-games/obsidian-moon-engine": "~1.5.0"
+    "dark-prospect-games/obsidian-moon-engine": "^1.7.0"
   },
   "autoload": {
     "psr-4": {
@@ -40,8 +38,32 @@ After editing the file, you can simply run the following command to use the Comp
 php composer.phar install
 ```
 
+
+<a name="file-structure"></a>
+## File Structure
+
+We now have an example application included in `examples` folder but below is an overview of the default and 
+recommended structure for an app using Obsidian Moon Engine:
+
+```
+.
+|-- config/       // For the configs used by OME
+|-- node_modules/ // If you use something like webpack, you would gitignore this folder.
+|-- public/       // index.php goes in here
+|   |-- .htaccess // Look in examples for this
+|-- src/          // Required library directory used by OME
+|   |-- Modules/  // Required, contains modules used by the app
+|   |-- Pages/    // Not required but I use it to run without Routing for now, while I work on improving it
+|   |-- Views/    // Required for any and all views used by OME
+|   |-- ...       // You can access any folder in `src` by using `$core->conf_libs . '/dirname'`;
+|-- vendor/       // Composer files needed for application, you can gitignore this
+|-- composer.json
+|-- ...
+
+```
+
 If you use apache you will be able to start setting up the routing by using the following in an `.htaccess` file in the 
-app's root folder:
+app's `public` folder:
 
 ```
 # Enabling the mod_rewrite module in this folder
@@ -72,14 +94,18 @@ errors that occur during the process of your application's life cycle.
 <a name="latest-changes"></a>
 ## Latest Changes
 
-<a name="latest-changes.bug-fixes"></a>
-### Bug Fixes
+- Requiring PHP 7.1 as minimum requirement, due to it being the current stable.
+- Now requiring there to be a `public` directory in which we will put all assets and the `index.php`. This is to 
+  protect the rest of the application from attack and is a best practice.
+- Included an `examples` directory with a simple example application, to show recommended file structure. This is a 
+  working demo of the framework. Just make the directory root for test site `./examples/public` to see it in action, or 
+  copy files from this into your new install!
 
-- Correcting an issue with the `DarkProspectGames\ObsidianMoonEngine\Modules\Database` class. It was not loading the 
-  drivers correctly. Had to pass the default configs to the `parent::__construct()` after an `array_replace()`. Will 
-  look into finding a better way to overload the inheritance that is compatible with PHP 7.0+.
-- Updating the `composer.lock` with the correct updated information, after having removed `PHPUnit` from the 
-  `composer.json`.
+<a name="latest-changes.planned"></a>
+## Planned Future Inclusions
+
+- A `docs` directory with documentation for the framework.
+- Rewriting the `DarkProspectGames\ObsidianMoonEngine\Modules\Routing` class and making it so that it works better.
 
 [Complete List of Changes](CHANGELOG.md)
 

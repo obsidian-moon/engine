@@ -34,7 +34,7 @@ class Core
 {
 
     /** @type string               Framework Version */
-    const VERSION = '1.6.0';
+    public const VERSION = '1.7.0';
     /** @type AbstractController[] Collection of controllers that can be used by the app. */
     protected $controls = [];
     /** @type mixed[]              Collection of models and modules that are available to all views. */
@@ -75,7 +75,7 @@ class Core
 	    $this->configs = [
 		    'core' => __DIR__,
 		    'base' => dirname($_SERVER['SCRIPT_FILENAME']),
-		    'libs' => dirname($_SERVER['SCRIPT_FILENAME']) . '/src',
+		    'libs' => dirname($_SERVER['SCRIPT_FILENAME']) . '/../src',
 	    ];
         // Assign all configuration values to $conf_**** variables.
         if (count($conf) > 0) {
