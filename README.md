@@ -22,7 +22,7 @@ all of your application's files by entering the following into a `composer.json`
 ```json
 {
   "require": {
-    "dark-prospect-games/obsidian-moon-engine": "^1.6.0"
+    "dark-prospect-games/obsidian-moon-engine": "^1.7.0"
   },
   "autoload": {
     "psr-4": {

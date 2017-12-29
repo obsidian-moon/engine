@@ -34,7 +34,7 @@ class Core
 {
 
     /** @type string               Framework Version */
-    public const VERSION = '1.6.0';
+    public const VERSION = '1.7.0';
     /** @type AbstractController[] Collection of controllers that can be used by the app. */
     protected $controls = [];
     /** @type mixed[]              Collection of models and modules that are available to all views. */
