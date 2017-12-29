@@ -1,10 +1,14 @@
 <a name="1.6.0"></a>
-# 1.6.0 (0000-00-00)
+# 1.6.0 (2017-12-29)
 
 <a name="1.6.0.features"></a>
 ## Features
 
 - Requiring PHP 7.1 as minimum requirement, due to it being the current stable.
+- Now requiring there to be a `public` directory in which we will put all assets and the `index.php`.
+- Included an `examples` directory with a simple example application, to show recommended file structure.This is a 
+  working demo of the framework. Just make the directory root for test site `./examples/public` to see it in action, or 
+  copy files from this into your new install!
 
 <a name="1.5.3"></a>
 # 1.5.3 (2017-10-17)
