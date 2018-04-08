@@ -6,6 +6,7 @@
  *
  * PHP version 7
  *
+ * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @copyright 2011-2018 Dark Prospect Games, LLC
@@ -39,8 +40,11 @@ use DarkProspectGames\ObsidianMoonEngine\{Core, AbstractModule};
  *
  * </code>
  *
+ * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
  * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @license  MIT https://darkprospect.net/MIT-License.txt
+ * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since    1.3.0
  * @uses     Core
  * @uses     AbstractModule
@@ -49,21 +53,29 @@ class Routing extends AbstractModule
 {
 
     /**
+     * Primary route file
+     *
      * @type string
      */
     protected $primary = '';
 
     /**
+     * Secondary route methods
+     *
      * @type string
      */
     protected $secondary = '';
 
     /**
+     * Parameters
+     *
      * @type mixed
      */
     protected $params = [];
 
     /**
+     * Control
+     *
      * @type mixed
      */
     protected $control;
@@ -73,18 +85,21 @@ class Routing extends AbstractModule
      *
      * This will create and run all of the methods for a Control
      *
-     * To create your own routing you can create a new start method with your app's namespace and customize it:
+     * To create your own routing you can create a new start method with your app's
+     * namespace and customize it:
      *
      * <code>
      * public function start(Core $core)
      * {
      *     parent::start($core);
-     *     // check if we have a default controller set in our core configs, or use a default 404.
+     *     // check if we have a default controller set in our core configs, or use
+     *     // a default 404.
      *     if ($this->primary === '') {
      *         $this->primary = $this->core->conf_defcon ?: 'Error404';
      *     }
      *
-     *     $control_name = "\\MyCompanyNamespace\\MyApplication\\Controllers\\{$this->primary}";
+     *     $control_name = "\\MyCompanyNamespace\\MyApplication\\Controllers\\"
+     *                     . "{$this->primary}";
      *     if (class_exists($control_name)) {
      *         // If the control exists we pass core and params to it.
      *         $this->control = new $control_name($this->core, $this->params);
@@ -94,43 +109,54 @@ class Routing extends AbstractModule
      *         $this->control->start();
      *     }
      *
-     *     if (isset($this->secondary) && method_exists($this->control, $this->secondary)) {
-     *         call_user_func_array([$this->control, $this->secondary], $this->params);
+     *     if (
+     *         isset($this->secondary)
+     *         && method_exists($this->control, $this->secondary)
+     *     ) {
+     *         call_user_func_array(
+     *             [$this->control, $this->secondary],
+     *             $this->params
+     *         );
      *     } else {
      *         $this->control->index();
      *     }
      * }
      * </code>
      *
-     * @param Core  $core    The reference to the Core Class.
+     * @param Core $core The reference to the Core Class.
      *
      * @since  1.3.0
      * @return void
      */
-    public function start(Core $core)
+    public function start(Core $core): void
     {
         parent::start($core);
         if ($this->primary === '') {
             $this->primary = $this->core->conf_defcon ?: 'Error404';
         }
 
-        // Get the URI from the system and process it into $this->primary and $this->params.
+        // Get the URI from the system and process it into $this->primary and
+        // $this->params.
         $filter = ['/\?.*$/i'];
         if (property_exists($this->core, 'conf_subdir')) {
             $filter[] = "/{$this->core->conf_subdir}/i";
         }
 
-        $uri           = explode('/', trim(preg_replace($filter, '', $_SERVER['REQUEST_URI']), '/'));
+        $uri = explode(
+            '/',
+            trim(preg_replace($filter, '', $_SERVER['REQUEST_URI']), '/')
+        );
         $this->primary = ucfirst($uri[0]);
-        $this->params  = array_slice($uri, 1);
+        $this->params  = \array_slice($uri, 1);
 
         // If there is a second parameter we want to pull that and use it.
         if (array_key_exists(0, $this->params)) {
             $this->secondary = $this->params[0];
-            $this->params    = array_slice($this->params, 1);
+            $this->params    = \array_slice($this->params, 1);
         }
 
-        $control_name = '\\DarkProspectGames\\ObsidianMoonEngine\\Controllers\\' . $this->primary;
+        $control_name = '\\DarkProspectGames\\ObsidianMoonEngine\\Controllers\\'
+                        . $this->primary;
         if (class_exists($control_name)) {
             // If the control exists we pass core and params to it.
             $this->control = new $control_name($this->core, $this->params);
@@ -140,8 +166,10 @@ class Routing extends AbstractModule
             $this->control->start();
         }
 
-        if (property_exists($this, 'secondary') && method_exists($this->control, $this->secondary)) {
-            call_user_func_array([$this->control, $this->secondary], $this->params);
+        if (property_exists($this, 'secondary')
+            && method_exists($this->control, $this->secondary)
+        ) {
+            \call_user_func_array([$this->control, $this->secondary], $this->params);
         } else {
             $this->control->index();
         }

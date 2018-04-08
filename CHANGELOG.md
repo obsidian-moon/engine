@@ -1,3 +1,12 @@
+<a name="1.7.1"></a>
+# 1.7.1 (2018-04-08)
+
+<a name="1.7.1.features"></a>
+## Features
+
+- Improving the `Core` class logic and improving performance.
+- Refactoring to meet PSR2.
+
 <a name="1.7.0"></a>
 # 1.7.0 (2017-12-29)
 
