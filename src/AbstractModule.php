@@ -6,6 +6,7 @@
  *
  * PHP version 7
  *
+ * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @copyright 2011-2018 Dark Prospect Games, LLC
@@ -37,8 +38,11 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  *
  * </code>
  *
+ * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine
  * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @license  MIT https://darkprospect.net/MIT-License.txt
+ * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since    1.3.0 Allowing for implementations of modules.
  * @uses     Core
  * @used-by  Benchmark
@@ -49,14 +53,16 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  */
 abstract class AbstractModule
 {
-
     /**
-     * @type Core     This will hold a reference to the Core class.
+     * This will hold a reference to the Core class.
+     *
+     * @type Core
      */
     protected $core;
-
     /**
-     * @type mixed[] This will hold the configurations for the module.
+     * This will hold the configurations for the module.
+     *
+     * @type mixed[]
      */
     protected $configs;
 
@@ -64,9 +70,10 @@ abstract class AbstractModule
      * Constructor class for a standard module.
      *
      * This method will be called when the class is instantiated. It automatically
-     * adds the Core class to $this->core and any params to $this->config. All child modules
-     * must call the parent as following if they want to modify the default behaviour of the
-     * constructor, unless they want to totally overwrite the constructor:
+     * adds the Core class to $this->core and any params to $this->config. All child
+     * modules must call the parent as following if they want to modify the default
+     * behaviour of the constructor, unless they want to totally overwrite the
+     * constructor:
      *
      * <code>
      * public function __construct(array $configs = [])
@@ -76,14 +83,13 @@ abstract class AbstractModule
      * }
      * </code>
      *
-     * This helps ensure that all modules are using the same implementation and that the module
-     * creator has an easier time with creating modules.
+     * This helps ensure that all modules are using the same implementation and that
+     * the module creator has an easier time with creating modules.
      *
      * @param array $configs The configurations being passed to the module.
      *
-     * @uses   Core
-     * @since  1.3.0
-     * @return AbstractModule
+     * @uses  Core
+     * @since 1.3.0
      */
     public function __construct(array $configs = [])
     {
@@ -93,9 +99,10 @@ abstract class AbstractModule
     /**
      * Post-initialization
      *
-     * This function will be called to store the Core Class in the core property. Addditionally,
-     * if the user needs to have any tasks happen after the initialization of the class, they will
-     * be able to overload the method by doing the following:
+     * This function will be called to store the Core Class in the core property.
+     * Addditionally, if the user needs to have any tasks happen after the
+     * initialization of the class, they will be able to overload the method by
+     * doing the following:
      *
      * <code>
      * public function start(Core $core)
@@ -110,7 +117,7 @@ abstract class AbstractModule
      * @since  1.3.0
      * @return void
      */
-    public function start(Core $core)
+    public function start(Core $core): void
     {
         $this->core = $core;
     }

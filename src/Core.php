@@ -6,6 +6,7 @@
  *
  * PHP version 7
  *
+ * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @copyright 2011-2018 Dark Prospect Games, LLC
@@ -19,47 +20,77 @@ use \DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
 /**
  * Class Core
  *
- * This class is the core of the framework and handles all of the loading and processing
- * of modules and controls that will be used by your application.
+ * This class is the core of the framework and handles all of the loading and
+ * processing of modules and controls that will be used by your application.
  *
+ * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine
  * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @license  MIT https://darkprospect.net/MIT-License.txt
+ * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @uses     AbstractController
  * @uses     AbstractModule
  * @uses     CoreException
- * @since    1.0.0 Created core module
- * @since    1.4.0 Handling objects passed to module instead of strings & added ability to have default view data.
+ * @since    1.0.0 Created core module, 1.4.0 Handling objects passed to module
+ *           instead of strings & added ability to have default view data.
  */
 class Core
 {
 
-    /** @type string               Framework Version */
-    public const VERSION = '1.7.0';
-    /** @type AbstractController[] Collection of controllers that can be used by the app. */
+    /**
+     * The Framework version
+     *
+     * @type string
+     */
+    public const VERSION = '1.7.1';
+    /**
+     * Collection of controllers that can be used by the app.
+     *
+     * @type AbstractController[]
+     */
     protected $controls = [];
-    /** @type mixed[]              Collection of models and modules that are available to all views. */
+    /**
+     * Collection of models and modules that are available to all views.
+     *
+     * @type mixed[]
+     */
     protected $viewData = [];
-    /** @type string               The variable that stores compiled output that will be returned at the end. */
+    /**
+     * The variable that stores compiled output that will be returned at the end.
+     *
+     * @type string
+     */
     protected $output;
-    /** @type mixed[]              Array holding all of the configurations that we created the Core with. */
+    /**
+     * Array holding all of the configurations that we created the Core with.
+     *
+     * @type mixed[]
+     */
     protected $configs  = [];
-    /** @type mixed[]              Contains keys and values of variables set in app. */
+    /**
+     * Contains keys and values of variables set in app.
+     *
+     * @type mixed[]
+     */
     protected $globals  = [];
-    /** @type AbstractModule[]     Array holding all of the Module objects currently loaded into Core. */
+    /**
+     * Array holding all of the Module objects currently loaded into Core.
+     *
+     * @type AbstractModule[]
+     */
     protected $modules  = [];
 
-    /** @type string[]             Collection of errors messages passed from the framework. */
+    /**
+     * Collection of errors messages passed from the framework.
+     *
+     * @type string[]
+     */
     public $errors = [];
 
     /**
      * This creates an instance of the core class.
      *
-     * @param array $conf {
-     *     @type string   $core    Directory root of the Core
-     *     @type string   $base    Directory root of the Application
-     *     @type string   $libs    Directory root of the Application sources
-     *     @type object[] $modules Collection of modules to pass to module() method.
-     * }
+     * @param mixed[] $conf Configurations being set and/or overwritten.
      *
      * @since  1.0.0
      * @throws CoreException
@@ -68,17 +99,17 @@ class Core
     {
         $this->globals = [
             'systemTime' => time(),
-            'isAjax'  => $this->getAjax(),
-            'isHttp'  => $this->getProtocol(),
+            'isAjax'  => $this->_getAjax(),
+            'isHttp'  => $this->_getProtocol(),
         ];
 
-	    $this->configs = [
-		    'core' => __DIR__,
-		    'base' => dirname($_SERVER['SCRIPT_FILENAME']),
-		    'libs' => dirname($_SERVER['SCRIPT_FILENAME']) . '/../src',
-	    ];
+        $this->configs = [
+            'core' => __DIR__,
+            'base' => \dirname($_SERVER['SCRIPT_FILENAME']),
+            'libs' => \dirname($_SERVER['SCRIPT_FILENAME']) . '/../src',
+        ];
         // Assign all configuration values to $conf_**** variables.
-        if (count($conf) > 0) {
+        if (\count($conf) > 0) {
             foreach ($conf as $key => $value) {
                 $this->configs[$key] = $value;
             }
@@ -86,7 +117,8 @@ class Core
 
         // CoreRouting is default routing method, can be overwritten when specified.
         if (!array_key_exists('routing', $this->configs)) {
-            $this->configs['routing'] = '\DarkProspectGames\ObsidianMoonEngine\Modules\Routing';
+            $this->configs['routing']
+                = '\DarkProspectGames\ObsidianMoonEngine\Modules\Routing';
         }
 
         if (array_key_exists('modules', $conf)) {
@@ -123,20 +155,22 @@ class Core
      */
     public function __get(string $name)
     {
+        // Check if we are looking for a configuration variable
         if (0 === stripos($name, 'conf_')) {
             $name = str_replace('conf_', '', $name);
             if (array_key_exists($name, $this->configs)) {
                 return $this->configs[$name];
-            } else {
-                throw new CoreException("Could not find a variable by the name 'conf_{$name}'!");
             }
-        } elseif (array_key_exists($name, $this->modules)) {
-            return $this->modules[$name];
-        } elseif (array_key_exists($name, $this->globals)) {
-            return $this->globals[$name];
-        } else {
-            throw new CoreException("Could not find a variable by the name '{$name}'!");
         }
+        // Is the variable a module?
+        if (array_key_exists($name, $this->modules)) {
+            return $this->modules[$name];
+        }
+        // Is the variable a global?
+        if (array_key_exists($name, $this->globals)) {
+            return $this->globals[$name];
+        }
+        throw new CoreException("Could not find a variable by the name '{$name}'!");
     }
 
     /**
@@ -155,55 +189,52 @@ class Core
      */
     public function __set(string $name, $value)
     {
-        if (0 !== stripos($name, 'conf_')) {
-            $this->globals[$name] = $value;
-
-            // Check to make sure that the value got set, and that it is correct.
-            if (array_key_exists($name, $this->globals) && $this->globals[$name] === $value) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        if (0 === stripos($name, 'conf_')) {
             return false;
         }
+        $this->globals[$name] = $value;
+
+        // Check to make sure that the value got set, and that it is correct.
+        return (array_key_exists($name, $this->globals) &&
+            $this->globals[$name] === $value);
     }
 
-	/**
-	 * Global Isset
-	 *
-	 * We use this to check if there is a global variable in the globals
-	 *
-	 * @param mixed $name The global variable that is going to be checked
-	 *
-	 * @uses globals to check if $name is a key
-	 *
-	 * @return boolean
-	 */
-	public function __isset($name)
-	{
-		if (0 === stripos($name, 'conf_')) {
-			$name = str_replace('conf_', '', $name);
-			if (array_key_exists($name, $this->configs)) {
-				return true;
-			}
-		} elseif (array_key_exists($name, $this->modules) || array_key_exists($name, $this->globals)) {
-			return true;
-		}
+    /**
+     * Global Isset
+     *
+     * We use this to check if there is a global variable in the globals
+     *
+     * @param mixed $name The global variable that is going to be checked
+     *
+     * @uses globals to check if $name is a key
+     *
+     * @return boolean
+     */
+    public function __isset($name)
+    {
+        if (0 === stripos($name, 'conf_')) {
+            $name = str_replace('conf_', '', $name);
+            if (array_key_exists($name, $this->configs)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return (array_key_exists($name, $this->modules) ||
+            array_key_exists($name, $this->globals));
+    }
 
-	/**
+    /**
      * Global toString
      *
-     * We use this to return the name and version of Framework if they try to echo Core.
+     * We use this to return the name and version of Framework if they try to
+     * echo Core.
      *
      * @return string
      */
     public function __toString()
     {
-        return 'Obsidian Moon Engine v'.self::VERSION.', Copyright (c) 2011-2018 Dark Prospect Games, LLC';
+        return 'Obsidian Moon Engine v' . self::VERSION .
+            ', Copyright (c) 2011-2018 Dark Prospect Games, LLC';
     }
 
     /**
@@ -211,14 +242,10 @@ class Core
      *
      * @return boolean
      */
-    private function getAjax()
+    private function _getAjax(): bool
     {
-        if (array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) &&
-            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
-            return true;
-        } else {
-            return false;
-        }
+        return (array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
     }
 
     /**
@@ -226,15 +253,19 @@ class Core
      *
      * @return string
      */
-    private function getProtocol()
+    private function _getProtocol(): string
     {
         // Check for Apache HTTPS.
-        if (array_key_exists('HTTPS', $_SERVER) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] === 1)) {
+        if (array_key_exists('HTTPS', $_SERVER)
+            && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] === 1)
+        ) {
             return 'https';
         }
 
         // Check for Nginx HTTPS.
-        if (array_key_exists('SERVER_PORT', $_SERVER) && ($_SERVER['SERVER_PORT'] === '443')) {
+        if (array_key_exists('SERVER_PORT', $_SERVER)
+            && ($_SERVER['SERVER_PORT'] === '443')
+        ) {
             return 'https';
         }
 
@@ -246,23 +277,24 @@ class Core
      * It will allow them to be accessible via $core->modulename.
      *
      * @param string $moduleName   This is key name that we will save the module to.
-     * @param object $moduleObject This is the modules that will be loaded into the Core.
+     * @param object $moduleObject This is the modules that will be loaded into Core.
      *
      * @return boolean
      * @throws CoreException
      */
-    public function module(string $moduleName, $moduleObject)
+    public function module(string $moduleName, $moduleObject): bool
     {
+        // Check to make sure the module doesn't already exist.
         if (array_key_exists($moduleName, $this->modules)) {
             throw new CoreException(
                 "Module '\$this->$moduleName' has already been set!"
             );
-        } else {
-            if (method_exists($moduleObject, 'start')) {
-                $moduleObject->start($this);
-            }
-            $this->modules[$moduleName] = $moduleObject;
         }
+
+        if (method_exists($moduleObject, 'start')) {
+            $moduleObject->start($this);
+        }
+        $this->modules[$moduleName] = $moduleObject;
 
         return true;
     }
@@ -270,12 +302,13 @@ class Core
     /**
      * Routing Caller
      *
-     * We run the routing after all the modules etc have been loaded to make sure that
-     * the correct Control is called.
+     * We run the routing after all the modules etc have been loaded to make sure
+     * that the correct Control is called.
      *
+     * @return void
      * @throws CoreException
      */
-    public function routing()
+    public function routing(): void
     {
         $routingClass = $this->configs['routing'];
         try {
@@ -295,42 +328,46 @@ class Core
      *     $this->core->view()
      * </code>
      *
-     * @param string  $_view   Name of the view to be called.
-     * @param mixed   $_data   Data that can be passed into the view to
-     *                         populate existing variables.
-     * @param bool    $_return If this is set to true it will pass the value
-     *                         out to user otherwise append to the output buffer.
+     * @param null|string $_view   Name of the view to be called.
+     * @param null|array  $_data   Data that can be passed into the view to
+     *                             populate existing variables.
+     * @param bool        $_return If this is set to true it will pass the value
+     *                             out to user otherwise append to the output buffer.
      *
      * @return mixed
      * @throws CoreException
      */
-    public function view($_view, $_data = [], bool $_return = false)
+    public function view($_view, ?array $_data = [], bool $_return = false)
     {
-        /** Load the default data before  */
-        if (count($this->viewData) > 0)
-        {
+        // Load the default data before
+        if (\count($this->viewData) > 0) {
             extract($this->viewData, EXTR_SKIP);
         }
-
-        if ($_view !== null && ! file_exists($this->configs['libs'] . '/Views/' . $_view . '.php')) {
-            throw new CoreException("Could not find View in './src/Views/{$_view}.php'!");
-        } elseif ($_view === null) {
+        // Are we sending data straight to output?
+        if ($_view === null) {
             $this->output .= $_data;
-        } else {
-            if (count($_data) > 0) {
-                extract($_data, EXTR_SKIP);
-            }
 
-            ob_start();
-            include $this->configs['libs'] . '/Views/' . $_view . '.php';
-            $buffer = ob_get_contents();
-            ob_end_clean();
-            if ($_return) {
-                return $buffer;
-            } else {
-                $this->output .= $buffer;
-            }
-        }//end if
+            return true;
+        }
+
+        // The location of the View to be loaded
+        $fileName = $this->configs['libs'] . '/Views/' . $_view . '.php';
+        if (!file_exists($fileName)) {
+            throw new CoreException("Could not find View in '{$fileName}'!");
+        }
+
+        if (\count($_data) > 0) {
+            extract($_data, EXTR_SKIP);
+        }
+
+        ob_start();
+        include $fileName;
+        $buffer = ob_get_contents();
+        ob_end_clean();
+        if ($_return) {
+            return $buffer;
+        }
+        $this->output .= $buffer;
 
         return true;
     }
@@ -340,13 +377,14 @@ class Core
      *
      * This method will merge the data with current `viewData` values.
      *
-     * @param array $modules A collection of modules that will be globally available in views.
+     * @param array $modules Modules that will be globally available in views.
      * @param bool  $reset   Whether to empty the data set before assigning new data.
+     *
+     * @return void
      */
-    public function data(array $modules, bool $reset = false)
+    public function data(array $modules, bool $reset = false): void
     {
-        if ($reset)
-        {
+        if ($reset) {
             $this->viewData = [];
         }
 

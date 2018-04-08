@@ -6,6 +6,7 @@
  *
  * PHP version 7
  *
+ * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @copyright 2011-2018 Dark Prospect Games, LLC
@@ -23,8 +24,11 @@ use Exception;
  * You will be able to log errors automatically instead of dealing
  * with error_log() directly.
  *
+ * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
  * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @license  MIT https://darkprospect.net/MIT-License.txt
+ * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since    1.3.0
  * @uses     Exception
  */
@@ -36,15 +40,18 @@ class CoreException extends Exception
      *
      * This extends the standard Exception class in order
      *
-     * @param  null|string   $message   The exception message
-     * @param  Exception     $previous  Pass the Exception class to CoreException
-     * @param  bool          $error_log Determines whether or not we will log the error in error_log
+     * @param null|string $message   The exception message
+     * @param Exception   $previous  Pass the Exception class to CoreException
+     * @param bool        $error_log Determines whether or not we will log the error
+     *                               in error_log
      *
-     * @since  1.3.0
-     * @return CoreException
+     * @since 1.3.0
      */
-    public function __construct(?string $message = null, Exception $previous = null, bool $error_log = true)
-    {
+    public function __construct(
+        ?string $message = null,
+        Exception $previous = null,
+        bool $error_log = true
+    ) {
         if ($message !== null) {
             $this->message = $message;
         }
