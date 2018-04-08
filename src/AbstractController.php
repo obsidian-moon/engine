@@ -6,6 +6,7 @@
  *
  * PHP version 7
  *
+ * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @copyright 2011-2018 Dark Prospect Games, LLC
@@ -37,30 +38,43 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  *
  * </code>
  *
+ * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine
  * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @license  MIT https://darkprospect.net/MIT-License.txt
+ * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since    1.3.0 Allowing for control routing.
  * @uses     Core
  * @abstract
  */
 abstract class AbstractController
 {
-
-    /** @type Core */
+    /**
+     * Variable holding the Core
+     *
+     * @type Core
+     */
     protected $core;
-    /** @type mixed[] */
+    /**
+     * Routes information gained from URI
+     *
+     * @type mixed[]
+     */
     protected $routes = [];
-    /** @type mixed[] */
+    /**
+     * Data being passed to the controller
+     *
+     * @type mixed[]
+     */
     protected $data = [];
 
     /**
      * Constructor class for a standard module.
      *
-     * This function will be called when the control is instantiated. It automatically
-     * adds the Core class to $this->core. All child controls must call the parent as
-     * following if they want to modify the default behaviour of the constructor, unless
-     * they want to totally overwrite the constructor:
-     *
+     * This function will be called when the control is instantiated. It
+     * automatically adds the Core class to $this->core. All child controls must
+     * call the parent as following if they want to modify the default behaviour of
+     * the constructor, unless they want to totally overwrite the constructor:
      *
      * <code>
      * public function __construct(array $routes = [])
@@ -70,8 +84,8 @@ abstract class AbstractController
      * }
      * </code>
      *
-     * This helps ensure that all modules are using the same implementation and that the module
-     * creator has an easier time with creating modules.
+     * This helps ensure that all modules are using the same implementation and that
+     * the module creator has an easier time with creating modules.
      *
      * @param string[] $routes Any extra routing that we get from routing module.
      *
@@ -89,7 +103,7 @@ abstract class AbstractController
      * @since  1.3.0
      * @return void
      */
-    abstract public function end();
+    abstract public function end(): void;
 
     /**
      * Default Page
@@ -107,5 +121,5 @@ abstract class AbstractController
      * @since  1.3.0
      * @return void
      */
-    abstract public function start();
+    abstract public function start(): void;
 }

@@ -6,6 +6,7 @@
  *
  * PHP version 7
  *
+ * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @copyright 2011-2018 Dark Prospect Games, LLC
@@ -19,10 +20,14 @@ use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
 /**
  * Class Input
  *
- * A module to handle all of the input from $_POST, $_GET, $_SESSION, $_COOKIE and $_SERVER
+ * A module to handle all of the input from $_POST, $_GET, $_SESSION, $_COOKIE and
+ * $_SERVER
  *
+ * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
  * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @license  MIT https://darkprospect.net/MIT-License.txt
+ * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since    1.0.0
  * @uses     AbstractModule
  */
@@ -45,23 +50,24 @@ class Input extends AbstractModule
     /**
      * The function that will handle getting the data from the arrays.
      *
-     * @param mixed   &$array    The array that will pulled from.
+     * @param mixed   $array     The array that will pulled from.
      * @param string  $index     What we are looking for.
      * @param boolean $xss_clean Whether to clean it or not or not. Incomplete.
      *
      * @since  1.0.0
      * @return mixed
      */
-    protected function fetchFromArray(array $array, string $index = '', $xss_clean = false)
-    {
-        if (!array_key_exists($index, $array))
-        {
+    protected function fetchFromArray(
+        array $array,
+        string $index = '',
+        $xss_clean = false
+    ) {
+        if (!array_key_exists($index, $array)) {
             return false;
         }
 
         // Checks to see if the variable is set, since 0 returns as false.
-        if ($xss_clean === 'isset')
-        {
+        if ($xss_clean === 'isset') {
             return array_key_exists($index, $array);
         }
 
@@ -79,7 +85,7 @@ class Input extends AbstractModule
      */
     public function get(?string $index = null, $xss_clean = false)
     {
-        if ($index === null && count($_GET) > 0) {
+        if ($index === null && \count($_GET) > 0) {
             $get = [];
 
             // Loop through the full $_GET array.
@@ -105,13 +111,11 @@ class Input extends AbstractModule
     public function request(?string $index = null, $xss_clean = false)
     {
         // Check if a field has been provided.
-        if ($index === null && count($_REQUEST) > 0)
-        {
+        if ($index === null && \count($_REQUEST) > 0) {
             $request = [];
 
             // Loop through the full $_REQUEST array and return the value.
-            foreach (array_keys($_REQUEST) as $key)
-            {
+            foreach (array_keys($_REQUEST) as $key) {
                 $request[$key] = $this->fetchFromArray($_REQUEST, $key, $xss_clean);
             }
 
@@ -133,7 +137,7 @@ class Input extends AbstractModule
     public function post(?string $index = null, $xss_clean = false)
     {
         // Check if a field has been provided.
-        if ($index === null && count($_POST) > 0) {
+        if ($index === null && \count($_POST) > 0) {
             $post = [];
 
             // Loop through the full $_POST array and return the value.

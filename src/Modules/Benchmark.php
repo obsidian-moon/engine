@@ -6,6 +6,7 @@
  *
  * PHP version 7
  *
+ * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
  * @copyright 2011-2018 Dark Prospect Games, LLC
@@ -22,17 +23,21 @@ use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
  * Loosely inspired by CodeIgniter's benchmark class, this module calculates the
  * time it takes to load the application's resources.
  *
- * @package DarkProspectGames\ObsidianMoonEngine\Modules
- * @author  Alfonso E Martinez, III <opensaurusrex@gmail.com>
- * @uses    AbstractModule
+ * @category ObsidianMoonEngine
+ * @package  DarkProspectGames\ObsidianMoonEngine\Modules
+ * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @license  MIT https://darkprospect.net/MIT-License.txt
+ * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @uses     AbstractModule
  */
 class Benchmark extends AbstractModule
 {
-
     /**
-     * @type array List of all benchmark markers and when they were added.
+     * List of all benchmark markers and when they were added.
+     *
+     * @type array
      */
-    private $marker = [];
+    private $_marker = [];
 
     /**
      * Set a benchmark marker
@@ -46,9 +51,9 @@ class Benchmark extends AbstractModule
      *
      * @return void
      */
-    public function mark(string $name)
+    public function mark(string $name): void
     {
-        $this->marker[$name] = microtime();
+        $this->_marker[$name] = microtime();
     }
 
     /**
@@ -66,24 +71,27 @@ class Benchmark extends AbstractModule
      * @access public
      * @return mixed
      */
-    public function elapsedTime(string $point1 = '', string $point2 = '', int $decimals = 4)
-    {
+    public function elapsedTime(
+        string $point1 = '',
+        string $point2 = '',
+        int $decimals = 4
+    ) {
         if ($point1 === '') {
             return '{elapsed_time}';
         }
 
-        if (!array_key_exists($point1, $this->marker)) {
+        if (!array_key_exists($point1, $this->_marker)) {
             return '';
         }
 
-        if (!array_key_exists($point2, $this->marker)) {
-            $this->marker[$point2] = microtime();
+        if (!array_key_exists($point2, $this->_marker)) {
+            $this->_marker[$point2] = microtime();
         }
 
-        list($sm, $ss) = explode(' ', $this->marker[$point1]);
-        list($em, $es) = explode(' ', $this->marker[$point2]);
+        [$sm, $ss] = explode(' ', $this->_marker[$point1]);
+        [$em, $es] = explode(' ', $this->_marker[$point2]);
 
-        return number_format((($em + $es) - ($sm + $ss)), $decimals);
+        return number_format(($em + $es) - ($sm + $ss), $decimals);
     }
 
     /**
@@ -94,10 +102,10 @@ class Benchmark extends AbstractModule
      * without the memory being calculated until the end.
      * The output class will swap the real value for this variable.
      *
-     * @access    public
-     * @return    string
+     * @access public
+     * @return string
      */
-    public function memoryUsage()
+    public function memoryUsage(): string
     {
         return '{memory_usage}';
     }
