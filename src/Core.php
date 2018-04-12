@@ -42,7 +42,7 @@ class Core
      *
      * @type string
      */
-    public const VERSION = '1.7.1';
+    public const VERSION = '1.7.2';
     /**
      * Collection of controllers that can be used by the app.
      *
@@ -345,7 +345,7 @@ class Core
         }
         // Are we sending data straight to output?
         if ($_view === null) {
-            $this->output .= $_data;
+            $this->output .= $_data[0];
 
             return true;
         }

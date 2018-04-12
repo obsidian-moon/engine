@@ -22,7 +22,7 @@ all of your application's files by entering the following into a `composer.json`
 ```json
 {
   "require": {
-    "dark-prospect-games/obsidian-moon-engine": "^1.7.1"
+    "dark-prospect-games/obsidian-moon-engine": "^1.7.2"
   },
   "autoload": {
     "psr-4": {
@@ -48,7 +48,7 @@ recommended structure for an app using Obsidian Moon Engine:
 ```
 .
 |-- config/       // For the configs used by OME
-|-- node_modules/ // If you use something like webpack, you would gitignore this folder.
+|-- node_modules/ // If you use something like webpack, you would .gitignore this folder.
 |-- public/       // index.php goes in here
 |   |-- .htaccess // Look in examples for this
 |-- src/          // Required library directory used by OME
@@ -94,12 +94,9 @@ errors that occur during the process of your application's life cycle.
 <a name="latest-changes"></a>
 ## Latest Changes
 
-- Requiring PHP 7.1 as minimum requirement, due to it being the current stable.
-- Now requiring there to be a `public` directory in which we will put all assets and the `index.php`. This is to 
-  protect the rest of the application from attack and is a best practice.
-- Included an `examples` directory with a simple example application, to show recommended file structure. This is a 
-  working demo of the framework. Just make the directory root for test site `./examples/public` to see it in action, or 
-  copy files from this into your new install!
+- Fixing an issue with the `Core::view()` method so that we can use a `null` value in
+  the `$_view` parameter and send the output to the browser without applying it to a
+  view file.
 
 <a name="latest-changes.planned"></a>
 ## Planned Future Inclusions
