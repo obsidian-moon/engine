@@ -1,3 +1,13 @@
+<a name="1.7.2"></a>
+# 1.7.2 (2018-04-12)
+
+<a name="1.7.2.bug-fixes"></a>
+## Bug Fixes
+
+- Fixing an issue with the `Core::view()` method so that we can use a `null` value in
+  the `$_view` parameter and send the output to the browser without applying it to a
+  view file.
+
 <a name="1.7.1"></a>
 # 1.7.1 (2018-04-08)
 
