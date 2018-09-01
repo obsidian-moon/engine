@@ -15,7 +15,10 @@
  */
 namespace DarkProspectGames\ObsidianMoonEngine;
 
-use \DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
+use DarkProspectGames\ObsidianMoonEngine\Modules\{
+    CoreException,
+    Routing
+};
 
 /**
  * Class Core
@@ -33,6 +36,9 @@ use \DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
  * @uses     CoreException
  * @since    1.0.0 Created core module, 1.4.0 Handling objects passed to module
  *           instead of strings & added ability to have default view data.
+ *
+ * @property object|AbstractModule[] $modules
+ * @property mixed[]                 $globals
  */
 class Core
 {
@@ -42,31 +48,19 @@ class Core
      *
      * @type string
      */
-    public const VERSION = '1.7.2';
-    /**
-     * Collection of controllers that can be used by the app.
-     *
-     * @type AbstractController[]
-     */
-    protected $controls = [];
-    /**
-     * Collection of models and modules that are available to all views.
-     *
-     * @type mixed[]
-     */
-    protected $viewData = [];
-    /**
-     * The variable that stores compiled output that will be returned at the end.
-     *
-     * @type string
-     */
-    protected $output;
+    public const VERSION = '1.8.0';
     /**
      * Array holding all of the configurations that we created the Core with.
      *
      * @type mixed[]
      */
     protected $configs  = [];
+    /**
+     * Collection of controllers that can be used by the app.
+     *
+     * @type AbstractController[]
+     */
+    protected $controls = [];
     /**
      * Contains keys and values of variables set in app.
      *
@@ -76,9 +70,21 @@ class Core
     /**
      * Array holding all of the Module objects currently loaded into Core.
      *
-     * @type AbstractModule[]
+     * @type callable|object|AbstractModule[]
      */
     protected $modules  = [];
+    /**
+     * The variable that stores compiled output that will be returned at the end.
+     *
+     * @type string
+     */
+    protected $output;
+    /**
+     * Collection of models and modules that are available to all views.
+     *
+     * @type mixed[]
+     */
+    protected $viewData = [];
 
     /**
      * Collection of errors messages passed from the framework.
@@ -105,9 +111,25 @@ class Core
 
         $this->configs = [
             'core' => __DIR__,
-            'base' => \dirname($_SERVER['SCRIPT_FILENAME']),
-            'libs' => \dirname($_SERVER['SCRIPT_FILENAME']) . '/../src',
+            'public' => \dirname($_SERVER['SCRIPT_FILENAME']),
+            'src' => \dirname($_SERVER['SCRIPT_FILENAME'], 2) . '/src',
+            'root' => \dirname($_SERVER['SCRIPT_FILENAME'], 2),
         ];
+
+        // Load any modules passed via $conf
+        if (array_key_exists('modules', $conf)) {
+            try {
+                foreach ($conf['modules'] as $key => $value) {
+                    $this->module($key, $value);
+                }
+            } catch (CoreException $e) {
+                throw new CoreException($e->getMessage());
+            }
+
+            // Prevent modules from being included in configs
+            unset($conf['modules']);
+        }
+
         // Assign all configuration values to $conf_**** variables.
         if (\count($conf) > 0) {
             foreach ($conf as $key => $value) {
@@ -117,19 +139,11 @@ class Core
 
         // CoreRouting is default routing method, can be overwritten when specified.
         if (!array_key_exists('routing', $this->configs)) {
-            $this->configs['routing']
-                = '\DarkProspectGames\ObsidianMoonEngine\Modules\Routing';
+            $this->configs['routing'] = Routing::class;
         }
 
-        if (array_key_exists('modules', $conf)) {
-            try {
-                foreach ($conf['modules'] as $key => $value) {
-                    $this->module($key, $value);
-                }
-            } catch (CoreException $e) {
-                throw new CoreException($e->getMessage());
-            }
-        }
+        // Pass a reference to `Core` to all views.
+        $this->data(['core' => $this]);
     }
 
     /**
@@ -155,13 +169,6 @@ class Core
      */
     public function __get(string $name)
     {
-        // Check if we are looking for a configuration variable
-        if (0 === stripos($name, 'conf_')) {
-            $name = str_replace('conf_', '', $name);
-            if (array_key_exists($name, $this->configs)) {
-                return $this->configs[$name];
-            }
-        }
         // Is the variable a module?
         if (array_key_exists($name, $this->modules)) {
             return $this->modules[$name];
@@ -176,9 +183,7 @@ class Core
     /**
      * Global Setter
      *
-     * We use this to set a global in the global storage array, however we don't
-     * want them to be able to create variables that have prefix of 'conf_' since
-     * that is reserved for framework configs.
+     * We use this to set a global in the global storage array.
      *
      * @param mixed $name  The global variable that is trying to be set.
      * @param mixed $value Value of the global that you are trying to set.
@@ -187,11 +192,8 @@ class Core
      *
      * @return boolean
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, $value): bool
     {
-        if (0 === stripos($name, 'conf_')) {
-            return false;
-        }
         $this->globals[$name] = $value;
 
         // Check to make sure that the value got set, and that it is correct.
@@ -204,21 +206,14 @@ class Core
      *
      * We use this to check if there is a global variable in the globals
      *
-     * @param mixed $name The global variable that is going to be checked
+     * @param string $name The global variable that is going to be checked
      *
      * @uses globals to check if $name is a key
      *
      * @return boolean
      */
-    public function __isset($name)
+    public function __isset(string $name): bool
     {
-        if (0 === stripos($name, 'conf_')) {
-            $name = str_replace('conf_', '', $name);
-            if (array_key_exists($name, $this->configs)) {
-                return true;
-            }
-        }
-
         return (array_key_exists($name, $this->modules) ||
             array_key_exists($name, $this->globals));
     }
@@ -270,6 +265,34 @@ class Core
         }
 
         return 'http';
+    }
+
+    /**
+     * Grab the key(s) or set keys to configs.
+     *
+     * We first check if the config is set, and if so we can opt in to overwriting
+     * it with passing a value of `true` to the $overwrite parameter. Otherwise,
+     * we set the new config with the passed $key and $value.
+     *
+     * @param mixed $key       The key of a config stored in core configs.
+     * @param mixed $value     Value to be set in config.
+     * @param mixed $overwrite Determine if we want to overwrite the config value.
+     *
+     * @return mixed
+     */
+    public function config($key, $value = null, $overwrite = false)
+    {
+        if (null !== $value) {
+            if (true !== $overwrite && array_key_exists($key, $this->configs)) {
+                return false;
+            }
+
+            $this->configs[$key] = $value;
+
+            return true;
+        }
+
+        return $this->configs[$key];
     }
 
     /**
@@ -351,7 +374,7 @@ class Core
         }
 
         // The location of the View to be loaded
-        $fileName = $this->configs['libs'] . '/Views/' . $_view . '.php';
+        $fileName = $this->configs['src'] . '/Views/' . $_view . '.php';
         if (!file_exists($fileName)) {
             throw new CoreException("Could not find View in '{$fileName}'!");
         }

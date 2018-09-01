@@ -74,7 +74,7 @@ class Database extends AbstractModule
         $configs = array_replace(
             [
                 'type'       => 'mysql',
-                'fetch_mode' => PDO::FETCH_ASSOC,
+                'fetch_mode' => PDO::FETCH_OBJ,
                 'error_mode' => PDO::ERRMODE_EXCEPTION,
             ],
             $configs

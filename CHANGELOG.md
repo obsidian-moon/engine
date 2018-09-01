@@ -1,3 +1,29 @@
+<a name="1.8.0"></a>
+# 1.8.0 ()
+
+<a name="1.8.0.features"></a>
+## Features
+
+- Added [Monolog](https://packagist.org/packages/monolog/monolog) as a dependencies and means of logging errors, in
+ order to meet `PSR-3` Logger Interface Standard. Implementation details to come!
+- Added a new configuration `Core::$configs['root']` which will return the root folder that contains `common.php`,
+ `public` folder, and `src` folder.
+- Added the `Core::config($key, $value, $overwrite)` method to replace using `$core->conf_*` to get global
+  configurations. See [Breaking Changes](#1.8.0.breaking-changes) for more details.
+- Views will now have access to the `$core` variable by default, no longer need to pass a copy manually. It is added
+  during instantiation of the `Core` object.
+
+<a name="1.8.0.breaking-changes"></a>
+## Breaking Changes
+
+- `Core::__get()`, `Core::__isset()`, and `Core::__set()` no longer have access to `Core::$configs`.
+- The following configs have been renamed and are only accessible via `Core::config($key)`:
+  - `Core::$configs['base']` to `Core::$configs['public']`
+  - `Core::$configs['libs']` to `Core::$configs['src']`
+- `Modules\CoreException` is an unmodified extension of `\Exception` and no longer accepts the boolean third parameter
+  `$error_log` that would cause the object to run an `error_log()` call.
+- `Modules\Database` now has a default fetch mode of `PDO::FETCH_OBJ` which can be overwritten explicitely.
+
 <a name="1.7.2"></a>
 # 1.7.2 (2018-04-12)
 

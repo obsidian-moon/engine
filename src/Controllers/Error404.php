@@ -45,7 +45,7 @@ class Error404 extends AbstractController
     {
         $this->core->view(
             null,
-            'Unable to find the Controller you were trying to access!'
+            ['Unable to find the Controller you were trying to access!']
         );
     }
 

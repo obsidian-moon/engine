@@ -10,20 +10,17 @@ lightweight and able to include any modules from other applications, etc.
 ## Installing Obsidian Moon Engine
 
 Since Obsidian Moon Engine uses [Composer](http://getcomposer.org) you will need to install it before you can run the
-code with it. If you do not already have Composer you can install it by doing the following from your command line:
+code with it. Once you have installed Composer you will then be able to install it by running the following command:
 
 ```bash
-curl -sS https://getcomposer.org/installer | php
-```
+composer require dark-prospect-games/obsidian-moon-engine
+``` 
 
-Once you have installed Composer you will then be able to install it automatically and configure the autoloader to load
+Once installed you can 
 all of your application's files by entering the following into a `composer.json` file:
 
 ```json
 {
-  "require": {
-    "dark-prospect-games/obsidian-moon-engine": "^1.7.2"
-  },
   "autoload": {
     "psr-4": {
       "MyCompanyNamespace\\MyApplication\\": "src/"
@@ -47,16 +44,22 @@ recommended structure for an app using Obsidian Moon Engine:
 
 ```
 .
-|-- config/       // For the configs used by OME
-|-- node_modules/ // If you use something like webpack, you would .gitignore this folder.
-|-- public/       // index.php goes in here
-|   |-- .htaccess // Look in examples for this
-|-- src/          // Required library directory used by OME
-|   |-- Modules/  // Required, contains modules used by the app
-|   |-- Pages/    // Not required but I use it to run without Routing for now, while I work on improving it
-|   |-- Views/    // Required for any and all views used by OME
-|   |-- ...       // You can access any folder in `src` by using `$core->conf_libs . '/dirname'`;
-|-- vendor/       // Composer files needed for application, you can gitignore this
+|-- config/             // For the presession modifications used by OME
+|   |-- environment.php // Modifies system values if needed, before the session is started
+|-- logs/               // Location for Monolog to place the .log files.
+|-- node_modules/       // If you use something like webpack, you would .gitignore this folder.
+|-- public/             // Contains all the files that are available to user, eg. js, css, images, etc.
+|   |-- .htaccess       // Look in examples for how to best set this
+|   |-- index.php       // The primary entry point to your application.
+|   |-- ...
+|-- src/                // Required library directory used by OME
+|   |-- Controllers/    // All Controllers go in here.
+|   |-- Modules/        // Required, contains modules used by the app
+|   |-- Pages/          // Not required but I use it to run without Routing for now, while I work on improving it
+|   |-- Views/          // Required for any and all views used by OME
+|   |-- ...             // You can access any folder in `src` by using `$core->conf_libs . '/dirname'`;
+|-- vendor/             // Composer files needed for application, you can gitignore this
+|-- common.php
 |-- composer.json
 |-- ...
 
@@ -69,10 +72,6 @@ app's `public` folder:
 # Enabling the mod_rewrite module in this folder
 RewriteEngine On
 Options +FollowSymLinks
-
-# Protecting access to secure locations
-RewriteCond %{REQUEST_URI} ^src.*
-RewriteRule ^(.*)$ /index.php?/$1 [L]
 
 # Redirects invalid locations to index
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -90,13 +89,6 @@ upon installation, Obsidian Moon Engine comes with a default routing module that
 
 Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any 
 errors that occur during the process of your application's life cycle.
-
-<a name="latest-changes"></a>
-## Latest Changes
-
-- Fixing an issue with the `Core::view()` method so that we can use a `null` value in
-  the `$_view` parameter and send the output to the browser without applying it to a
-  view file.
 
 <a name="latest-changes.planned"></a>
 ## Planned Future Inclusions

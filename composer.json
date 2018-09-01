@@ -1,7 +1,7 @@
 {
   "name": "dark-prospect-games/obsidian-moon-engine",
   "description": "An Open Source, Lightweight and 100% Modular Framework in PHP",
-  "version": "1.7.2",
+  "version": "1.8.0",
   "keywords": [
     "framework"
   ],
@@ -10,17 +10,22 @@
   "authors": [
     {
       "name": "Alfonso E Martinez, III",
-      "email": "opensaurusrex@gmail.com",
+      "email": "admin@darkprospect.net",
       "role": "Lead Developer"
     }
   ],
   "support": {
-    "email": "opensaurusrex@gmail.com",
+    "email": "admin@darkprospect.net",
     "issues": "https://github.com/dark-prospect-games/obsidian-moon-engine/issues",
     "source": "https://github.com/dark-prospect-games/obsidian-moon-engine"
   },
   "require": {
-    "php": ">=7.2.0"
+    "php": ">=7.2.0",
+    "ext-pdo": "*",
+    "monolog/monolog": "^1.23"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master"
   },
   "autoload": {
     "psr-4": {
@@ -29,7 +34,10 @@
     }
   },
   "config": {
-    "preferred-install": "dist"
+    "preferred-install": {
+      "roave/security-advisories": "source",
+      "*": "dist"
+    }
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "stable"
 }

@@ -148,7 +148,7 @@ class Input extends AbstractModule
             return $post;
         }
 
-	    return $this->fetchFromArray($_POST, $index, $xss_clean);
+        return $this->fetchFromArray($_POST, $index, $xss_clean);
     }
 
     /**
@@ -190,8 +190,7 @@ class Input extends AbstractModule
      */
     public function setSession(string $index = '', $value = '')
     {
-        if (array_key_exists($index, $_SESSION))
-        {
+        if (array_key_exists($index, $_SESSION)) {
             return false;
         }
 
@@ -211,8 +210,7 @@ class Input extends AbstractModule
     public function unsetSession(string $index = ''): bool
     {
         unset($_SESSION[$index]);
-        if (!array_key_exists($index, $_SESSION))
-        {
+        if (!array_key_exists($index, $_SESSION)) {
             return true;
         }
 
