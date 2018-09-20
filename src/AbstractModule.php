@@ -8,7 +8,7 @@
  *
  * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
@@ -40,7 +40,7 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  *
  * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine
- * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
  * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since    1.3.0 Allowing for implementations of modules.
@@ -114,7 +114,8 @@ abstract class AbstractModule
      *
      * @param Core $core The reference to the Core Class.
      *
-     * @since  1.3.0
+     * @since 1.3.0
+     *
      * @return void
      */
     public function start(Core $core): void

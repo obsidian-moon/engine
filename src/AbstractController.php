@@ -8,7 +8,7 @@
  *
  * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
@@ -40,7 +40,7 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  *
  * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine
- * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
  * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since    1.3.0 Allowing for control routing.
@@ -89,7 +89,6 @@ abstract class AbstractController
      *
      * @param string[] $routes Any extra routing that we get from routing module.
      *
-     * @uses  Core Core module used in all controlls.
      * @since 1.3.0
      */
     public function __construct(array $routes = [])
@@ -100,7 +99,8 @@ abstract class AbstractController
     /**
      * This happens after all of the functions are complete.
      *
-     * @since  1.3.0
+     * @since 1.3.0
+     *
      * @return void
      */
     abstract public function end(): void;
@@ -110,7 +110,8 @@ abstract class AbstractController
      *
      * This is used when there isn't any secondary parameter set.
      *
-     * @since  1.3.0
+     * @since 1.3.0
+     *
      * @return mixed
      */
     abstract public function index();
@@ -118,8 +119,19 @@ abstract class AbstractController
     /**
      * This is called when the class is created.
      *
-     * @since  1.3.0
+     * <code>
+     * public function start(Core $core)
+     * {
+     *     parent::start($core);
+     *     //...
+     * }
+     * </code>
+     *
+     * @param Core $core Pass the Core to controller
+     *
+     * @since 1.3.0
+     *
      * @return void
      */
-    abstract public function start(): void;
+    abstract public function start(Core $core): void;
 }

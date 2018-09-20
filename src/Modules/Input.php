@@ -8,7 +8,7 @@
  *
  * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
@@ -25,7 +25,7 @@ use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
  *
  * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
- * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
  * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since    1.0.0
@@ -39,7 +39,8 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return mixed
      */
     public function cookie(string $index = '', $xss_clean = false)
@@ -54,7 +55,8 @@ class Input extends AbstractModule
      * @param string  $index     What we are looking for.
      * @param boolean $xss_clean Whether to clean it or not or not. Incomplete.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return mixed
      */
     protected function fetchFromArray(
@@ -80,7 +82,8 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return mixed
      */
     public function get(?string $index = null, $xss_clean = false)
@@ -105,7 +108,8 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
-     * @since  1.5.0
+     * @since 1.5.0
+     *
      * @return mixed
      */
     public function request(?string $index = null, $xss_clean = false)
@@ -131,7 +135,8 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return mixed
      */
     public function post(?string $index = null, $xss_clean = false)
@@ -157,7 +162,8 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return mixed
      */
     public function server(string $index = '', $xss_clean = false)
@@ -171,7 +177,8 @@ class Input extends AbstractModule
      * @param mixed   $index     The index that we will be searching for.
      * @param boolean $xss_clean Whether we want to clean it or not.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return mixed
      */
     public function session(string $index = '', $xss_clean = false)
@@ -185,7 +192,8 @@ class Input extends AbstractModule
      * @param mixed $index The index that we will be setting.
      * @param mixed $value Value of what we will be setting in the index.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return mixed
      */
     public function setSession(string $index = '', $value = '')
@@ -204,7 +212,8 @@ class Input extends AbstractModule
      *
      * @param mixed $index The index that we will be removing.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return boolean
      */
     public function unsetSession(string $index = ''): bool

@@ -8,7 +8,7 @@
  *
  * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
@@ -25,7 +25,7 @@ use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
  *
  * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
- * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
  * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @uses     AbstractModule
@@ -69,6 +69,7 @@ class Benchmark extends AbstractModule
      * @param integer $decimals the number of decimal places
      *
      * @access public
+     *
      * @return mixed
      */
     public function elapsedTime(
@@ -103,6 +104,7 @@ class Benchmark extends AbstractModule
      * The output class will swap the real value for this variable.
      *
      * @access public
+     *
      * @return string
      */
     public function memoryUsage(): string

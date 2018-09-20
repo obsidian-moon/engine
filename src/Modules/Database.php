@@ -8,7 +8,7 @@
  *
  * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
@@ -27,7 +27,7 @@ use PDOStatement;
  *
  * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
- * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
  * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since    1.0.0
@@ -94,8 +94,10 @@ class Database extends AbstractModule
      * @param mixed[] $configs These are the details pertaining to a newly created
      *                         connection, if not set it uses the config params.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @throws CoreException
+     *
      * @return void
      */
     protected function connect($configs = null): void
@@ -130,9 +132,11 @@ class Database extends AbstractModule
      *                      statement.
      * @param string $stmt  The name of the variable where the statement was stored.
      *
-     * @since  1.0.0
-     * @return Database
+     * @since 1.0.0
+     *
      * @throws CoreException
+     *
+     * @return Database
      */
     public function execute($array, $stmt = 'stmt'): Database
     {
@@ -176,7 +180,8 @@ class Database extends AbstractModule
      *
      * @param mixed[]|bool $params Specify the method that we are looking for.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return mixed[]|bool
      */
     public function fetchArray($params = false)
@@ -207,7 +212,8 @@ class Database extends AbstractModule
     /**
      * Get the last id of the query that in an insert event.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return null|int
      */
     public function insertId(): int
@@ -218,7 +224,8 @@ class Database extends AbstractModule
     /**
      * Return the number of rows found in the database.
      *
-     * @since  1.0.0
+     * @since 1.0.0
+     *
      * @return int
      */
     public function numRows(): int
@@ -232,9 +239,11 @@ class Database extends AbstractModule
      * @param mixed  $sql  The SQL statement that will be prepared.
      * @param string $stmt The statement will be saved into this space.
      *
-     * @since  1.0.0
-     * @return Database
+     * @since 1.0.0
+     *
      * @throws CoreException
+     *
+     * @return Database
      */
     public function prepare($sql, string $stmt = 'stmt'): Database
     {
@@ -258,9 +267,11 @@ class Database extends AbstractModule
      * @param mixed $sql    The content of the SQL query.
      * @param null  $params The parameters of the query.
      *
-     * @since  1.0.0
-     * @return Database
+     * @since 1.0.0
+     *
      * @throws CoreException
+     *
+     * @return Database
      */
     public function query($sql, $params = null): Database
     {
@@ -330,6 +341,7 @@ class Database extends AbstractModule
      * @param mixed  $value value of the config to set
      *
      * @since  1.0.0
+     *
      * @return void
      */
     public function setConfig(string $name, $value): void

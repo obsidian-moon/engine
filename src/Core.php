@@ -8,7 +8,7 @@
  *
  * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
@@ -19,6 +19,7 @@ use DarkProspectGames\ObsidianMoonEngine\Modules\{
     CoreException,
     Routing
 };
+use Dotenv\Dotenv;
 
 /**
  * Class Core
@@ -28,7 +29,7 @@ use DarkProspectGames\ObsidianMoonEngine\Modules\{
  *
  * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine
- * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
  * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @uses     AbstractController
@@ -61,6 +62,12 @@ class Core
      * @type AbstractController[]
      */
     protected $controls = [];
+    /**
+     * Dotenv object
+     *
+     * @type Dotenv
+     */
+    protected $dotenv;
     /**
      * Contains keys and values of variables set in app.
      *
@@ -112,8 +119,8 @@ class Core
         $this->configs = [
             'core' => __DIR__,
             'public' => \dirname($_SERVER['SCRIPT_FILENAME']),
-            'src' => \dirname($_SERVER['SCRIPT_FILENAME'], 2) . '/src',
             'root' => \dirname($_SERVER['SCRIPT_FILENAME'], 2),
+            'src' => \dirname($_SERVER['SCRIPT_FILENAME'], 2) . '/src',
         ];
 
         // Load any modules passed via $conf
@@ -130,11 +137,9 @@ class Core
             unset($conf['modules']);
         }
 
-        // Assign all configuration values to $conf_**** variables.
+        // Merge the passed configurations.
         if (\count($conf) > 0) {
-            foreach ($conf as $key => $value) {
-                $this->configs[$key] = $value;
-            }
+            array_merge($this->configs, $conf);
         }
 
         // CoreRouting is default routing method, can be overwritten when specified.
@@ -144,6 +149,10 @@ class Core
 
         // Pass a reference to `Core` to all views.
         $this->data(['core' => $this]);
+
+        // Load the getenv() function.
+        $this->dotenv = new Dotenv($this->configs['root']);
+        $this->dotenv->load();
     }
 
     /**
@@ -164,8 +173,9 @@ class Core
      *
      * @param string $name The global variable that is trying to be accessed.
      *
-     * @return mixed
      * @throws CoreException
+     *
+     * @return mixed
      */
     public function __get(string $name)
     {
@@ -278,12 +288,17 @@ class Core
      * @param mixed $value     Value to be set in config.
      * @param mixed $overwrite Determine if we want to overwrite the config value.
      *
+     * @since 1.8.0
+     *
      * @return mixed
      */
     public function config($key, $value = null, $overwrite = false)
     {
         if (null !== $value) {
             if (true !== $overwrite && array_key_exists($key, $this->configs)) {
+                return false;
+            }
+            if (true === $overwrite && \in_array($key, $this->protectedConfigs)) {
                 return false;
             }
 
@@ -302,8 +317,9 @@ class Core
      * @param string $moduleName   This is key name that we will save the module to.
      * @param object $moduleObject This is the modules that will be loaded into Core.
      *
-     * @return boolean
      * @throws CoreException
+     *
+     * @return boolean
      */
     public function module(string $moduleName, $moduleObject): bool
     {
@@ -328,8 +344,9 @@ class Core
      * We run the routing after all the modules etc have been loaded to make sure
      * that the correct Control is called.
      *
-     * @return void
      * @throws CoreException
+     *
+     * @return void
      */
     public function routing(): void
     {
@@ -357,8 +374,9 @@ class Core
      * @param bool        $_return If this is set to true it will pass the value
      *                             out to user otherwise append to the output buffer.
      *
-     * @return mixed
      * @throws CoreException
+     *
+     * @return mixed
      */
     public function view($_view, ?array $_data = [], bool $_return = false)
     {

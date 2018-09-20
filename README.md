@@ -13,11 +13,16 @@ Since Obsidian Moon Engine uses [Composer](http://getcomposer.org) you will need
 code with it. Once you have installed Composer you will then be able to install it by running the following command:
 
 ```bash
+composer create-project dark-prospect-games/obsidian-moon-framework
+```
+
+Or, if you want to use the Obsidian Moon Engine in a previously made project, you can instead run:
+
+```bash
 composer require dark-prospect-games/obsidian-moon-engine
 ``` 
 
-Once installed you can 
-all of your application's files by entering the following into a `composer.json` file:
+Once installed you can make your application's files by entering the following into a `composer.json` file:
 
 ```json
 {
@@ -39,8 +44,8 @@ php composer.phar install
 <a name="file-structure"></a>
 ## File Structure
 
-We now have an example application included in `examples` folder but below is an overview of the default and 
-recommended structure for an app using Obsidian Moon Engine:
+You can now run `composer create-project dark-prospect-games/obsidian-moon-framework` to install a new install with the
+following file structure:
 
 ```
 .
@@ -71,7 +76,7 @@ app's `public` folder:
 ```
 # Enabling the mod_rewrite module in this folder
 RewriteEngine On
-Options +FollowSymLinks
+Options -Indexes
 
 # Redirects invalid locations to index
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -93,7 +98,6 @@ errors that occur during the process of your application's life cycle.
 <a name="latest-changes.planned"></a>
 ## Planned Future Inclusions
 
-- A `docs` directory with documentation for the framework.
 - Rewriting the `DarkProspectGames\ObsidianMoonEngine\Modules\Routing` class and making it so that it works better.
 
 [Complete List of Changes](CHANGELOG.md)

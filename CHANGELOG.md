@@ -4,6 +4,8 @@
 <a name="1.8.0.features"></a>
 ## Features
 
+- Users can now run `composer create-project dark-prospect-games/obsidian-moon-framework` to install a preconfigured
+  project with Obsidan Moon Engine pre-installed.
 - Added [Monolog](https://packagist.org/packages/monolog/monolog) as a dependencies and means of logging errors, in
  order to meet `PSR-3` Logger Interface Standard. Implementation details to come!
 - Added a new configuration `Core::$configs['root']` which will return the root folder that contains `common.php`,
@@ -12,6 +14,17 @@
   configurations. See [Breaking Changes](#1.8.0.breaking-changes) for more details.
 - Views will now have access to the `$core` variable by default, no longer need to pass a copy manually. It is added
   during instantiation of the `Core` object.
+- `Core::$configs[]` will now allow the changing of any of it's value from default set when instantiating the `Core`
+  class. Eg.
+   ```php
+   $core = new Core(
+       [
+           'src' = '/var/www/myapp/app', // Change the default location of app files
+           'public' = '/var/www/myapp/viewable', // Change where the public files are
+           'root' = '/var/www/myapp' // This would less likely change
+       ]
+   );
+   ```
 
 <a name="1.8.0.breaking-changes"></a>
 ## Breaking Changes

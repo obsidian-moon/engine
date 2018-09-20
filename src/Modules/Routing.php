@@ -8,7 +8,7 @@
  *
  * @category  ObsidianMoonEngine
  * @package   DarkProspectGames\ObsidianMoonEngine
- * @author    Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
  * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
@@ -42,7 +42,7 @@ use DarkProspectGames\ObsidianMoonEngine\{Core, AbstractModule};
  *
  * @category ObsidianMoonEngine
  * @package  DarkProspectGames\ObsidianMoonEngine\Modules
- * @author   Alfonso E Martinez, III <opensaurusrex@gmail.com>
+ * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
  * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
  * @since    1.3.0
@@ -132,14 +132,14 @@ class Routing extends AbstractModule
     {
         parent::start($core);
         if ($this->primary === '') {
-            $this->primary = $this->core->conf_defcon ?: 'Error404';
+            $this->primary = $this->core->config('default_controller') ?: 'Error404';
         }
 
         // Get the URI from the system and process it into $this->primary and
         // $this->params.
         $filter = ['/\?.*$/i'];
-        if (property_exists($this->core, 'conf_subdir')) {
-            $filter[] = "/{$this->core->conf_subdir}/i";
+        if ($this->core->config('subdir')) {
+            $filter[] = "/{$this->core->config('subdir')}/i";
         }
 
         $uri = explode(
@@ -159,7 +159,7 @@ class Routing extends AbstractModule
                         . $this->primary;
         if (class_exists($control_name)) {
             // If the control exists we pass core and params to it.
-            $this->control = new $control_name($this->core, $this->params);
+            $this->control = new $control_name($this->params);
         }
 
         if (method_exists($this->control, 'start')) {
