@@ -20,10 +20,10 @@
     "source": "https://github.com/dark-prospect-games/obsidian-moon-engine"
   },
   "require": {
-    "php": ">=7.2.0",
+    "php": ">=7.4.0",
     "ext-pdo": "*",
-    "monolog/monolog": "^2.0",
-    "vlucas/phpdotenv": "^5.0"
+    "monolog/monolog": "~2.0",
+    "vlucas/phpdotenv": "~5.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master"
