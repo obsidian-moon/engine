@@ -59,6 +59,7 @@ abstract class AbstractModule
      * @type Core
      */
     protected $core;
+
     /**
      * This will hold the configurations for the module.
      *

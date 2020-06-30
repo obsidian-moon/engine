@@ -50,42 +50,49 @@ class Core
      * @type string
      */
     public const VERSION = '1.8.0';
+
     /**
      * Array holding all of the configurations that we created the Core with.
      *
      * @type mixed[]
      */
     protected $configs  = [];
+
     /**
      * Collection of controllers that can be used by the app.
      *
      * @type AbstractController[]
      */
     protected $controls = [];
+
     /**
      * Dotenv object
      *
      * @type Dotenv
      */
     protected $dotenv;
+
     /**
      * Contains keys and values of variables set in app.
      *
      * @type mixed[]
      */
     protected $globals  = [];
+
     /**
      * Array holding all of the Module objects currently loaded into Core.
      *
      * @type callable|object|AbstractModule[]
      */
     protected $modules  = [];
+
     /**
      * The variable that stores compiled output that will be returned at the end.
      *
      * @type string
      */
     protected $output;
+
     /**
      * Collection of models and modules that are available to all views.
      *
@@ -117,10 +124,10 @@ class Core
         ];
 
         $this->configs = [
-            'core' => __DIR__,
+            'core'   => __DIR__,
             'public' => \dirname($_SERVER['SCRIPT_FILENAME']),
-            'root' => \dirname($_SERVER['SCRIPT_FILENAME'], 2),
-            'src' => \dirname($_SERVER['SCRIPT_FILENAME'], 2) . '/src',
+            'root'   => \dirname($_SERVER['SCRIPT_FILENAME'], 2),
+            'src'    => \dirname($_SERVER['SCRIPT_FILENAME'], 2) . '/src',
         ];
 
         // Load any modules passed via $conf
@@ -183,10 +190,12 @@ class Core
         if (array_key_exists($name, $this->modules)) {
             return $this->modules[$name];
         }
+
         // Is the variable a global?
         if (array_key_exists($name, $this->globals)) {
             return $this->globals[$name];
         }
+
         throw new CoreException("Could not find a variable by the name '{$name}'!");
     }
 
@@ -236,7 +245,7 @@ class Core
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'Obsidian Moon Engine v' . self::VERSION .
             ', Copyright (c) 2011-2018 Dark Prospect Games, LLC';
@@ -298,7 +307,10 @@ class Core
             if (true !== $overwrite && array_key_exists($key, $this->configs)) {
                 return false;
             }
-            if (true === $overwrite && \in_array($key, $this->protectedConfigs)) {
+
+            if (true === $overwrite
+                && \in_array($key, $this->protectedConfigs, true)
+            ) {
                 return false;
             }
 
@@ -405,6 +417,7 @@ class Core
         include $fileName;
         $buffer = ob_get_contents();
         ob_end_clean();
+
         if ($_return) {
             return $buffer;
         }

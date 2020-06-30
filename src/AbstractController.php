@@ -55,12 +55,14 @@ abstract class AbstractController
      * @type Core
      */
     protected $core;
+
     /**
      * Routes information gained from URI
      *
      * @type mixed[]
      */
     protected $routes = [];
+
     /**
      * Data being passed to the controller
      *
