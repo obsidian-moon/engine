@@ -158,7 +158,7 @@ class Core
         $this->data(['core' => $this]);
 
         // Load the getenv() function.
-        $this->dotenv = new Dotenv($this->configs['root']);
+        $this->dotenv = Dotenv::create($this->configs['root']);
         $this->dotenv->load();
     }
 
