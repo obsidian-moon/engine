@@ -7,31 +7,29 @@
  * PHP version 7
  *
  * @category  ObsidianMoonEngine
- * @package   DarkProspectGames\ObsidianMoonEngine
+ * @package   ObsidianMoonDevelopment\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link      https://github.com/obsidian-moon-development/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine;
+namespace ObsidianMoonDevelopment\ObsidianMoonEngine;
 
-use DarkProspectGames\ObsidianMoonEngine\Modules\{
-    CoreException,
-    Routing
-};
+use ObsidianMoonDevelopment\ObsidianMoonEngine\Modules\CoreException;
+use ObsidianMoonDevelopment\ObsidianMoonEngine\Modules\Routing;
 use Dotenv\Dotenv;
 
 /**
  * Class Core
  *
- * This class is the core of the framework and handles all of the loading and
+ * This class is the core of the framework and handles all the loading and
  * processing of modules and controls that will be used by your application.
  *
  * @category ObsidianMoonEngine
- * @package  DarkProspectGames\ObsidianMoonEngine
+ * @package  ObsidianMoonDevelopment\ObsidianMoonEngine
  * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
- * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link     https://github.com/obsidian-moon-development/obsidian-moon-engine/
  * @uses     AbstractController
  * @uses     AbstractModule
  * @uses     CoreException
@@ -39,7 +37,7 @@ use Dotenv\Dotenv;
  *           instead of strings & added ability to have default view data.
  *
  * @property object|AbstractModule[] $modules
- * @property mixed[]                 $globals
+ * @property array                   $globals
  */
 class Core
 {

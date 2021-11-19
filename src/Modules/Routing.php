@@ -7,15 +7,16 @@
  * PHP version 7
  *
  * @category  ObsidianMoonEngine
- * @package   DarkProspectGames\ObsidianMoonEngine
+ * @package   ObsidianMoonDevelopment\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link      https://github.com/obsidian-moon-development/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules;
+namespace ObsidianMoonDevelopment\ObsidianMoonEngine\Modules;
 
-use DarkProspectGames\ObsidianMoonEngine\{Core, AbstractModule};
+use ObsidianMoonDevelopment\ObsidianMoonEngine\AbstractModule;
+use ObsidianMoonDevelopment\ObsidianMoonEngine\Core;
 
 /**
  * Class Routing
@@ -30,8 +31,8 @@ use DarkProspectGames\ObsidianMoonEngine\{Core, AbstractModule};
  * // ./src/Modules/MyRouting.php
  * namespace MyCompanyNamespace\MyApplication;
  *
- * use \DarkProspectGames\ObsidianMoonEngine\Modules\Routing;
- * use \DarkProspectGames\ObsidianMoonEngine\Core;
+ * use \ObsidianMoonDevelopment\ObsidianMoonEngine\Modules\Routing;
+ * use \ObsidianMoonDevelopment\ObsidianMoonEngine\Core;
  *
  * class MyRouting extends Routing
  * {
@@ -41,10 +42,10 @@ use DarkProspectGames\ObsidianMoonEngine\{Core, AbstractModule};
  * </code>
  *
  * @category ObsidianMoonEngine
- * @package  DarkProspectGames\ObsidianMoonEngine\Modules
+ * @package  ObsidianMoonDevelopment\ObsidianMoonEngine\Modules
  * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
- * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link     https://github.com/obsidian-moon-development/obsidian-moon-engine/
  * @since    1.3.0
  * @uses     Core
  * @uses     AbstractModule
@@ -155,7 +156,7 @@ class Routing extends AbstractModule
             $this->params    = \array_slice($this->params, 1);
         }
 
-        $control_name = '\\DarkProspectGames\\ObsidianMoonEngine\\Controllers\\'
+        $control_name = '\\ObsidianMoonDevelopment\\ObsidianMoonEngine\\Controllers\\'
                         . $this->primary;
         if (class_exists($control_name)) {
             // If the control exists we pass core and params to it.

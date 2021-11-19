@@ -1,11 +1,11 @@
 {
-  "name": "dark-prospect-games/obsidian-moon-engine",
+  "name": "obsidian-moon-development/obsidian-moon-engine",
   "description": "An Open Source, Lightweight and 100% Modular Framework in PHP",
   "version": "1.8.0",
   "keywords": [
     "framework"
   ],
-  "homepage": "https://github.com/dark-prospect-games/obsidian-moon-engine",
+  "homepage": "https://github.com/obsidian-moon-development/obsidian-moon-engine",
   "license": "MIT",
   "authors": [
     {
@@ -16,8 +16,8 @@
   ],
   "support": {
     "email": "opensaurusrex@gmail.com",
-    "issues": "https://github.com/dark-prospect-games/obsidian-moon-engine/issues",
-    "source": "https://github.com/dark-prospect-games/obsidian-moon-engine"
+    "issues": "https://github.com/obsidian-moon-development/obsidian-moon-engine/issues",
+    "source": "https://github.com/obsidian-moon-development/obsidian-moon-engine"
   },
   "require": {
     "php": ">=7.4.0",
@@ -30,7 +30,7 @@
   },
   "autoload": {
     "psr-4": {
-      "DarkProspectGames\\ObsidianMoonEngine\\": "src/"
+      "ObsidianMoonDevelopment\\ObsidianMoonEngine\\": "src/"
     }
   },
   "config": {

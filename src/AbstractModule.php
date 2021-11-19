@@ -7,13 +7,13 @@
  * PHP version 7
  *
  * @category  ObsidianMoonEngine
- * @package   DarkProspectGames\ObsidianMoonEngine
+ * @package   obsidian-moon-development\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link      https://github.com/obsidian-moon-development/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine;
+namespace ObsidianMoonDevelopment\ObsidianMoonEngine;
 
 /**
  * Class AbstractModule
@@ -28,8 +28,8 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  * // ./src/Modules/MyModule.php
  * namespace MyCompanyNamespace\MyApplication;
  *
- * use \DarkProspectGames\ObsidianMoonEngine\AbstractModule;
- * use \DarkProspectGames\ObsidianMoonEngine\Core;
+ * use \ObsidianMoonDevelopment\ObsidianMoonEngine\AbstractModule;
+ * use \ObsidianMoonDevelopment\ObsidianMoonEngine\Core;
  *
  * class MyModule extends AbstractModule
  * {
@@ -39,10 +39,10 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  * </code>
  *
  * @category ObsidianMoonEngine
- * @package  DarkProspectGames\ObsidianMoonEngine
+ * @package  ObsidianMoonDevelopment\ObsidianMoonEngine
  * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
- * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link     https://github.com/obsidian-moon-development/obsidian-moon-engine/
  * @since    1.3.0 Allowing for implementations of modules.
  * @uses     Core
  * @used-by  Benchmark

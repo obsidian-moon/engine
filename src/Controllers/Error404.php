@@ -7,17 +7,17 @@
  * PHP version 7
  *
  * @category  ObsidianMoonEngine
- * @package   DarkProspectGames\ObsidianMoonEngine
+ * @package   obsidian-moon-development\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link      https://github.com/obsidian-moon-development/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Controllers;
+namespace ObsidianMoonDevelopment\ObsidianMoonEngine\Controllers;
 
-use DarkProspectGames\ObsidianMoonEngine\AbstractController;
-use DarkProspectGames\ObsidianMoonEngine\Core;
-use DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
+use ObsidianMoonDevelopment\ObsidianMoonEngine\AbstractController;
+use ObsidianMoonDevelopment\ObsidianMoonEngine\Core;
+use ObsidianMoonDevelopment\ObsidianMoonEngine\Modules\CoreException;
 
 /**
  * Class Error404
@@ -25,10 +25,10 @@ use DarkProspectGames\ObsidianMoonEngine\Modules\CoreException;
  * This is the default controller.
  *
  * @category ObsidianMoonEngine
- * @package  DarkProspectGames\ObsidianMoonEngine\Controllers
+ * @package  ObsidianMoonDevelopment\ObsidianMoonEngine\Controllers
  * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
- * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link     https://github.com/obsidian-moon-development/obsidian-moon-engine/
  * @since    1.3.2
  * @uses     AbstractController
  */

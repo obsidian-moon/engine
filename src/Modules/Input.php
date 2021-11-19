@@ -7,15 +7,15 @@
  * PHP version 7
  *
  * @category  ObsidianMoonEngine
- * @package   DarkProspectGames\ObsidianMoonEngine
+ * @package   ObsidianMoonDevelopment\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link      https://github.com/obsidian-moon-development/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine\Modules;
+namespace ObsidianMoonDevelopment\ObsidianMoonEngine\Modules;
 
-use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
+use ObsidianMoonDevelopment\ObsidianMoonEngine\AbstractModule;
 
 /**
  * Class Input
@@ -24,10 +24,10 @@ use DarkProspectGames\ObsidianMoonEngine\AbstractModule;
  * $_SERVER
  *
  * @category ObsidianMoonEngine
- * @package  DarkProspectGames\ObsidianMoonEngine\Modules
+ * @package  ObsidianMoonDevelopment\ObsidianMoonEngine\Modules
  * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
- * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link     https://github.com/obsidian-moon-development/obsidian-moon-engine/
  * @since    1.0.0
  * @uses     AbstractModule
  */

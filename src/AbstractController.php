@@ -7,13 +7,13 @@
  * PHP version 7
  *
  * @category  ObsidianMoonEngine
- * @package   DarkProspectGames\ObsidianMoonEngine
+ * @package   obsidian-moon-development\ObsidianMoonEngine
  * @author    Alfonso E Martinez, III <admin@darkprospect.net>
  * @copyright 2011-2018 Dark Prospect Games, LLC
  * @license   MIT https://darkprospect.net/MIT-License.txt
- * @link      https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link      https://github.com/obsidian-moon-development/obsidian-moon-engine/
  */
-namespace DarkProspectGames\ObsidianMoonEngine;
+namespace ObsidianMoonDevelopment\ObsidianMoonEngine;
 
 /**
  * Class AbstractController
@@ -28,8 +28,8 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  * // ./src/Controllers/MyController.php
  * namespace MyCompanyNamespace\MyApplication;
  *
- * use \DarkProspectGames\ObsidianMoonEngine\AbstractController;
- * use \DarkProspectGames\ObsidianMoonEngine\Core;
+ * use \ObsidianMoonDevelopment\ObsidianMoonEngine\AbstractController;
+ * use \ObsidianMoonDevelopment\ObsidianMoonEngine\Core;
  *
  * class MyController extends AbstractController
  * {
@@ -39,36 +39,24 @@ namespace DarkProspectGames\ObsidianMoonEngine;
  * </code>
  *
  * @category ObsidianMoonEngine
- * @package  DarkProspectGames\ObsidianMoonEngine
+ * @package  ObsidianMoonDevelopment\ObsidianMoonEngine
  * @author   Alfonso E Martinez, III <admin@darkprospect.net>
  * @license  MIT https://darkprospect.net/MIT-License.txt
- * @link     https://github.com/dark-prospect-games/obsidian-moon-engine/
+ * @link     https://github.com/obsidian-moon-development/obsidian-moon-engine/
  * @since    1.3.0 Allowing for control routing.
  * @uses     Core
  * @abstract
  */
 abstract class AbstractController
 {
-    /**
-     * Variable holding the Core
-     *
-     * @type Core
-     */
-    protected $core;
+    /** Variable holding the Core */
+    protected Core $core;
 
-    /**
-     * Routes information gained from URI
-     *
-     * @type mixed[]
-     */
-    protected $routes = [];
+    /** Routes information gained from URI */
+    protected array $routes = [];
 
-    /**
-     * Data being passed to the controller
-     *
-     * @type mixed[]
-     */
-    protected $data = [];
+    /** Data being passed to the controller */
+    protected array $data = [];
 
     /**
      * Constructor class for a standard module.
@@ -99,7 +87,7 @@ abstract class AbstractController
     }
 
     /**
-     * This happens after all of the functions are complete.
+     * This happens after all the functions are complete.
      *
      * @since 1.3.0
      *

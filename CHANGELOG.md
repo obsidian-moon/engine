@@ -4,7 +4,7 @@
 <a name="1.8.0.features"></a>
 ## Features
 
-- Users can now run `composer create-project dark-prospect-games/obsidian-moon-framework` to install a preconfigured
+- Users can now run `composer create-project obsidian-moon-development/obsidian-moon-framework` to install a preconfigured
   project with Obsidan Moon Engine pre-installed.
 - Added [Monolog](https://packagist.org/packages/monolog/monolog) as a dependencies and means of logging errors, in
  order to meet `PSR-3` Logger Interface Standard. Implementation details to come!
