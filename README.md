@@ -13,13 +13,13 @@ Since Obsidian Moon Engine uses [Composer](http://getcomposer.org) you will need
 code with it. Once you have installed Composer you will then be able to install it by running the following command:
 
 ```bash
-composer create-project obsidian-moon-development/obsidian-moon-framework
+composer create-project obsidian-moon/framework
 ```
 
 Or, if you want to use the Obsidian Moon Engine in a previously made project, you can instead run:
 
 ```bash
-composer require obsidian-moon-development/obsidian-moon-engine
+composer require obsidian-moon/engine
 ``` 
 
 Once installed you can make your application's files by entering the following into a `composer.json` file:

@@ -1,11 +1,11 @@
 {
-  "name": "obsidian-moon-development/obsidian-moon-engine",
+  "name": "obsidian-moon/engine",
   "description": "An Open Source, Lightweight and 100% Modular Framework in PHP",
-  "version": "1.8.0",
+  "version": "2.0.0",
   "keywords": [
     "framework"
   ],
-  "homepage": "https://github.com/obsidian-moon-development/obsidian-moon-engine",
+  "homepage": "https://github.com/obsidian-moon/engine",
   "license": "MIT",
   "authors": [
     {
@@ -16,21 +16,22 @@
   ],
   "support": {
     "email": "opensaurusrex@gmail.com",
-    "issues": "https://github.com/obsidian-moon-development/obsidian-moon-engine/issues",
-    "source": "https://github.com/obsidian-moon-development/obsidian-moon-engine"
+    "issues": "https://github.com/obsidian-moon/engine/issues",
+    "source": "https://github.com/obsidian-moon/engine"
   },
   "require": {
-    "php": ">=7.4.0",
+    "php": ">=8.1",
     "ext-pdo": "*",
-    "monolog/monolog": "^1.25",
-    "vlucas/phpdotenv": "^3.0"
+    "vlucas/phpdotenv": "^3.0",
+    "symfony/routing": "^6.0",
+    "symfony/http-foundation": "^6.0"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master"
+    "roave/security-advisories": "dev-latest"
   },
   "autoload": {
     "psr-4": {
-      "ObsidianMoonDevelopment\\ObsidianMoonEngine\\": "src/"
+      "ObsidianMoon\\Engine\\": "src/"
     }
   },
   "config": {
