@@ -21,7 +21,6 @@
   },
   "require": {
     "php": ">=8.1",
-    "ext-pdo": "*",
     "vlucas/phpdotenv": "^3.0",
     "symfony/routing": "^6.0",
     "symfony/http-foundation": "^6.0"
