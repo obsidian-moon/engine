@@ -11,6 +11,10 @@ class ViewHandler
 {
     protected string $output = '';
 
+    /**
+     * @param string $viewsRoot The location where we are storing views.
+     * @param array  $viewData  Default data we can pass to the view.
+     */
     public function __construct(protected string $viewsRoot, protected array $viewData = [])
     {
     }
@@ -26,27 +30,27 @@ class ViewHandler
      */
     public function load(?string $view = null, array $data = [], bool $return = false): bool|string
     {
-        $content = '';
-
+        /** Load default view data */
         if (\count($this->viewData) > 0) {
             extract($this->viewData, EXTR_SKIP);
         }
 
-        // Are we sending data straight to output?
+        /** Are we sending data straight to output? */
         if ($view === null) {
             $this->output .= $data[0];
 
             return true;
         }
 
-        // The location of the View to be loaded
+        /** The location of the View to be loaded */
         $fileName = $this->viewsRoot . '/' . $view . '.php';
         if (!file_exists($fileName)) {
             throw new FileNotFoundException("Could not find a view file at '{$fileName}'!");
         }
 
+        /** Load data specific to this view */
         if (\count($data) > 0) {
-            extract($data, EXTR_SKIP);
+            extract($data, EXTR_OVERWRITE);
         }
 
         ob_start();
