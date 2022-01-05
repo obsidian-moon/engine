@@ -28,7 +28,7 @@ Once installed you can make your application's files by entering the following i
 {
   "autoload": {
     "psr-4": {
-      "MyCompanyNamespace\\MyApplication\\": "src/"
+      "ObsidianMoon\\Framework\\": "src/"
     }
   }
 }
@@ -44,25 +44,28 @@ php composer.phar install
 <a name="file-structure"></a>
 ## File Structure
 
-You can now run `composer create-project obsidian-moon-development/obsidian-moon-framework` to install a new install with the
+You can now run `composer create-project obsidian-moon/framework` to install a new install with the
 following file structure:
 
 ```
 .
+|-- app/                // Application namespace root
+|   |-- Controllers     // Controllers for handling routes
+|   |-- Entity          // For storing entities, to be explained later
+|   |-- Modules         // Modular classes for handling various functionality 
 |-- config/             // For the presession modifications used by OME
 |   |-- environment.php // Modifies system values if needed, before the session is started
-|-- logs/               // Location for Monolog to place the .log files.
+|   |-- routes.php      // Routes for the application
 |-- node_modules/       // If you use something like webpack, you would .gitignore this folder.
 |-- public/             // Contains all the files that are available to user, eg. js, css, images, etc.
 |   |-- .htaccess       // Look in examples for how to best set this
 |   |-- index.php       // The primary entry point to your application.
 |   |-- ...
 |-- src/                // Required library directory used by OME
-|   |-- Controllers/    // All Controllers go in here.
-|   |-- Modules/        // Required, contains modules used by the app
-|   |-- Pages/          // Not required but I use it to run without Routing for now, while I work on improving it
-|   |-- Views/          // Required for any and all views used by OME
-|   |-- ...             // You can access any folder in `src` by using `$core->conf_libs . '/dirname'`;
+|   |-- js              // Store your js source files for webpack
+|   |-- scss            // SCSS that will be processed by webpack
+|   |-- views/          // All view files will go in here
+|   |-- ...             
 |-- vendor/             // Composer files needed for application, you can gitignore this
 |-- common.php
 |-- composer.json
