@@ -11,7 +11,7 @@ class ViewHandler
 {
     protected string $output = '';
 
-    public function __construct(protected array $viewData = [])
+    public function __construct(protected string $viewsRoot, protected array $viewData = [])
     {
     }
 
@@ -27,7 +27,6 @@ class ViewHandler
     public function load(?string $view = null, array $data = [], bool $return = false): bool|string
     {
         $content = '';
-        $viewRoot = (defined('VIEW_ROOT')) ? VIEW_ROOT : dirname(__DIR__, 2);
 
         if (\count($this->viewData) > 0) {
             extract($this->viewData, EXTR_SKIP);
@@ -41,7 +40,7 @@ class ViewHandler
         }
 
         // The location of the View to be loaded
-        $fileName = $viewRoot . '/' . $view . '.php';
+        $fileName = $this->viewsRoot . '/' . $view . '.php';
         if (!file_exists($fileName)) {
             throw new FileNotFoundException("Could not find a view file at '{$fileName}'!");
         }

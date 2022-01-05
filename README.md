@@ -28,7 +28,7 @@ Once installed you can make your application's files by entering the following i
 {
   "autoload": {
     "psr-4": {
-      "ObsidianMoon\\Framework\\": "src/"
+      "ObsidianMoon\\Framework\\": "app/"
     }
   }
 }
@@ -111,9 +111,9 @@ errors that occur during the process of your application's life cycle.
 You will find that the Obsidian Moon Engine is 100% modular and will expand as you build code into it. Feel free to
 submit modules for addition into the core, tweak the code to suite your needs and add any features I have not thought
 of yet. If you do use this framework we would appreciate you any credit given and would like if you could like back to
-this page. Additionally if you happen to write code that improves on what I have already created, please feel free to
+this page. Addittionally if you happen to write code that improves on what I have already created, please feel free to
 share back! We will appreciate any assistance! Thanks and Enjoy!
 
 Regards,  
-Alfonso E Martinez, III  
-Dark Prospect Games, LLC
+Alfonso Martinez 
+Obsidian Moon Development
