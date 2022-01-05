@@ -10,23 +10,25 @@ lightweight and able to include any modules from other applications, etc.
 ## Installing Obsidian Moon Engine
 
 Since Obsidian Moon Engine uses [Composer](http://getcomposer.org) you will need to install it before you can run the
-code with it. If you do not already have Composer you can install it by doing the following from your command line:
+code with it. Once you have installed Composer you will then be able to install it by running the following command:
 
 ```bash
-curl -sS https://getcomposer.org/installer | php
+composer create-project obsidian-moon/framework
 ```
 
-Once you have installed Composer you will then be able to install it automatically and configure the autoloader to load
-all of your application's files by entering the following into a `composer.json` file:
+Or, if you want to use the Obsidian Moon Engine in a previously made project, you can instead run:
+
+```bash
+composer require obsidian-moon/engine
+``` 
+
+Once installed you can make your application's files by entering the following into a `composer.json` file:
 
 ```json
 {
-  "require": {
-    "dark-prospect-games/obsidian-moon-engine": "^1.7.2"
-  },
   "autoload": {
     "psr-4": {
-      "MyCompanyNamespace\\MyApplication\\": "src/"
+      "ObsidianMoon\\Framework\\": "app/"
     }
   }
 }
@@ -42,21 +44,30 @@ php composer.phar install
 <a name="file-structure"></a>
 ## File Structure
 
-We now have an example application included in `examples` folder but below is an overview of the default and 
-recommended structure for an app using Obsidian Moon Engine:
+You can now run `composer create-project obsidian-moon/framework` to install a new install with the
+following file structure:
 
 ```
 .
-|-- config/       // For the configs used by OME
-|-- node_modules/ // If you use something like webpack, you would .gitignore this folder.
-|-- public/       // index.php goes in here
-|   |-- .htaccess // Look in examples for this
-|-- src/          // Required library directory used by OME
-|   |-- Modules/  // Required, contains modules used by the app
-|   |-- Pages/    // Not required but I use it to run without Routing for now, while I work on improving it
-|   |-- Views/    // Required for any and all views used by OME
-|   |-- ...       // You can access any folder in `src` by using `$core->conf_libs . '/dirname'`;
-|-- vendor/       // Composer files needed for application, you can gitignore this
+|-- app/                // Application namespace root
+|   |-- Controllers     // Controllers for handling routes
+|   |-- Entity          // For storing entities, to be explained later
+|   |-- Modules         // Modular classes for handling various functionality 
+|-- config/             // For the presession modifications used by OME
+|   |-- environment.php // Modifies system values if needed, before the session is started
+|   |-- routes.php      // Routes for the application
+|-- node_modules/       // If you use something like webpack, you would .gitignore this folder.
+|-- public/             // Contains all the files that are available to user, eg. js, css, images, etc.
+|   |-- .htaccess       // Look in examples for how to best set this
+|   |-- index.php       // The primary entry point to your application.
+|   |-- ...
+|-- src/                // Required library directory used by OME
+|   |-- js              // Store your js source files for webpack
+|   |-- scss            // SCSS that will be processed by webpack
+|   |-- views/          // All view files will go in here
+|   |-- ...             
+|-- vendor/             // Composer files needed for application, you can gitignore this
+|-- common.php
 |-- composer.json
 |-- ...
 
@@ -68,11 +79,7 @@ app's `public` folder:
 ```
 # Enabling the mod_rewrite module in this folder
 RewriteEngine On
-Options +FollowSymLinks
-
-# Protecting access to secure locations
-RewriteCond %{REQUEST_URI} ^src.*
-RewriteRule ^(.*)$ /index.php?/$1 [L]
+Options -Indexes
 
 # Redirects invalid locations to index
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -91,17 +98,9 @@ upon installation, Obsidian Moon Engine comes with a default routing module that
 Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any 
 errors that occur during the process of your application's life cycle.
 
-<a name="latest-changes"></a>
-## Latest Changes
-
-- Fixing an issue with the `Core::view()` method so that we can use a `null` value in
-  the `$_view` parameter and send the output to the browser without applying it to a
-  view file.
-
 <a name="latest-changes.planned"></a>
 ## Planned Future Inclusions
 
-- A `docs` directory with documentation for the framework.
 - Rewriting the `DarkProspectGames\ObsidianMoonEngine\Modules\Routing` class and making it so that it works better.
 
 [Complete List of Changes](CHANGELOG.md)
@@ -112,9 +111,9 @@ errors that occur during the process of your application's life cycle.
 You will find that the Obsidian Moon Engine is 100% modular and will expand as you build code into it. Feel free to
 submit modules for addition into the core, tweak the code to suite your needs and add any features I have not thought
 of yet. If you do use this framework we would appreciate you any credit given and would like if you could like back to
-this page. Additionally if you happen to write code that improves on what I have already created, please feel free to
+this page. Addittionally if you happen to write code that improves on what I have already created, please feel free to
 share back! We will appreciate any assistance! Thanks and Enjoy!
 
 Regards,  
-Alfonso E Martinez, III  
-Dark Prospect Games, LLC
+Alfonso Martinez 
+Obsidian Moon Development

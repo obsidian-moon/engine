@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ObsidianMoonEngine.iml" filepath="$PROJECT_DIR$/.idea/ObsidianMoonEngine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/obsidian-moon-engine.iml" filepath="$PROJECT_DIR$/.idea/obsidian-moon-engine.iml" />
     </modules>
   </component>
 </project>

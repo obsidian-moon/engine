@@ -1,35 +1,43 @@
 {
-  "name": "dark-prospect-games/obsidian-moon-engine",
+  "name": "obsidian-moon/engine",
   "description": "An Open Source, Lightweight and 100% Modular Framework in PHP",
-  "version": "1.7.2",
+  "version": "2.0.0",
   "keywords": [
     "framework"
   ],
-  "homepage": "https://github.com/dark-prospect-games/obsidian-moon-engine",
+  "homepage": "https://github.com/obsidian-moon/engine",
   "license": "MIT",
   "authors": [
     {
-      "name": "Alfonso E Martinez, III",
+      "name": "Alfonso Martinez",
       "email": "opensaurusrex@gmail.com",
       "role": "Lead Developer"
     }
   ],
   "support": {
     "email": "opensaurusrex@gmail.com",
-    "issues": "https://github.com/dark-prospect-games/obsidian-moon-engine/issues",
-    "source": "https://github.com/dark-prospect-games/obsidian-moon-engine"
+    "issues": "https://github.com/obsidian-moon/engine/issues",
+    "source": "https://github.com/obsidian-moon/engine"
   },
   "require": {
-    "php": ">=7.2.0"
+    "php": ">=8.1",
+    "vlucas/phpdotenv": "^5.4",
+    "symfony/routing": "^6.0",
+    "symfony/http-foundation": "^6.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest"
   },
   "autoload": {
     "psr-4": {
-      "DarkProspectGames\\ExampleApp\\": "examples/src/",
-      "DarkProspectGames\\ObsidianMoonEngine\\": "src/"
+      "ObsidianMoon\\Engine\\": "src/"
     }
   },
   "config": {
-    "preferred-install": "dist"
+    "preferred-install": {
+      "roave/security-advisories": "source",
+      "*": "dist"
+    }
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "stable"
 }
