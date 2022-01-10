@@ -13,8 +13,8 @@ class AbstractController
     protected ViewHandler $view;
 
     #[Pure]
-    public function __construct(protected string $viewsRoot)
+    public function __construct(protected string $viewsRoot, array $viewData = [])
     {
-        $this->view = new ViewHandler($this->viewsRoot);
+        $this->view = new ViewHandler($this->viewsRoot, $viewData);
     }
 }

@@ -1,8 +1,6 @@
 Obsidian Moon Engine
 ====================
 
-[![Floobits Status](https://floobits.com/opensaurusrex/obsidian-moon-engine.svg)](https://floobits.com/opensaurusrex/obsidian-moon-engine/redirect)
-
 This is a project that I have worked on for several years after wanting a completely modular framework. I am aiming for 
 lightweight and able to include any modules from other applications, etc.
 
@@ -13,90 +11,22 @@ Since Obsidian Moon Engine uses [Composer](http://getcomposer.org) you will need
 code with it. Once you have installed Composer you will then be able to install it by running the following command:
 
 ```bash
-composer create-project obsidian-moon/framework
-```
-
-Or, if you want to use the Obsidian Moon Engine in a previously made project, you can instead run:
-
-```bash
 composer require obsidian-moon/engine
 ``` 
 
-Once installed you can make your application's files by entering the following into a `composer.json` file:
-
-```json
-{
-  "autoload": {
-    "psr-4": {
-      "ObsidianMoon\\Framework\\": "app/"
-    }
-  }
-}
-```
-
-After editing the file, you can simply run the following command to use the Composer file you installed:
+Alternatively, you can install the [Obsidian Moon Framework](/obsidian-moon/framework) with a prebuilt structure,
+by using the following command. Click the link for additional information.
 
 ```bash
-php composer.phar install
+composer create-project obsidian-moon/framework
 ```
 
+<a name="implementation"></a>
+## Implelementation
 
-<a name="file-structure"></a>
-## File Structure
+### Controller Handler
 
-You can now run `composer create-project obsidian-moon/framework` to install a new install with the
-following file structure:
-
-```
-.
-|-- app/                // Application namespace root
-|   |-- Controllers     // Controllers for handling routes
-|   |-- Entity          // For storing entities, to be explained later
-|   |-- Modules         // Modular classes for handling various functionality 
-|-- config/             // For the presession modifications used by OME
-|   |-- environment.php // Modifies system values if needed, before the session is started
-|   |-- routes.php      // Routes for the application
-|-- node_modules/       // If you use something like webpack, you would .gitignore this folder.
-|-- public/             // Contains all the files that are available to user, eg. js, css, images, etc.
-|   |-- .htaccess       // Look in examples for how to best set this
-|   |-- index.php       // The primary entry point to your application.
-|   |-- ...
-|-- src/                // Required library directory used by OME
-|   |-- js              // Store your js source files for webpack
-|   |-- scss            // SCSS that will be processed by webpack
-|   |-- views/          // All view files will go in here
-|   |-- ...             
-|-- vendor/             // Composer files needed for application, you can gitignore this
-|-- common.php
-|-- composer.json
-|-- ...
-
-```
-
-If you use apache you will be able to start setting up the routing by using the following in an `.htaccess` file in the 
-app's `public` folder:
-
-```
-# Enabling the mod_rewrite module in this folder
-RewriteEngine On
-Options -Indexes
-
-# Redirects invalid locations to index
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?/$1 [L]
-```
-
-<a name="base-methods"></a>
-## Overview of the Base Methods
-
-Within the Obsidian Moon Engine there are a few functions that you will need to keep in mind when using using the 
-framework. The first of all is that the system uses a path routing system that you will need to declare in the 
-configurations. The files used to manage the flow of application's called Controls. In order to provide an ease of use 
-upon installation, Obsidian Moon Engine comes with a default routing module that you use or extend and/or overwrite.
-
-Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any 
-errors that occur during the process of your application's life cycle.
+In your application, you will need to pass information regarding your controller from `symfony/routing`
 
 <a name="latest-changes.planned"></a>
 ## Planned Future Inclusions

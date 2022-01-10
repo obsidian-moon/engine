@@ -7,7 +7,10 @@ use ObsidianMoon\Engine\Exceptions\FileNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * Handles the processing of Controllers
  *
+ * It will take an array (usually from symfony route) and process it, looking for `_controller` key.
+ * Once it has the value of that key it then checks to make sure that we have a valid control class.
  */
 class ControllerHandler
 {
@@ -46,6 +49,6 @@ class ControllerHandler
             throw new FileNotFoundException('Could not find the "' . $this->method . '" method on the Controller.');
         }
 
-        return $this->controller?->{$this->method}(...$this->attributes);
+        return $this->controller->{$this->method}(...$this->attributes);
     }
 }
