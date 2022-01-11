@@ -31,7 +31,7 @@ class ViewHandler
     public function load(?string $view = null, array $data = [], bool $return = false): bool|string
     {
         /** Load default view data */
-        if (\count($this->viewData) > 0) {
+        if (count($this->viewData) > 0) {
             extract($this->viewData, EXTR_SKIP);
         }
 
@@ -45,11 +45,11 @@ class ViewHandler
         /** The location of the View to be loaded */
         $fileName = $this->viewsRoot . '/' . $view . '.php';
         if (!file_exists($fileName)) {
-            throw new FileNotFoundException("Could not find a view file at '{$fileName}'!");
+            throw new FileNotFoundException("Could not find a view file at '$fileName'!");
         }
 
         /** Load data specific to this view */
-        if (\count($data) > 0) {
+        if (count($data) > 0) {
             extract($data, EXTR_OVERWRITE);
         }
 

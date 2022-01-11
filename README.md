@@ -1,8 +1,6 @@
 Obsidian Moon Engine
 ====================
 
-[![Floobits Status](https://floobits.com/opensaurusrex/obsidian-moon-engine.svg)](https://floobits.com/opensaurusrex/obsidian-moon-engine/redirect)
-
 This is a project that I have worked on for several years after wanting a completely modular framework. I am aiming for 
 lightweight and able to include any modules from other applications, etc.
 
@@ -13,106 +11,128 @@ Since Obsidian Moon Engine uses [Composer](http://getcomposer.org) you will need
 code with it. Once you have installed Composer you will then be able to install it by running the following command:
 
 ```bash
-composer create-project obsidian-moon/framework
-```
-
-Or, if you want to use the Obsidian Moon Engine in a previously made project, you can instead run:
-
-```bash
 composer require obsidian-moon/engine
 ``` 
 
-Once installed you can make your application's files by entering the following into a `composer.json` file:
+Alternatively, you can install the [Obsidian Moon Framework](/obsidian-moon/framework) with a prebuilt structure,
+by using the following command. Click the link for additional information.
 
-```json
+```bash
+composer create-project obsidian-moon/framework
+```
+
+<a name="implementation"></a>
+## Implelementation
+
+To see a complete implementation of these features review the 
+[common.php](/obsidian-moon/framework/blob/master/common.php) file from the Obsidian Moon Framework. However, below are
+expanded examples which you can see all the optional features in use.
+
+### Controllers
+
+Controllers are simple classes that hold methods that can be called from the `ControllerHandler` class. You can extend
+the builtin abstract class `AbstractController` and pass it your views folder configuration, as follows:
+
+```php
+// app/Controllers/LandingController.php
+class LandingController extends AbstractController
 {
-  "autoload": {
-    "psr-4": {
-      "ObsidianMoon\\Framework\\": "app/"
+    /**
+     * Pass the `views` folder configuration to the abstract parent class. 
+     * Optional: Pass a set of default values which will be handed off to `ViewHandler`
+     */
+    public function __construct()
+    {
+        /**
+         * Retrieve from database or declare statically...
+         */
+        $optionalDefaultValues = [
+            'defaultKey1' => 'defaultValue1',
+            'defaultKey2' => 'defaultValue2',
+            // ...
+        ];
+        parent::__construct(viewsRoot: VIEWS_ROOT, viewData: $optionalDefaultValues);
     }
-  }
 }
 ```
 
-After editing the file, you can simply run the following command to use the Composer file you installed:
+### Controller Handler
 
-```bash
-php composer.phar install
+In your application, you can pass information regarding your controller from `symfony/routing` or by passing an array
+with `_controller` declared. It will return a Symfony Response once the `ControllerHandler::render()` method is called,
+and it has found the class and method declared:
+
+```php
+use ObsidianMoon\Engine\Handlers\ControllerHandler;
+use ObsidianMoon\Framework\Controllers\LandingController;
+
+/**
+ * Needs an array containing the following keys `_controller` as follows
+ * For Symfony Routing, Replace array with: $matcher->match($request->getPathInfo())
+ * 
+ * Throws FileNotFoundException, Symfony's ResourceNotFoundException, or Symfony's MethodNotAllowedException on error.
+ */
+$controller = new ControllerHandler(controller: ['_controller' => [LandingController::class, 'index']]); 
+
+$response = $controller->render(); // Returns Symfony Responce object
 ```
 
+### Exception Handler
 
-<a name="file-structure"></a>
-## File Structure
+You can utilize the use of a custom Exception Handler to handle whether the error message is shown or a custom error is.
+You can do so as follows:
 
-You can now run `composer create-project obsidian-moon/framework` to install a new install with the
-following file structure:
+```php
+use ObsidianMoon\Engine\Exceptions\FileNotFoundException;
+use ObsidianMoon\Engine\Handlers\ExceptionHandler;
 
-```
-.
-|-- app/                // Application namespace root
-|   |-- Controllers     // Controllers for handling routes
-|   |-- Entity          // For storing entities, to be explained later
-|   |-- Modules         // Modular classes for handling various functionality 
-|-- config/             // For the presession modifications used by OME
-|   |-- environment.php // Modifies system values if needed, before the session is started
-|   |-- routes.php      // Routes for the application
-|-- node_modules/       // If you use something like webpack, you would .gitignore this folder.
-|-- public/             // Contains all the files that are available to user, eg. js, css, images, etc.
-|   |-- .htaccess       // Look in examples for how to best set this
-|   |-- index.php       // The primary entry point to your application.
-|   |-- ...
-|-- src/                // Required library directory used by OME
-|   |-- js              // Store your js source files for webpack
-|   |-- scss            // SCSS that will be processed by webpack
-|   |-- views/          // All view files will go in here
-|   |-- ...             
-|-- vendor/             // Composer files needed for application, you can gitignore this
-|-- common.php
-|-- composer.json
-|-- ...
+$exceptions = new ExceptionHandler(admin: false);
 
+/** Useful in conjunction with the `ControllerHandler` */
+try {
+    throw new FileNotFoundException('More detailed message for admins');
+} catch (FileNotFoundException $e) {
+    $message = $exceptions->handle($e, 'A public error message for non-admins and/or production');
+}
 ```
 
-If you use apache you will be able to start setting up the routing by using the following in an `.htaccess` file in the 
-app's `public` folder:
+### View Handler
 
+The view handler will look for the location it is passed and find a file with the name that is declared and can return
+its value, or store it in the output property for later use. There are various ways it can be used, but the most common
+is as follows:
+
+```php
+use ObsidianMoon\Engine\Handlers\ViewHandler;
+
+$optionalDefaultData = [
+    'defaultKey1' => 'defaultValue1',
+    'defaultKey1' => 'defaultValue1',
+    // ...
+];
+
+/** Instantiate with VIEWS_ROOT constant set to `src/views` and prepare to make calls */
+$view = new ViewHandler(viewsRoot: VIEWS_ROOT, viewData: $optionalDefaultData);
+
+/** Load a view `src/views/landing/index.php`, pass it data, and return value to a variable */
+$landingContent = $view->load(view: 'landing/index', data: ['key1' => 'value1'], return: true)
+
+/** Take the landing content and insert it into `src/views/layouts/shell.php` */
+$view->load(view: 'layouts/shell', data: compact('landingContent'));
+
+/** Render the content that has been stored in the handler output. */
+$view->render(); 
 ```
-# Enabling the mod_rewrite module in this folder
-RewriteEngine On
-Options -Indexes
-
-# Redirects invalid locations to index
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?/$1 [L]
-```
-
-<a name="base-methods"></a>
-## Overview of the Base Methods
-
-Within the Obsidian Moon Engine there are a few functions that you will need to keep in mind when using using the 
-framework. The first of all is that the system uses a path routing system that you will need to declare in the 
-configurations. The files used to manage the flow of application's called Controls. In order to provide an ease of use 
-upon installation, Obsidian Moon Engine comes with a default routing module that you use or extend and/or overwrite.
-
-Within the Control you will be able to load modules (`Core::module()`) and views (`Core::view()`) as well as handle any 
-errors that occur during the process of your application's life cycle.
-
-<a name="latest-changes.planned"></a>
-## Planned Future Inclusions
-
-- Rewriting the `DarkProspectGames\ObsidianMoonEngine\Modules\Routing` class and making it so that it works better.
 
 [Complete List of Changes](CHANGELOG.md)
 
 <a name="summary"></a>
 ## Summary of Obsidian Moon Engine
 
-You will find that the Obsidian Moon Engine is 100% modular and will expand as you build code into it. Feel free to
-submit modules for addition into the core, tweak the code to suite your needs and add any features I have not thought
-of yet. If you do use this framework we would appreciate you any credit given and would like if you could like back to
-this page. Addittionally if you happen to write code that improves on what I have already created, please feel free to
-share back! We will appreciate any assistance! Thanks and Enjoy!
+Most of the code for this is meant to keep it as modular as possible. With version `1.x` I found that I ended up having
+to repeat a lot of the code because of how routing was unable to be handled automatically. Using symfony routes 
+components ended up solving that issue. However, I was forced to rewrite the code to where it was simpler. I hope
+that you find this code as useful as I have. And, I will continue to add to it as I expand it with my projects.
 
 Regards,  
 Alfonso Martinez 
