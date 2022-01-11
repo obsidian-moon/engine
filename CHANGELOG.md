@@ -1,5 +1,5 @@
 <a name="2.0.1"></a>
-# 2.0.1 ()
+# 2.0.1 (2022-01-11)
 
 <a name="2.0.1.features"></a>
 ## Features
@@ -11,7 +11,9 @@
 <a name="2.0.1.bug-fixes"></a>
 ## Bug Fixes
 
-* Corrected the `CHANGELOG.md` for version  `2.0.0`, removed the unfinished `1.8.0` documentation.
+* Corrected the `CHANGELOG.md` for version `2.0.0`, removed the unfinished change logs for abandoned version `1.8.0`.
+* Removed details from `README.md` pertaining to
+  [obsidian-moon/framework](https://packagist.org/packages/obsidian-moon/framework) structure.
 * Cleaned up some minor code formatting.
 
 <a name="2.0.0"></a>
@@ -26,26 +28,35 @@
 * Users can now run `composer create-project obsidian-moon/framework` to install a preconfigured project with 
   Obsidan Moon Engine pre-installed. See [Obsidian Moon Engine](https://github.com/obsidian-moon/framework) on GitHub 
   for more information.
-* Added a handler for controllers called `ControllerHandler` which uses `symfony/routing`.
-* Added a handler for views called `ViewHandler`:
-  * Views will have access to default values via the `$this->viewData` property which can be passed values on
-    instatiation of:
-    ```php
-    new ViewHandler(viewsRoot: VIEWS_ROOT, viewData: ['key' => 'value']) 
-    ```
+* Added an abstract class for controllers `AbstractController`.
+* Added a handler for controllers called `ControllerHandler` which uses `symfony/routing`, but can have the values
+  passed to manually like the following:
+  ```php
+  new ControllerHandler(controller: ['_controller' => [LandingController::class, 'index']])
+  ```
+* Added a handler for exceptions calle `ExceptionHandler` which can limit error messages to whether a user is given
+  admin access or not:
+  ```php
+  new ExceptionHandler(admin: false);
+  ```
+* Added a handler for views called `ViewHandler`. Views will have access to default values via the `$this->viewData` property which can be passed values on
+  instatiation of:
+  ```php
+  new ViewHandler(viewsRoot: VIEWS_ROOT, viewData: ['key' => 'value']) 
+  ```
 
 <a name="2.0.0.breaking-changes"></a>
 ## Breaking Changes
 
-* `Core` class no longer exists. It has been replaced with a few handlers: `ControllerHandler`, `ExceptionHandler` and
-  `ViewHandler`.
+* `Core` class no longer exists. It has been replaced with a few handlers and abstract classes: `AbstractController`,
+  `ControllerHandler`, `ExceptionHandler` and `ViewHandler`.
 * We are now using `symfony/routing` and `symfony/http-foundation` to handle routing. See 
-  [Obsidian Moon Framework](/obsidian-moon/framework) for how that is being implemented.
+  [Obsidian Moon Framework](https://github.com/obsidian-moon/framework), as well as the
+  [README](https://github.com/obsidian-moon/engine/blob/master/README.md#implementation) for how that is being implemented.
 * We are no longer handling any configs within the framework itself, configs are handled by the application and that is
-  passed to handlers, eg. `ViewsHandler::__construct(VIEWS_ROOT, $viewData)`
-* Added an exception handler for differentiating how we handle the Exceptions. If `$this->admin` is instantiated to
-  true, then we will 
-* `Modules\Database` now has a default fetch mode of `PDO::FETCH_OBJ` which can be overwritten explicitely.
+  passed to handlers, eg. `ViewsHandler::__construct(viewsRoot: VIEWS_ROOT, viewData: [])`
+* Removed the database modules, so now the user can choose their own. May choose to create a separate module that can be
+  used in conjunction with OME at a later date.
 
 <a name="1.7.2"></a>
 # 1.7.2 (2018-04-12)
