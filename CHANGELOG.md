@@ -1,3 +1,11 @@
+<a name="2.0.2"></a>
+# 2.0.2 (2022-01-11)
+
+<a name="2.0.2.bug-fixes"></a>
+## Bug Fixes
+
+* Fixing an issue with the composer distribution.
+
 <a name="2.0.1"></a>
 # 2.0.1 (2022-01-11)
 
