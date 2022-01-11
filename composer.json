@@ -1,7 +1,7 @@
 {
   "name": "obsidian-moon/engine",
   "description": "An Open Source, Lightweight and 100% Modular Framework in PHP",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "keywords": [
     "framework"
   ],
