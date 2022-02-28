@@ -46,7 +46,9 @@ class ControllerHandler
     public function render(): Response
     {
         if (!method_exists($this->controller, $this->method)) {
-            throw new FileNotFoundException('Could not find the "' . $this->method . '" method on the Controller.');
+            throw new FileNotFoundException(
+                'Could not find the "' . $this->method . '" method on the "' . $this->controller . '" Controller.'
+            );
         }
 
         return $this->controller->{$this->method}(...$this->attributes);
