@@ -23,8 +23,9 @@ class ViewHandler
      * Handle the locating and processing of views from the application.
      *
      * @param string|null $view Location of the view
-     * @param array $data
-     * @param bool $return
+     * @param array $data       Pass data to be used in the view
+     * @param bool $return      Will we return it or add it to output?
+     *
      * @return bool|string
      * @throws FileNotFoundException
      */
@@ -53,6 +54,7 @@ class ViewHandler
             extract($data, EXTR_OVERWRITE);
         }
 
+        /** Store the content in output or return it */
         ob_start();
         include $fileName;
         $buffer = ob_get_clean();
@@ -64,6 +66,11 @@ class ViewHandler
         return true;
     }
 
+    /**
+     * We render the output that is stored
+     *
+     * @return void
+     */
     public function render(): void
     {
         echo $this->output;

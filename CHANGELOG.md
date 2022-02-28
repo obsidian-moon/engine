@@ -1,4 +1,12 @@
 <a name="2.0.2"></a>
+# 2.0.2 (2022-02-28)
+
+<a name="2.0.2.features"></a>
+## Features
+
+* Added the controller name to exception message, when trying to call a method that does not exist on the controller.
+
+<a name="2.0.2"></a>
 # 2.0.2 (2022-01-11)
 
 <a name="2.0.2.bug-fixes"></a>
