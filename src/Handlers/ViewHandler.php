@@ -51,7 +51,7 @@ class ViewHandler
 
         /** Load data specific to this view */
         if (count($data) > 0) {
-            extract($data, EXTR_OVERWRITE);
+            extract($data);
         }
 
         /** Store the content in output or return it */
