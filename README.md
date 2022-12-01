@@ -1,21 +1,21 @@
 Obsidian Moon Engine
 ====================
 
-This is a project that I have worked on for several years after wanting a completely modular framework. I am aiming for 
+This is a project that I have worked on for several years after wanting a completely modular framework. I am aiming for
 lightweight and able to include any modules from other applications, etc.
 
 <a name="installing"></a>
 ## Installing Obsidian Moon Engine
 
-Since Obsidian Moon Engine uses [Composer](http://getcomposer.org) you will need to install it before you can run the
+Since Obsidian Moon Engine uses [Composer](https://getcomposer.org/) you will need to install it before you can run the
 code with it. Once you have installed Composer you will then be able to install it by running the following command:
 
 ```bash
 composer require obsidian-moon/engine
-``` 
+```
 
-Alternatively, you can install the [Obsidian Moon Framework](/obsidian-moon/framework) with a prebuilt structure,
-by using the following command. Click the link for additional information.
+Alternatively, you can install the [Obsidian Moon Framework](https://github.com/obsidian-moon/framework/) with a prebuilt
+structure, by using the following command. Click the link for additional information.
 
 ```bash
 composer create-project obsidian-moon/framework
@@ -24,9 +24,10 @@ composer create-project obsidian-moon/framework
 <a name="implementation"></a>
 ## Implelementation
 
-To see a complete implementation of these features review the 
-[common.php](/obsidian-moon/framework/blob/master/common.php) file from the Obsidian Moon Framework. However, below are
-expanded examples which you can see all the optional features in use.
+To see a complete implementation of these features review the
+[common.php](https://github.com/obsidian-moon/framework/blob/master/common.php) file from the
+[Obsidian Moon Framework](https://github.com/obsidian-moon/framework/).
+However, below are expanded examples which you can read to see all the optional features in use.
 
 ### Controllers
 
@@ -38,13 +39,13 @@ the builtin abstract class `AbstractController` and pass it your views folder co
 class LandingController extends AbstractController
 {
     /**
-     * Pass the `views` folder configuration to the abstract parent class. 
+     * Required: Pass the `views` folder configuration to the abstract parent class.
      * Optional: Pass a set of default values which will be handed off to `ViewHandler`
      */
     public function __construct()
     {
         /**
-         * Retrieve from database or declare statically...
+         * Retrieve default data from database/session or declare statically...
          */
         $optionalDefaultValues = [
             'defaultKey1' => 'defaultValue1',
@@ -65,16 +66,26 @@ and it has found the class and method declared:
 ```php
 use ObsidianMoon\Engine\Handlers\ControllerHandler;
 use ObsidianMoon\Framework\Controllers\LandingController;
+use ObsidianMoon\Engine\Exceptions\FileNotFoundException;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
  * Needs an array containing the following keys `_controller` as follows
  * For Symfony Routing, Replace array with: $matcher->match($request->getPathInfo())
- * 
+ *
  * Throws FileNotFoundException, Symfony's ResourceNotFoundException, or Symfony's MethodNotAllowedException on error.
  */
-$controller = new ControllerHandler(controller: ['_controller' => [LandingController::class, 'index']]); 
-
-$response = $controller->render(); // Returns Symfony Responce object
+try {
+    $controller = new ControllerHandler(controller: ['_controller' => [LandingController::class, 'index']]);
+    $response = $controller->render(); // Returns Symfony Responce object
+} catch (FileNotFoundException | ResourceNotFoundException) {
+    // Unable to find that file or route is undefined.
+    $response = 'We could not find that page!';
+} catch (MethodNotAllowedException) {
+    // Sent because of unsupported method, e.g. `$_POST` instead of `$_GET`.
+    $response = 'We are unable to process your request. Please try again!';
+}
 ```
 
 ### Exception Handler
@@ -86,9 +97,13 @@ You can do so as follows:
 use ObsidianMoon\Engine\Exceptions\FileNotFoundException;
 use ObsidianMoon\Engine\Handlers\ExceptionHandler;
 
+/**
+ * Setting `admin` to `false` will return the message we pass to `handle()` method. Otherwise, it will return the
+ * message originally sent from initial exception.
+ */
 $exceptions = new ExceptionHandler(admin: false);
 
-/** Useful in conjunction with the `ControllerHandler` */
+/** Useful in conjunction with the `ControllerHandler`. */
 try {
     throw new FileNotFoundException('More detailed message for admins');
 } catch (FileNotFoundException $e) {
@@ -103,37 +118,51 @@ its value, or store it in the output property for later use. There are various w
 is as follows:
 
 ```php
+use ObsidianMoon\Engine\Exceptions\FileNotFoundException;
 use ObsidianMoon\Engine\Handlers\ViewHandler;
 
+/** Optional default data that can be pulled from DB, session, or static variables to be used in the views. */
 $optionalDefaultData = [
     'defaultKey1' => 'defaultValue1',
-    'defaultKey1' => 'defaultValue1',
+    'defaultKey2' => 'defaultValue2',
     // ...
 ];
 
-/** Instantiate with VIEWS_ROOT constant set to `src/views` and prepare to make calls */
-$view = new ViewHandler(viewsRoot: VIEWS_ROOT, viewData: $optionalDefaultData);
+try {
+    /** Instantiate with VIEWS_ROOT constant set to `src/views` and prepare to make calls */
+    $view = new ViewHandler(viewsRoot: VIEWS_ROOT, viewData: $optionalDefaultData);
 
-/** Load a view `src/views/landing/index.php`, pass it data, and return value to a variable */
-$landingContent = $view->load(view: 'landing/index', data: ['key1' => 'value1'], return: true)
+    /** Load a view `src/views/landing/index.php`, pass it data, and return output to a variable */
+    $landingContent = $view->load(view: 'landing/index', data: ['key1' => 'value1'], return: true)
 
-/** Take the landing content and insert it into `src/views/layouts/shell.php` */
-$view->load(view: 'layouts/shell', data: compact('landingContent'));
+    /** Take the landing content and insert it as a variable into `src/views/layouts/shell.php` */
+    $view->load(view: 'layouts/shell', data: compact('landingContent'));
 
-/** Render the content that has been stored in the handler output. */
-$view->render(); 
+    /** Render the content that has been stored in the handler output. */
+    $view->render();
+} catch (FileNotFoundException $e) {
+    // Did not find the file, handle the 404 here.
+}
 ```
 
 [Complete List of Changes](CHANGELOG.md)
+
+<a name="credits"></a>
+## Credits
+
+Obsidian Moon Engine uses the following libraries and projects in its development:
+
+* [PHP 8](https://www.php.net/) with [Composer](https://getcomposer.org/) package manager.
+* [Symfony 6 Components](https://symfony.com/components) for HTTP Requests and Routing.
 
 <a name="summary"></a>
 ## Summary of Obsidian Moon Engine
 
 Most of the code for this is meant to keep it as modular as possible. With version `1.x` I found that I ended up having
-to repeat a lot of the code because of how routing was unable to be handled automatically. Using symfony routes 
+to repeat a lot of the code because of how routing was unable to be handled automatically. Using symfony routes
 components ended up solving that issue. However, I was forced to rewrite the code to where it was simpler. I hope
 that you find this code as useful as I have. And, I will continue to add to it as I expand it with my projects.
 
-Regards,  
-Alfonso Martinez 
+Regards,<br>
+Alfonso Martinez<br>
 Obsidian Moon Development

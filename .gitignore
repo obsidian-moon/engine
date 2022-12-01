@@ -1,10 +1,18 @@
-extern
-node_modules
-tmp
-vendor
-.idea/workspace.xml
-.idea/misc.xml
-
 # System Files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
 *.DS_Store
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+*.log
 error_log
+tmp
+
+# Project files
+vendor
+node_modules
+*.cache
+extern
