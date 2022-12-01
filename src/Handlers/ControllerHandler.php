@@ -1,5 +1,18 @@
 <?php
-
+/**
+ * Controller Handler
+ *
+ * Allows for the handling of controllers once routes have determined with controller and method
+ * should be used by the application.
+ *
+ * Obsidian Moon Engine by Obsidian Moon Development
+ * An Open Source, Lightweight and 100% Modular Framework in PHP
+ *
+ * PHP version 8
+ *
+ * @category  Framework
+ * @package   ObsidianMoon\Engine
+ */
 namespace ObsidianMoon\Engine\Handlers;
 
 use ObsidianMoon\Engine\Abstracts\AbstractController;
@@ -20,6 +33,7 @@ class ControllerHandler
 
     /**
      * @param array $controller
+     *
      * @throws FileNotFoundException
      */
     public function __construct(array $controller)

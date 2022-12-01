@@ -1,7 +1,7 @@
 {
   "name": "obsidian-moon/engine",
   "description": "An Open Source, Lightweight and 100% Modular Framework in PHP",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "keywords": [
     "framework"
   ],
@@ -21,9 +21,9 @@
   },
   "require": {
     "php": ">=8.1",
-    "vlucas/phpdotenv": "^5.4",
-    "symfony/routing": "^6.0",
-    "symfony/http-foundation": "^6.0"
+    "vlucas/phpdotenv": "^5.5",
+    "symfony/routing": "^6.2",
+    "symfony/http-foundation": "^6.2"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest"

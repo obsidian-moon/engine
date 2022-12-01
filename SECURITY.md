@@ -2,10 +2,11 @@
 
 ## Supported Versions
 
-Below are the current versions that will continue to receive support from us/
+Below are the current versions that will continue to receive support from us:
 
 | Version | Supported          |
-|---------| ------------------ |
+|---------|--------------------|
+| 2.1.x   | :white_check_mark: |
 | 2.0.x   | :white_check_mark: |
 | < 2.0   | :x:                |
 

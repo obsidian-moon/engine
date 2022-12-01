@@ -1,7 +1,18 @@
-<a name="2.0.2"></a>
-# 2.0.2 (2022-02-28)
+<a name="2.1.0"></a>
+# 2.1.0 (2022-12-01)
 
-<a name="2.0.2.features"></a>
+<a name="2.1.0.features"></a>
+## Features
+
+* Migrated Symfony Components to `Symfony 6.2`
+* Added additional documentation blocks to the code, to be expanded on later.
+* Removed support for `floobits`.
+* Corrected some typos in `README.md` and added `Credits` section.
+
+<a name="2.0.3"></a>
+# 2.0.3 (2022-02-28)
+
+<a name="2.0.3.features"></a>
 ## Features
 
 * Added the controller name to exception message, when trying to call a method that does not exist on the controller.
@@ -21,7 +32,7 @@
 ## Features
 
 * Added a security policy in `SECURITY.md`.
-* Added an optional `viewData` property to `AbstractController::__construct(viewsRoot: VIEWS_ROOT, viewData: [])` to 
+* Added an optional `viewData` property to `AbstractController::__construct(viewsRoot: VIEWS_ROOT, viewData: [])` to
   be passed to `ViewHandler`.
 
 <a name="2.0.1.bug-fixes"></a>
@@ -41,8 +52,8 @@
 * Raised the minimum version of PHP to 8.1.
 * With `2.0.0` we are moving the project from `dark-prospect-games/obsidian-moon-engine` to `obsidian-moon/engine` to
   make it more concise.
-* Users can now run `composer create-project obsidian-moon/framework` to install a preconfigured project with 
-  Obsidan Moon Engine pre-installed. See [Obsidian Moon Engine](https://github.com/obsidian-moon/framework) on GitHub 
+* Users can now run `composer create-project obsidian-moon/framework` to install a preconfigured project with
+  Obsidan Moon Engine pre-installed. See [Obsidian Moon Engine](https://github.com/obsidian-moon/framework) on GitHub
   for more information.
 * Added an abstract class for controllers `AbstractController`.
 * Added a handler for controllers called `ControllerHandler` which uses `symfony/routing`, but can have the values
@@ -58,7 +69,7 @@
 * Added a handler for views called `ViewHandler`. Views will have access to default values via the `$this->viewData` property which can be passed values on
   instatiation of:
   ```php
-  new ViewHandler(viewsRoot: VIEWS_ROOT, viewData: ['key' => 'value']) 
+  new ViewHandler(viewsRoot: VIEWS_ROOT, viewData: ['key' => 'value'])
   ```
 
 <a name="2.0.0.breaking-changes"></a>
@@ -66,7 +77,7 @@
 
 * `Core` class no longer exists. It has been replaced with a few handlers and abstract classes: `AbstractController`,
   `ControllerHandler`, `ExceptionHandler` and `ViewHandler`.
-* We are now using `symfony/routing` and `symfony/http-foundation` to handle routing. See 
+* We are now using `symfony/routing` and `symfony/http-foundation` to handle routing. See
   [Obsidian Moon Framework](https://github.com/obsidian-moon/framework), as well as the
   [README](https://github.com/obsidian-moon/engine/blob/master/README.md#implementation) for how that is being implemented.
 * We are no longer handling any configs within the framework itself, configs are handled by the application and that is
@@ -100,10 +111,10 @@
 ## Features
 
 * Now requiring there to be a `public` directory in which we will put all assets and the `index.php`.
-* Included an `examples` directory with a simple example application, to show recommended file structure.This is a 
-  working demo of the framework. Just make the directory root for test site `./examples/public` to see it in action, or 
-  copy files from this into your new install!
-  
+* Included an `examples` directory with a simple example application, to show recommended file structure.This is a
+  working demo of the framework. Just make the directory root for test site `./examples/public` to see it in action, or
+  copy files from this into your new installation!
+
 <a name="1.6.0"></a>
 # 1.6.0 (2017-11-24)
 
@@ -118,10 +129,10 @@
 <a name="1.5.3.bug-fixes"></a>
 ## Bug Fixes
 
-* Correcting an issue with the `DarkProspectGames\ObsidianMoonEngine\Modules\Database` class. It was not loading the 
-  drivers correctly. Had to pass the default configs to the `parent::__construct()` after an `array_replace()`. Will 
+* Correcting an issue with the `DarkProspectGames\ObsidianMoonEngine\Modules\Database` class. It was not loading the
+  drivers correctly. Had to pass the default configs to the `parent::__construct()` after an `array_replace()`. Will
   look into finding a better way to overload the inheritance that is compatible with PHP 7.0+.
-* Updating the `composer.lock` with the correct updated information, after having removed `PHPUnit` from the 
+* Updating the `composer.lock` with the correct updated information, after having removed `PHPUnit` from the
   `composer.json`.
 
 <a name="1.5.2"></a>
@@ -130,9 +141,9 @@
 <a name="1.5.2.bug-fixes"></a>
 ## Bug Fixes
 
-* Correcting an issue with the `DarkProspectGames\ObsidianMoonEngine\Modules\Database` class. It was not loading the 
-  drivers correctly. Declaring the configs in the class declaration was not working. I had to move the assigning to the 
-  `__construct()` method, after which it will be overwritten by the configs passed to it.  
+* Correcting an issue with the `DarkProspectGames\ObsidianMoonEngine\Modules\Database` class. It was not loading the
+  drivers correctly. Declaring the configs in the class declaration was not working. I had to move the assigning to the
+  `__construct()` method, after which it will be overwritten by the configs passed to it.
 
 <a name="1.5.1"></a>
 # 1.5.1 (2017-10-11)
@@ -158,7 +169,7 @@
 <a name="1.5.0.bug-fixes"></a>
 ## Bug Fixes
 
-* Corrected a misspelled call of `array_key_exists()` in `DarkProspectGames\ObsidianMoonEngine\Modules\Database` in the 
+* Corrected a misspelled call of `array_key_exists()` in `DarkProspectGames\ObsidianMoonEngine\Modules\Database` in the
   `fetchArray()` method.
 
 <a name="1.4.2"></a>
@@ -184,7 +195,7 @@
 <a name="1.4.0.features"></a>
 ## Features
 
-* Found extra information regarding PHPDocs so I include those changes as well.
+* Found extra information regarding PHPDocs, so I include those changes as well.
 * Removed `.htaccess` and placed contents in `README.md` under installation information.
 * Removed the unused dependencies in `require-dev`
 * Renamed the `Changelog.md` to `CHANGELOG.md`
@@ -194,7 +205,7 @@
   use DarkProspectGames\MyApplication\Models\User;
   use DarkProspectGames\MyApplication\Modules\Handler;
   use DarkProspectGames\MyApplication\Modules\Random;
-  
+
   $user    = User::find(1);
   $handler = new Handler();
   $core->data(['user' => $user, 'handler' => $handler]);
@@ -204,22 +215,22 @@
   ```
 
 <a name="1.4.0.breaking-changes"></a>
-## Breaking Changes 
+## Breaking Changes
 
 * Raised minimum PHP version from v5.4 to v5.5.
 * Renamed `AbstractControl` to `AbstractController` and updated code documentation with examples.
-* All of the modules use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
+* All modules now use `DarkProspectGames\ObsidianMoonEngine\Core\CoreException`.
 * `Core::module()` instead of instantiating an object for you, now only handles objects in the following manner:
 
   ```php
   use DarkProspectGames\ObsidianMoonEngine\Modules\Input as CoreInput;
-  
+
   $core->module('newProperty', new CoreInput([/* array of configs */]));
   // Use that new object to set a session
   $core->newProperty->setSession('id', 1);
   ```
 
-* View data will no longer overwrite using PHP's `EXTR_OVERWRITE`. Instead it will use `EXTR_SKIP` and thus skip any
+* View data will no longer overwrite using PHP's `EXTR_OVERWRITE`. Instead, it will use `EXTR_SKIP` and thus skip any
   conflicting variables.
 * Renamed the following properties: `is_ajax` to `isAjax`; `is_http` to `isHttp`; `systime` to `systemTime`.
 
@@ -229,7 +240,7 @@
 * Added the ability to change configs after the instantiation of the Database class.
 * Removed the CouchDB class.
 * Converted the license from BSD-3 to MIT.
-* Updated all of the PhpDoc documentation.
+* Updated the PhpDoc documentation.
 
 <a name="1.3.0"></a>
 # 1.3.0 (2014-08-27)
@@ -243,7 +254,7 @@
   your application.
 * Allowing users to customize their apps by adding additional optional configurations, `mycontrol` & `mymodule`.
 * Added the ability to overwrite the configurations stored in  `Libraries/Configs` by passing an array to `module()`.
-* Additional routing info will be passed to Control class into `$this->routes` to be used by an Controls that you
+* Additional routing info will be passed to Control class into `$this->routes` to be used by a Controls that you
   create, this functionality will be included as a part of the CoreRouting module.
 * Added the ability to modify how the routing runs by making sure it calls a `start()` method if exists.
 

@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * View Handler
+ *
+ * This handles the loading and implementation of the views when they are called.
+ *
+ * Obsidian Moon Engine by Obsidian Moon Development
+ * An Open Source, Lightweight and 100% Modular Framework in PHP
+ *
+ * PHP version 8
+ *
+ * @category  Framework
+ * @package   ObsidianMoon\Engine
+ */
 namespace ObsidianMoon\Engine\Handlers;
 
 use ObsidianMoon\Engine\Exceptions\FileNotFoundException;
@@ -22,9 +34,9 @@ class ViewHandler
     /**
      * Handle the locating and processing of views from the application.
      *
-     * @param string|null $view Location of the view
-     * @param array $data       Pass data to be used in the view
-     * @param bool $return      Will we return it or add it to output?
+     * @param string|null $view   Location of the view
+     * @param array       $data   Pass data to be used in the view
+     * @param bool        $return Will we return it or add it to output?
      *
      * @return bool|string
      * @throws FileNotFoundException
@@ -51,7 +63,7 @@ class ViewHandler
 
         /** Load data specific to this view */
         if (count($data) > 0) {
-            extract($data, EXTR_OVERWRITE);
+            extract($data);
         }
 
         /** Store the content in output or return it */
