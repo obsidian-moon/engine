@@ -2,8 +2,8 @@
 Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
-*.DS_Store
 .DS_Store
+*.DS_Store
 .AppleDouble
 .LSOverride
 ._*
@@ -11,8 +11,12 @@ ehthumbs_vista.db
 error_log
 tmp
 
+# Sensitive JetBrains Files
+.idea/dataSources.xml
+atlassian-ide-plugin.xml
+
 # Project files
 vendor
 node_modules
+composer.phar
 *.cache
-extern

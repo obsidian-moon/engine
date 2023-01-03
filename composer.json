@@ -26,7 +26,9 @@
     "symfony/http-foundation": "^6.2"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-latest"
+    "phpmd/phpmd": "^2.13",
+    "roave/security-advisories": "dev-latest",
+    "squizlabs/php_codesniffer": "^3.7"
   },
   "autoload": {
     "psr-4": {
